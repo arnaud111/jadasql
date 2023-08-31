@@ -1,10 +1,13 @@
-#include "sql/statement/SqlStatement.h"
-#include "sql/parser/SqlStatementParser.h"
+#include "parser/LexicalScanner.h"
 
 int main() {
 
-    SqlStatement* s = SqlStatementParser::statement_from_string("SELECT test AS yo, (SELECT 1) FROM users");
-    s->compute();
+    LexicalScanner lexicalScanner;
+    vector<Symbol> result = lexicalScanner.scan("SELECT test FROM users;");
+
+    for (auto & i : result) {
+        printf("\"%s\", %u\n", i.value.c_str(), i.group);
+    }
 
     return 0;
 }

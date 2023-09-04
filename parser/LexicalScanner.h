@@ -1,5 +1,5 @@
 //
-// Created by a833444 on 29/08/2023.
+// Created by arnaud on 29/08/2023.
 //
 
 #ifndef JADA_LEXICALSCANNER_H
@@ -14,61 +14,51 @@ using namespace std;
 class LexicalScanner {
 
 public:
-    vector<Symbol> scan(string request);
+    vector<Symbol> scan(const string& request);
 
 private:
-    Symbol convert_to_symbol(string val);
-    bool is_in_keywords(string val);
-    bool is_in_double_keywords(string val);
-    bool is_in_functions(string val);
-    bool is_in_data_types(string val);
-    bool is_in_operators(string val);
-    static bool is_in_array(string val, string* array, int array_size);
-    static string string_to_upper(string val);
+    static Symbol convert_to_symbol(const string& val);
+    void add_word(const string& word);
+    bool check_next_multi_keyword(string& word_added);
+    void compute_word(const string& request);
+    bool compute_string(const string& request);
+    void add_delimiter(const string& request);
+    void add_operator(const string& request);
+    static bool is_full_text(const string& val);
+    static bool is_number(const string& val);
+    static bool is_in_keywords(const string& val);
+    static int is_in_multi_keywords(string val);
+    static bool is_in_functions(const string& val);
+    static bool is_in_data_types(const string& val);
+    static bool is_in_operators(const string& val);
+    static bool is_in_array(const string& val, string* array, int array_size);
+    static string string_to_upper(const string& val);
 
 private:
-    int keywords_size = 3;
-    string keywords[3] = {
-            "SELECT",
-            "FROM",
-            "WHERE"
-    };
+    int left;
+    int right;
+    vector<Symbol> list_symbol;
+    Symbol symbol_tmp;
+    string actual_word;
+    bool is_multi_keywords = false;
+    bool is_operator = false;
+    char char_string_definition = 0;
+    bool escaped = false;
 
-    int double_keywords_size = 2;
-    string double_keywords[2] = {
-            "INSERT INTO",
-            "CREATE TABLE"
-    };
+    static int keywords_size;
+    static string keywords[28];
 
-    int functions_size = 2;
-    string functions[2] = {
-            "MAX",
-            "SUM"
-    };
+    static int multi_keywords_size;
+    static string multi_keywords[22];
 
-    int data_types_size = 10;
-    string data_types[10] = {
-            "CHAR",
-            "VARCHAR",
-            "TINYINT",
-            "BOOLEAN",
-            "INT",
-            "FLOAT",
-            "DOUBLE",
-            "DATE",
-            "DATETIME",
-            "TIMESTAMP"
-    };
+    static int functions_size;
+    static string functions[9];
 
-    int operators_size = 6;
-    string operators[6] = {
-            ">",
-            "<",
-            ">=",
-            "<=",
-            "==",
-            "!="
-    };
+    static int data_types_size;
+    static string data_types[10];
+
+    static int operators_size;
+    static string operators[24];
 };
 
 

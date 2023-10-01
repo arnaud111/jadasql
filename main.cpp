@@ -36,7 +36,7 @@ public:
 	}
 };
 
-int main() {
+int mainOld() {
 
 	auto *test = new Node<MyInt, MyInt>(5);
 	test->keys = (MyInt**) malloc(sizeof(MyInt*) * 2);
@@ -88,4 +88,27 @@ int main() {
 	}
 
 	return 1;
+}
+
+int main() {
+	auto test = UniqueIndex<MyInt, MyInt>(5);
+	auto key = new MyInt(5);
+	test.insert(key, new MyInt(5));
+	test.insert(new MyInt(6), new MyInt(6));
+	test.insert(new MyInt(7), new MyInt(7));
+	test.insert(new MyInt(8), new MyInt(8));
+	test.insert(new MyInt(9), new MyInt(9));
+	test.insert(new MyInt(10), new MyInt(10));
+
+	printf("%d\n", test.root->children[0]->n);
+
+	for(int i = 0; i < test.root->n + 1; ++i) {
+		for(int j = 0; j < test.root->children[i]->n; ++j) {
+			printf("test->children[%d]->records[%d] = %d\n", i, j,  ((LeafNode<MyInt, MyInt>*)test.root->children[i])->records[j]->value);
+		}
+		if(i < test.root->n) {
+			printf("test->keys[%d] = %d\n", i, test.root->keys[i]->value);
+		}
+	}
+	return 0;
 }

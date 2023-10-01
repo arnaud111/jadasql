@@ -69,7 +69,16 @@ public:
 		return;
 	}
 
-protected:
+	virtual bool canInsert(K *key) {
+		for(int i = 0; i < n; ++i) {
+			if(*key < *(keys[i])) {
+				if(children[i]->canInsert(key)) {
+					return true;
+				}
+				return n < max;
+			}
+		}
+	}
 
 	virtual Node<V, K>* split() {
 		auto *newNode = new Node<V, K>(max);
@@ -86,15 +95,11 @@ protected:
 		return newNode;
 	}
 
-	virtual bool canInsert(K *key) {
-		for(int i = 0; i < n; ++i) {
-			if(*key < *(keys[i])) {
-				if(children[i]->canInsert(key)) {
-					return true;
-				}
-				return n < max;
-			}
+	void insertChild(int index, Node *child) {
+		for(int i = n; i >= index; --i) {
+			children[i + 1] = children[i];
 		}
+		children[index] = child;
 	}
 
 	void insertKey(int index, K *key) {
@@ -102,13 +107,6 @@ protected:
 			keys[i + 1] = keys[i];
 		}
 		keys[index] = key;
-	}
-
-	void insertChild(int index, Node *child) {
-		for(int i = n; i >= index; --i) {
-			children[i + 1] = children[i];
-		}
-		children[index] = child;
 	}
 
 	void insertKey(K *key) {
@@ -120,6 +118,8 @@ protected:
 		}
 		insertKey(n, key);
 	}
+
+protected:
 
 };
 
@@ -160,6 +160,21 @@ public:
 		this->n++;
 	}
 
+	Node<V, K>* split() {
+		auto *newNode = new LeafNode<V, K>(this->max);
+		for(int i = (this->max+1)/2; i < this->max; ++i){
+			newNode->records[i - (this->max+1)/2] = this->records[i];
+			newNode->keys[i - (this->max+1)/2] = this->keys[i];
+			this->records[i] = nullptr;
+			this->keys[i] = nullptr;
+		}
+		newNode->n = this->max / 2;
+		this->n = (this->max+1) / 2;
+		newNode->records[this->max - (this->max+1)/2] = this->records[this->max];
+		this->records[this->max] = nullptr;
+		return newNode;
+	}
+
 private:
 
 	bool canInsert(K *key) {
@@ -171,21 +186,6 @@ private:
 			records[i + 1] = records[i];
 		}
 		records[index] = value;
-	}
-
-	Node<V, K>* split() {
-		auto *newNode = new LeafNode<V, K>(this->max);
-		for(int i = (this->max+1)/2; i < this->max; ++i){
-			newNode->records[i - (this->max+1)/2] = this->records[i];
-			newNode->keys[i - (this->max+1)/2] = this->keys[i];
-			this->records[i] = nullptr;
-			this->keys[i] = nullptr;
-		}
-		newNode->n = this->max / 2;
-		this->n = this->max / 2;
-		newNode->records[this->max - (this->max+1)/2] = this->records[this->max];
-		this->records[this->max] = nullptr;
-		return newNode;
 	}
 };
 

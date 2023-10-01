@@ -78,6 +78,7 @@ public:
 				return n < max;
 			}
 		}
+		return n < max;
 	}
 
 	virtual Node<V, K>* split() {
@@ -133,7 +134,7 @@ public:
 		this->records = (V**) malloc(sizeof(V*) * (m+1));
 	};
 
-	V **records = nullptr;
+	V **records;
 
 	LeafNode *next = nullptr;
 

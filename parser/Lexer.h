@@ -2,8 +2,8 @@
 // Created by arnaud on 29/08/2023.
 //
 
-#ifndef JADA_LEXICALSCANNER_H
-#define JADA_LEXICALSCANNER_H
+#ifndef JADA_LEXER_H
+#define JADA_LEXER_H
 
 #include <string>
 #include <vector>
@@ -11,7 +11,7 @@
 
 using namespace std;
 
-class LexicalScanner {
+class Lexer {
 
 public:
     vector<Symbol> scan(const string& request);
@@ -62,4 +62,4 @@ private:
 };
 
 
-#endif //JADA_LEXICALSCANNER_H
+#endif //JADA_LEXER_H

@@ -3,10 +3,10 @@
 //
 
 #include <stdexcept>
-#include "LexicalScanner.h"
+#include "Lexer.h"
 
-int LexicalScanner::operators_size = 24;
-string LexicalScanner::operators[24] = {
+int Lexer::operators_size = 24;
+string Lexer::operators[24] = {
         ">",
         "<",
         ">=",
@@ -33,8 +33,8 @@ string LexicalScanner::operators[24] = {
         "%"
 };
 
-int LexicalScanner::keywords_size = 28;
-string LexicalScanner::keywords[28] = {
+int Lexer::keywords_size = 28;
+string Lexer::keywords[28] = {
         "SELECT",
         "FROM",
         "WHERE",
@@ -65,8 +65,8 @@ string LexicalScanner::keywords[28] = {
         "SOME"
 };
 
-int LexicalScanner::multi_keywords_size = 22;
-string LexicalScanner::multi_keywords[22] = {
+int Lexer::multi_keywords_size = 22;
+string Lexer::multi_keywords[22] = {
         "INSERT INTO",
         "CREATE DATABASE",
         "DROP DATABASE",
@@ -91,8 +91,8 @@ string LexicalScanner::multi_keywords[22] = {
         "GROUP BY",
 };
 
-int LexicalScanner::functions_size = 9;
-string LexicalScanner::functions[9] = {
+int Lexer::functions_size = 9;
+string Lexer::functions[9] = {
         "MAX",
         "SUM",
         "COUNT",
@@ -104,8 +104,8 @@ string LexicalScanner::functions[9] = {
         "COALESCE",
 };
 
-int LexicalScanner::data_types_size = 10;
-string LexicalScanner::data_types[10] = {
+int Lexer::data_types_size = 10;
+string Lexer::data_types[10] = {
         "CHAR",
         "VARCHAR",
         "TINYINT",
@@ -118,7 +118,7 @@ string LexicalScanner::data_types[10] = {
         "TIMESTAMP"
 };
 
-vector<Symbol> LexicalScanner::scan(const string &request) {
+vector<Symbol> Lexer::scan(const string &request) {
 
     for (right = 0, left = 0; right < request.size(); right++) {
         if (is_operator) {
@@ -154,7 +154,7 @@ vector<Symbol> LexicalScanner::scan(const string &request) {
     return list_symbol;
 }
 
-void LexicalScanner::add_operator(const string& request) {
+void Lexer::add_operator(const string& request) {
 
     actual_word = request.substr(left, right - left);
 
@@ -168,7 +168,7 @@ void LexicalScanner::add_operator(const string& request) {
 
 }
 
-void LexicalScanner::add_delimiter(const string& request) {
+void Lexer::add_delimiter(const string& request) {
     if (request[right] == '(' || request[right] == ')' || request[right] == ',' || request[right] == ';' || request[right] == '.') {
         symbol_tmp.value = request[right];
         symbol_tmp.group = Delimiter;
@@ -176,7 +176,7 @@ void LexicalScanner::add_delimiter(const string& request) {
     }
 }
 
-bool LexicalScanner::compute_string(const string& request) {
+bool Lexer::compute_string(const string& request) {
     if (escaped) {
         escaped = false;
         return false;
@@ -195,14 +195,14 @@ bool LexicalScanner::compute_string(const string& request) {
     return false;
 }
 
-void LexicalScanner::compute_word(const string& request) {
+void Lexer::compute_word(const string& request) {
     if (left != right) {
         add_word(request.substr(left, right - left));
     }
     left = right;
 }
 
-void LexicalScanner::add_word(const string& word) {
+void Lexer::add_word(const string& word) {
 
     string word_added;
 
@@ -220,7 +220,7 @@ void LexicalScanner::add_word(const string& word) {
     }
 }
 
-bool LexicalScanner::check_next_multi_keyword(string &word_added) {
+bool Lexer::check_next_multi_keyword(string &word_added) {
 
     actual_word.append(" ");
     actual_word.append(word_added);
@@ -237,7 +237,7 @@ bool LexicalScanner::check_next_multi_keyword(string &word_added) {
     return true;
 }
 
-Symbol LexicalScanner::convert_to_symbol(const string &val) {
+Symbol Lexer::convert_to_symbol(const string &val) {
 
     Symbol symbol;
 
@@ -266,7 +266,7 @@ Symbol LexicalScanner::convert_to_symbol(const string &val) {
     return symbol;
 }
 
-bool LexicalScanner::is_full_text(const string& val) {
+bool Lexer::is_full_text(const string& val) {
 
     for (char c: val) {
         if ((c < 65 || c > 90) && (c < 97 || c > 122)) {
@@ -277,7 +277,7 @@ bool LexicalScanner::is_full_text(const string& val) {
     return true;
 }
 
-bool LexicalScanner::is_number(const string& val) {
+bool Lexer::is_number(const string& val) {
 
     for (char c: val) {
         if (c < 48 || c > 57) {
@@ -288,7 +288,7 @@ bool LexicalScanner::is_number(const string& val) {
     return true;
 }
 
-int LexicalScanner::is_in_multi_keywords(string val) {
+int Lexer::is_in_multi_keywords(string val) {
 
     bool part;
 
@@ -310,23 +310,23 @@ int LexicalScanner::is_in_multi_keywords(string val) {
     return 0;
 }
 
-bool LexicalScanner::is_in_keywords(const string &val) {
+bool Lexer::is_in_keywords(const string &val) {
     return is_in_array(string_to_upper(val), keywords, keywords_size);
 }
 
-bool LexicalScanner::is_in_functions(const string &val) {
+bool Lexer::is_in_functions(const string &val) {
     return is_in_array(string_to_upper(val), functions, functions_size);
 }
 
-bool LexicalScanner::is_in_data_types(const string &val) {
+bool Lexer::is_in_data_types(const string &val) {
     return is_in_array(string_to_upper(val), data_types, data_types_size);
 }
 
-bool LexicalScanner::is_in_operators(const string &val) {
+bool Lexer::is_in_operators(const string &val) {
     return is_in_array(val, operators, operators_size);
 }
 
-bool LexicalScanner::is_in_array(const string &val, string *array, int array_size) {
+bool Lexer::is_in_array(const string &val, string *array, int array_size) {
     for (int i = 0; i < array_size; i++) {
         if (array[i] == val) {
             return true;
@@ -335,7 +335,7 @@ bool LexicalScanner::is_in_array(const string &val, string *array, int array_siz
     return false;
 }
 
-string LexicalScanner::string_to_upper(const string &val) {
+string Lexer::string_to_upper(const string &val) {
 
     string upper;
 

@@ -1,12 +1,12 @@
 #include <iostream>
-#include "parser/LexicalScanner.h"
+#include "parser/Lexer.h"
 
 int main() {
 
     string request;
     cout << "SQL -> ";
     getline (cin, request);
-    LexicalScanner lexicalScanner = LexicalScanner();
+    Lexer lexicalScanner = Lexer();
     vector<Symbol> result = lexicalScanner.scan(request);
 
     for (auto & i : result) {

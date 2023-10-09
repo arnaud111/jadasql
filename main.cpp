@@ -92,23 +92,60 @@ int mainOld() {
 
 int main() {
 	auto test = UniqueIndex<MyInt, MyInt>(5);
-	auto key = new MyInt(5);
-	test.insert(key, new MyInt(5));
+	test.insert(new MyInt(0), new MyInt(0));
+	test.insert(new MyInt(1), new MyInt(1));
+	test.insert(new MyInt(2), new MyInt(2));
+	test.insert(new MyInt(3), new MyInt(3));
+	test.insert(new MyInt(4), new MyInt(4));
+	test.insert(new MyInt(5), new MyInt(5));
 	test.insert(new MyInt(6), new MyInt(6));
 	test.insert(new MyInt(7), new MyInt(7));
 	test.insert(new MyInt(8), new MyInt(8));
 	test.insert(new MyInt(9), new MyInt(9));
 	test.insert(new MyInt(10), new MyInt(10));
+	test.insert(new MyInt(11), new MyInt(11));
+	test.insert(new MyInt(12), new MyInt(12));
+	test.insert(new MyInt(13), new MyInt(13));
+	test.insert(new MyInt(14), new MyInt(14));
+	test.insert(new MyInt(15), new MyInt(15));
+	test.insert(new MyInt(16), new MyInt(16));
+	test.insert(new MyInt(17), new MyInt(17));
+	test.insert(new MyInt(18), new MyInt(18));
+	test.insert(new MyInt(19), new MyInt(19));
+	test.insert(new MyInt(20), new MyInt(20));
 
-	printf("%d\n", test.root->children[0]->n);
+	auto f = test.root->firstLeaf();
 
-	for(int i = 0; i < test.root->n + 1; ++i) {
-		for(int j = 0; j < test.root->children[i]->n; ++j) {
-			printf("test->children[%d]->records[%d] = %d\n", i, j,  ((LeafNode<MyInt, MyInt>*)test.root->children[i])->records[j]->value);
+	int j = 0;
+	while(f != nullptr) {
+		for(int i = 0; i < f->n; ++i) {
+			printf("test[%d] = %d\n", j++, f->records[i]->value);
 		}
-		if(i < test.root->n) {
-			printf("test->keys[%d] = %d\n", i, test.root->keys[i]->value);
-		}
+		printf("\n");
+		f = f->next;
 	}
+	test.insert(new MyInt(21), new MyInt(21));
+	test.insert(new MyInt(22), new MyInt(22));
+	test.insert(new MyInt(23), new MyInt(23));
+
+	f = test.root->firstLeaf();
+
+	j = 0;
+	while(f != nullptr) {
+		for(int i = 0; i < f->n; ++i) {
+			printf("test[%d] = %d\n", j++, f->records[i]->value);
+		}
+		printf("\n");
+		f = f->next;
+	}
+
+//	for(int i = 0; i < test.root->n + 1; ++i) {
+//		for(int j = 0; j < test.root->children[i]->n; ++j) {
+//			printf("test->children[%d]->records[%d] = %d\n", i, j,  ((LeafNode<MyInt, MyInt>*)test.root->children[i])->records[j]->value);
+//		}
+//		if(i < test.root->n) {
+//			printf("test->keys[%d] = %d\n", i, test.root->keys[i]->value);
+//		}
+//	}
 	return 0;
 }

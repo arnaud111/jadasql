@@ -60,11 +60,7 @@ public:
 			auto tmp = children[n]->split();
 			insertChild(n + 1, tmp);
 			this->n++;
-			if (*key < *(keys[n])) {
-				children[n]->insertAt(key, value);
-			} else {
-				children[n + 1]->insertAt(key, value);
-			}
+			children[n]->insertAt(key, value);
 		}
 	}
 
@@ -99,6 +95,14 @@ public:
 		for (int i = n; i >= index; --i) {
 			children[i + 1] = children[i];
 		}
+		if(instanceof<LeafNode<V, K>>(children[0])){
+			if(index != 0){
+				((LeafNode<V, K>*)children[index-1])->next = (LeafNode<V, K>*)child;
+			}
+			if(index <= n) {
+				((LeafNode<V,K>*)child)->next = (LeafNode<V, K>*)children[index+1];
+			}
+		}
 		children[index] = child;
 	}
 
@@ -117,6 +121,10 @@ public:
 			}
 		}
 		insertKey(n, key);
+	}
+
+	virtual LeafNode<V, K>* firstLeaf() {
+		return children[0]->firstLeaf();
 	}
 
 protected:
@@ -173,6 +181,10 @@ public:
 		newNode->records[this->max - (this->max + 1) / 2] = this->records[this->max];
 		this->records[this->max] = nullptr;
 		return newNode;
+	}
+
+	LeafNode<V, K>* firstLeaf() {
+		return this;
 	}
 
 private:

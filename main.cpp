@@ -1,5 +1,7 @@
 #include <iostream>
-#include "parser/Lexer.h"
+#include "lexer/Lexer.h"
+#include "parser/Parser.h"
+#include "parser/tree/statements/SelectStatement.h"
 
 int main() {
 
@@ -12,6 +14,13 @@ int main() {
     for (auto & i : result) {
         printf("\"%s\", %u\n", i.value.c_str(), i.group);
     }
+
+    vector<Statement*> listStatement = Parser::parse(result);
+    SelectStatement* selectStatement = (SelectStatement*) listStatement[0];
+    SelectStatement* selectStatement2 = (SelectStatement*) listStatement[1];
+
+    printf("%d\n", selectStatement->limit);
+    printf("%d\n", selectStatement2->limit);
 
     return 0;
 }

@@ -13,27 +13,6 @@ using namespace std;
 
 class Lexer {
 
-public:
-    vector<Symbol> scan(const string& request);
-
-private:
-    static Symbol convert_to_symbol(const string& val);
-    void add_word(const string& word);
-    bool check_next_multi_keyword(string& word_added);
-    void compute_word(const string& request);
-    bool compute_string(const string& request);
-    void add_delimiter(const string& request);
-    void add_operator(const string& request);
-    static bool is_full_text(const string& val);
-    static bool is_number(const string& val);
-    static bool is_in_keywords(const string& val);
-    static int is_in_multi_keywords(string val);
-    static bool is_in_functions(const string& val);
-    static bool is_in_data_types(const string& val);
-    static bool is_in_operators(const string& val);
-    static bool is_in_array(const string& val, string* array, int array_size);
-    static string string_to_upper(const string& val);
-
 private:
     int left;
     int right;
@@ -59,6 +38,27 @@ private:
 
     static int operators_size;
     static string operators[24];
+
+public:
+    vector<Symbol> scan(const string& request);
+
+private:
+    static Symbol convert_to_symbol(const string& val);
+    void add_word(const string& word);
+    bool check_next_multi_keyword(string& word_added);
+    void compute_word(const string& request);
+    bool compute_string(const string& request);
+    void add_delimiter(const string& request);
+    void add_operator(const string& request);
+    static bool is_full_text(const string& val);
+    static bool is_number(const string& val);
+    static bool is_in_keywords(const string& val);
+    static int is_in_multi_keywords(string val);
+    static bool is_in_functions(const string& val);
+    static bool is_in_data_types(const string& val);
+    static bool is_in_operators(const string& val);
+    static bool is_in_array(const string& val, string* array, int array_size);
+    static string string_to_upper(const string& val);
 };
 
 

@@ -13,12 +13,6 @@ class Condition: public Expression {
     LogicalKeyword *logicalKeyword;
     Expression *expression2;
 
-    Condition() {
-        expression1 = nullptr;
-        logicalKeyword = nullptr;
-        expression2 = nullptr;
-    }
-
     explicit Condition(Expression *expression) {
         expression1 = expression;
         logicalKeyword = nullptr;
@@ -33,6 +27,13 @@ class Condition: public Expression {
 
     bool evaluate() override {
         return true;
+    }
+
+public:
+    Condition() {
+        expression1 = nullptr;
+        logicalKeyword = nullptr;
+        expression2 = nullptr;
     }
 };
 

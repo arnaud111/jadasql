@@ -9,14 +9,17 @@
 #include <string>
 #include "../from/From.h"
 #include "../condition/Condition.h"
+#include "Statement.h"
 
-class SelectStatement {
+
+class SelectStatement: public Statement {
+
+public:
     std::vector<std::string> field;
     From from;
     Condition where;
     int limit;
     bool distinct;
-
 };
 
 

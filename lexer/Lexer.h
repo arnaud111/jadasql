@@ -7,7 +7,7 @@
 
 #include <string>
 #include <vector>
-#include "Symbol.h"
+#include "symbol/Symbol.h"
 
 using namespace std;
 
@@ -19,45 +19,25 @@ private:
     vector<Symbol> list_symbol;
     Symbol symbol_tmp;
     string actual_word;
-    bool is_multi_keywords = false;
     bool is_operator = false;
     char char_string_definition = 0;
     bool escaped = false;
-
-    static int keywords_size;
-    static string keywords[28];
-
-    static int multi_keywords_size;
-    static string multi_keywords[22];
-
-    static int functions_size;
-    static string functions[9];
-
-    static int data_types_size;
-    static string data_types[10];
-
-    static int operators_size;
-    static string operators[24];
 
 public:
     vector<Symbol> scan(const string& request);
 
 private:
     static Symbol convert_to_symbol(const string& val);
-    void add_word(const string& word);
-    bool check_next_multi_keyword(string& word_added);
-    void compute_word(const string& request);
     bool compute_string(const string& request);
     void add_delimiter(const string& request);
     void add_operator(const string& request);
-    static bool is_full_text(const string& val);
-    static bool is_number(const string& val);
-    static bool is_in_keywords(const string& val);
-    static int is_in_multi_keywords(string val);
-    static bool is_in_functions(const string& val);
-    static bool is_in_data_types(const string& val);
-    static bool is_in_operators(const string& val);
-    static bool is_in_array(const string& val, string* array, int array_size);
+    static SymbolValue * try_convert_to_full_text(const string& val);
+    static SymbolValue * try_convert_to_number(const string& val);
+    static SymbolValue * try_convert_to_keywords(const string& val);
+    static SymbolValue* try_convert_to_datatype(const string& val);
+    static SymbolValue* try_convert_to_operator(const string& val);
+    static SymbolValue* try_convert_to_delimiter(char val);
+    static int is_in_array(const string& val, string* array, int array_size);
     static string string_to_upper(const string& val);
 };
 

@@ -8,8 +8,7 @@
 enum Group {
     DataType,
     Keyword,
-    MultiKeyword,
-    Function,
+    StatementKeyword,
     Operator,
     Number,
     String,

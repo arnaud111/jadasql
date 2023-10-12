@@ -8,12 +8,15 @@
 
 #include <vector>
 #include "tree/statements/Statement.h"
-#include "../lexer/Symbol.h"
+#include "../lexer/symbol/Symbol.h"
 
 class Parser {
 
 public:
     static std::vector<Statement*> parse(std::vector<Symbol> symbols);
+
+private:
+    static Statement* createStatement(Symbol symbol);
 };
 
 

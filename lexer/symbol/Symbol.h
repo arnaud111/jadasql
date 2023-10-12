@@ -5,16 +5,14 @@
 #ifndef JADA_SYMBOL_H
 #define JADA_SYMBOL_H
 
-#include <string>
 #include "Group.h"
-
-using namespace std;
+#include "SymbolValue.h"
 
 class Symbol {
 
 public:
     Group group;
-    string value;
+    SymbolValue* value;
 };
 
 #endif //JADA_SYMBOL_H

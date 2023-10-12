@@ -20,6 +20,12 @@ public:
     Condition where;
     int limit;
     bool distinct;
+
+    SelectStatement() : Statement() {
+        this->statementType = Select;
+        this->limit = -1;
+        this->distinct = false;
+    }
 };
 
 

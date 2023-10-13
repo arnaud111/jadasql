@@ -3,7 +3,6 @@
 //
 
 #include <stdexcept>
-#include <cstring>
 #include "Lexer.h"
 #include "symbol/keyword/DataTypeKeyword.h"
 #include "symbol/keyword/OperatorKeyword.h"
@@ -17,7 +16,6 @@
 vector<Symbol> Lexer::scan(const string &request) {
 
     for (right = 0, left = 0; right < request.size(); right++) {
-        printf("r : %d / ", right);
         if (is_operator) {
             if (request[right] != '<' && request[right] != '>' && request[right] != '=' && request[right] != '+' && request[right] != '-' && request[right] != '*' && request[right] != '/' && request[right] != '%' && request[right] != '&' && request[right] != '|' && request[right] != '^') {
                 add_operator(request);
@@ -29,20 +27,22 @@ vector<Symbol> Lexer::scan(const string &request) {
             if (compute_string(request))
                 left = right + 1;
         } else {
-            printf("%d : %c\n", request[right], request[right]);
             if (request[right] == '"' || request[right] == '\'') {
-                printf("1\n");
                 char_string_definition = request[right];
-                list_symbol.push_back(convert_to_symbol(request.substr(left, right - left)));
+                if (left != right) {
+                    list_symbol.push_back(convert_to_symbol(request.substr(left, right - left)));
+                }
                 left = right + 1;
             } else if (request[right] == ' ' || request[right] == '\t' || request[right] == '\n' || request[right] == '(' || request[right] == ')' || request[right] == ',' || request[right] == ';' || request[right] == '.') {
-                printf("2\n");
-                list_symbol.push_back(convert_to_symbol(request.substr(left, right - left)));
+                if (left != right) {
+                    list_symbol.push_back(convert_to_symbol(request.substr(left, right - left)));
+                }
                 add_delimiter(request);
                 left = right + 1;
             } else if ((request[right] == '<' || request[right] == '>' || request[right] == '=' || request[right] == '+' || request[right] == '-' || request[right] == '*' || request[right] == '/' || request[right] == '%' || request[right] == '&' || request[right] == '|' || request[right] == '^') && !is_operator) {
-                printf("3\n");
-                list_symbol.push_back(convert_to_symbol(request.substr(left, right - left)));
+                if (left != right) {
+                    list_symbol.push_back(convert_to_symbol(request.substr(left, right - left)));
+                }
                 is_operator = true;
                 left = right;
             }
@@ -67,7 +67,6 @@ void Lexer::add_operator(const string& request) {
         symbol_tmp.group = g_Operator;
         list_symbol.push_back(symbol_tmp);
     } else {
-        printf("b : %s\n", actual_word.c_str());
         throw invalid_argument("Syntax Error");
     }
 
@@ -75,9 +74,7 @@ void Lexer::add_operator(const string& request) {
 
 void Lexer::add_delimiter(const string& request) {
 
-    printf("%c - %d\n", request[right], request[right]);
     SymbolValue * symbolValue = try_convert_to_delimiter(request[right]);
-    printf("%p\n", symbolValue);
 
     if (symbolValue != nullptr) {
         symbol_tmp.value = symbolValue;
@@ -109,31 +106,23 @@ Symbol Lexer::convert_to_symbol(const string &val) {
 
     Symbol symbol = Symbol();
 
-    printf("%s\n", val.c_str());
-
     symbol.value = try_convert_to_keywords(val);
     symbol.group = g_Keyword;
-    printf("%p\n", symbol.value);
     if (symbol.value == nullptr) {
         symbol.value = try_convert_to_statement(val);
         symbol.group = g_StatementKeyword;
-        printf("%p\n", symbol.value);
     } if (symbol.value == nullptr) {
         symbol.value = try_convert_to_operator(val);
         symbol.group = g_Operator;
-        printf("%p\n", symbol.value);
     } if (symbol.value == nullptr) {
         symbol.value = try_convert_to_datatype(val);
         symbol.group = g_DataType;
-        printf("%p\n", symbol.value);
     } if (symbol.value == nullptr) {
         symbol.value = try_convert_to_number(val);
         symbol.group = g_Number;
-        printf("%p\n", symbol.value);
     } if (symbol.value == nullptr) {
         symbol.value = try_convert_to_identifier(val);
         symbol.group = g_Identifier;
-        printf("%p\n", symbol.value);
     }
 
     if (symbol.value == nullptr) {

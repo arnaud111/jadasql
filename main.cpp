@@ -11,8 +11,8 @@ int main() {
     Lexer lexicalScanner = Lexer();
     vector<Symbol> result = lexicalScanner.scan(request);
 
-    for (int i = 0; i < result.size(); i++) {
-        result[i].value->display();
+    for (auto & i : result) {
+        i.value->display();
     }
 /*
     vector<Statement*> listStatement = Parser::parse(result);

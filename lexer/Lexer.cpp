@@ -3,6 +3,7 @@
 //
 
 #include <stdexcept>
+#include <cstring>
 #include "Lexer.h"
 #include "symbol/keyword/DataTypeKeyword.h"
 #include "symbol/keyword/OperatorKeyword.h"
@@ -11,10 +12,12 @@
 #include "symbol/NumberSymbolValue.h"
 #include "symbol/keyword/DelimiterKeyword.h"
 #include "symbol/keyword/StatementKeyword.h"
+#include "symbol/IdentifierSymbolValue.h"
 
 vector<Symbol> Lexer::scan(const string &request) {
 
     for (right = 0, left = 0; right < request.size(); right++) {
+        printf("r : %d / ", right);
         if (is_operator) {
             if (request[right] != '<' && request[right] != '>' && request[right] != '=' && request[right] != '+' && request[right] != '-' && request[right] != '*' && request[right] != '/' && request[right] != '%' && request[right] != '&' && request[right] != '|' && request[right] != '^') {
                 add_operator(request);
@@ -26,23 +29,28 @@ vector<Symbol> Lexer::scan(const string &request) {
             if (compute_string(request))
                 left = right + 1;
         } else {
+            printf("%d : %c\n", request[right], request[right]);
             if (request[right] == '"' || request[right] == '\'') {
+                printf("1\n");
                 char_string_definition = request[right];
-                list_symbol.push_back(convert_to_symbol(request.substr(left, right)));
+                list_symbol.push_back(convert_to_symbol(request.substr(left, right - left)));
                 left = right + 1;
             } else if (request[right] == ' ' || request[right] == '\t' || request[right] == '\n' || request[right] == '(' || request[right] == ')' || request[right] == ',' || request[right] == ';' || request[right] == '.') {
-                list_symbol.push_back(convert_to_symbol(request.substr(left, right)));
+                printf("2\n");
+                list_symbol.push_back(convert_to_symbol(request.substr(left, right - left)));
                 add_delimiter(request);
                 left = right + 1;
             } else if ((request[right] == '<' || request[right] == '>' || request[right] == '=' || request[right] == '+' || request[right] == '-' || request[right] == '*' || request[right] == '/' || request[right] == '%' || request[right] == '&' || request[right] == '|' || request[right] == '^') && !is_operator) {
-                list_symbol.push_back(convert_to_symbol(request.substr(left, right)));
+                printf("3\n");
+                list_symbol.push_back(convert_to_symbol(request.substr(left, right - left)));
                 is_operator = true;
+                left = right;
             }
         }
     }
 
     if (left < right) {
-        list_symbol.push_back(convert_to_symbol(request.substr(left, right)));
+        list_symbol.push_back(convert_to_symbol(request.substr(left, right - left)));
     }
 
     return list_symbol;
@@ -57,9 +65,9 @@ void Lexer::add_operator(const string& request) {
     if (symbolValue != nullptr) {
         symbol_tmp.value = symbolValue;
         symbol_tmp.group = g_Operator;
-        printf("test1\n");
         list_symbol.push_back(symbol_tmp);
     } else {
+        printf("b : %s\n", actual_word.c_str());
         throw invalid_argument("Syntax Error");
     }
 
@@ -67,13 +75,13 @@ void Lexer::add_operator(const string& request) {
 
 void Lexer::add_delimiter(const string& request) {
 
+    printf("%c - %d\n", request[right], request[right]);
     SymbolValue * symbolValue = try_convert_to_delimiter(request[right]);
+    printf("%p\n", symbolValue);
 
     if (symbolValue != nullptr) {
         symbol_tmp.value = symbolValue;
         symbol_tmp.group = g_Delimiter;
-        printf("test2\n");
-        printf("");
         list_symbol.push_back(symbol_tmp);
     }
 }
@@ -87,7 +95,6 @@ bool Lexer::compute_string(const string& request) {
         if (left != right) {
             symbol_tmp.value = new StringSymbolValue(request.substr(left, right - left));
             symbol_tmp.group = g_String;
-            printf("test3\n");
             list_symbol.push_back(symbol_tmp);
         }
         char_string_definition = 0;
@@ -102,23 +109,31 @@ Symbol Lexer::convert_to_symbol(const string &val) {
 
     Symbol symbol = Symbol();
 
+    printf("%s\n", val.c_str());
+
     symbol.value = try_convert_to_keywords(val);
     symbol.group = g_Keyword;
+    printf("%p\n", symbol.value);
     if (symbol.value == nullptr) {
         symbol.value = try_convert_to_statement(val);
         symbol.group = g_StatementKeyword;
+        printf("%p\n", symbol.value);
     } if (symbol.value == nullptr) {
         symbol.value = try_convert_to_operator(val);
         symbol.group = g_Operator;
+        printf("%p\n", symbol.value);
     } if (symbol.value == nullptr) {
         symbol.value = try_convert_to_datatype(val);
         symbol.group = g_DataType;
+        printf("%p\n", symbol.value);
     } if (symbol.value == nullptr) {
         symbol.value = try_convert_to_number(val);
         symbol.group = g_Number;
+        printf("%p\n", symbol.value);
     } if (symbol.value == nullptr) {
-        symbol.value = try_convert_to_full_text(val);
+        symbol.value = try_convert_to_identifier(val);
         symbol.group = g_Identifier;
+        printf("%p\n", symbol.value);
     }
 
     if (symbol.value == nullptr) {
@@ -128,9 +143,9 @@ Symbol Lexer::convert_to_symbol(const string &val) {
     return symbol;
 }
 
-SymbolValue * Lexer::try_convert_to_full_text(const string& val) {
+SymbolValue * Lexer::try_convert_to_identifier(const string& val) {
 
-    StringSymbolValue * symbolValue;
+    IdentifierSymbolValue * symbolValue = nullptr;
 
     for (char c: val) {
         if ((c < 65 || c > 90) && (c < 97 || c > 122)) {
@@ -138,7 +153,7 @@ SymbolValue * Lexer::try_convert_to_full_text(const string& val) {
         }
     }
 
-    symbolValue->value = val;
+    symbolValue = new IdentifierSymbolValue(val);
 
     return symbolValue;
 }
@@ -209,8 +224,10 @@ SymbolValue * Lexer::try_convert_to_operator(const string &val) {
 SymbolValue * Lexer::try_convert_to_delimiter(char val) {
     DelimiterKeyword* delimiterKeyword = nullptr;
     int tmp;
+    string s;
+    s.push_back(val);
 
-    tmp = is_in_array(to_string(val), DelimiterKeyword::stringValues, DelimiterKeyword::size);
+    tmp = is_in_array(s, DelimiterKeyword::stringValues, DelimiterKeyword::size);
     if (tmp != -1) {
         delimiterKeyword = new DelimiterKeyword(tmp);
     }

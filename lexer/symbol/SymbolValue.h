@@ -14,6 +14,7 @@ enum SymbolValueType {
     v_Number,
     v_String,
     v_None,
+    v_Identifier,
 };
 
 class SymbolValue {

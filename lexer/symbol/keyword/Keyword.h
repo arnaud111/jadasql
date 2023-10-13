@@ -72,7 +72,7 @@ public:
 
     explicit Keyword(int val) {
         this->symbolValueType = v_Keyword;
-        if (val >= From && val <= Timestamp) {
+        if (val >= From && val <= Coalesce) {
             this->keyword = static_cast<KeywordEnum>(val);
         } else {
             this->keyword = From;

@@ -31,7 +31,7 @@ private:
     bool compute_string(const string& request);
     void add_delimiter(const string& request);
     void add_operator(const string& request);
-    static SymbolValue * try_convert_to_full_text(const string& val);
+    static SymbolValue * try_convert_to_identifier(const string& val);
     static SymbolValue * try_convert_to_number(const string& val);
     static SymbolValue * try_convert_to_keywords(const string& val);
     static SymbolValue * try_convert_to_statement(const string& val);

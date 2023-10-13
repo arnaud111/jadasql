@@ -12,4 +12,5 @@ add_executable(jada main.cpp list/List.h list/Node.h lexer/Lexer.cpp lexer/Lexer
         lexer/symbol/StringSymbolValue.h
         lexer/symbol/keyword/Dictionary.cpp
         lexer/symbol/keyword/Keyword.h
-        lexer/symbol/NumberSymbolValue.h)
+        lexer/symbol/NumberSymbolValue.h
+        lexer/symbol/IdentifierSymbolValue.h)

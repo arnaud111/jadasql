@@ -63,7 +63,7 @@ enum KeywordEnum {
     Coalesce,
 };
 
-class Keyword: SymbolValue {
+class Keyword: public SymbolValue {
 
 public:
     static int size;
@@ -71,6 +71,7 @@ public:
     KeywordEnum keyword;
 
     explicit Keyword(int val) {
+        this->symbolValueType = v_Keyword;
         if (val >= From && val <= Timestamp) {
             this->keyword = static_cast<KeywordEnum>(val);
         } else {
@@ -79,7 +80,7 @@ public:
     }
 
     void display() override {
-        printf("Keyword : %s", Keyword::stringValues[this->keyword].c_str());
+        printf("g_Keyword : %s", Keyword::stringValues[this->keyword].c_str());
     }
 };
 

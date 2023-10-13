@@ -11,11 +11,10 @@ int main() {
     Lexer lexicalScanner = Lexer();
     vector<Symbol> result = lexicalScanner.scan(request);
 
-    printf("%zu", result.size());
+    printf("%zu\n", result.size());
 
     for (auto & i : result) {
-        printf("a");
-        i.value->display();
+        printf("a %d\n", i.value->symbolValueType);
     }
 /*
     vector<Statement*> listStatement = Parser::parse(result);

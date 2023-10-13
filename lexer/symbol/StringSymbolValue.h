@@ -15,11 +15,12 @@ public:
     std::string value;
 
     explicit StringSymbolValue(std::string val) {
+        this->symbolValueType = v_String;
         this->value = std::move(val);
     }
 
     void display() override {
-        printf("String : %s", this->value.c_str());
+        printf("g_String : %s", this->value.c_str());
     }
 };
 

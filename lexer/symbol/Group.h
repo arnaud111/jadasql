@@ -6,14 +6,14 @@
 #define JADA_GROUP_H
 
 enum Group {
-    DataType,
-    Keyword,
-    StatementKeyword,
-    Operator,
-    Number,
-    String,
-    Identifier,
-    Delimiter
+    g_DataType,
+    g_Keyword,
+    g_StatementKeyword,
+    g_Operator,
+    g_Number,
+    g_String,
+    g_Identifier,
+    g_Delimiter
 };
 
 #endif //JADA_GROUP_H

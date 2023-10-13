@@ -30,6 +30,7 @@ public:
     DataTypeKeywordEnum keyword;
 
     explicit DataTypeKeyword(int val) {
+        this->symbolValueType = v_DataType;
         if (val >= Char && val <= Timestamp) {
             this->keyword = static_cast<DataTypeKeywordEnum>(val);
         } else {

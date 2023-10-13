@@ -16,7 +16,7 @@ enum DelimiterKeywordEnum {
     Dot,
 };
 
-class DelimiterKeyword: SymbolValue {
+class DelimiterKeyword: public SymbolValue {
 
 public:
     static int size;
@@ -24,6 +24,7 @@ public:
     DelimiterKeywordEnum keyword;
 
     explicit DelimiterKeyword(int val) {
+        this->symbolValueType = v_Delimiter;
         if (val >= ParenthesisRight && val <= Dot) {
             this->keyword = static_cast<DelimiterKeywordEnum>(val);
         } else {
@@ -32,7 +33,7 @@ public:
     }
 
     void display() override {
-        printf("Delimiter : %s", DelimiterKeyword::stringValues[this->keyword].c_str());
+        printf("g_Delimiter : %s", DelimiterKeyword::stringValues[this->keyword].c_str());
     }
 };
 

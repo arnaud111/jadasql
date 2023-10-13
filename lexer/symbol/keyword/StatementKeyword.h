@@ -18,7 +18,7 @@ enum StatementKeywordEnum {
     Alter,
 };
 
-class StatementKeyword: SymbolValue {
+class StatementKeyword: public SymbolValue {
 
 public:
     static int size;
@@ -26,6 +26,7 @@ public:
     StatementKeywordEnum keyword;
 
     explicit StatementKeyword(int val) {
+        this->symbolValueType = v_Statement;
         if (val >= Select && val <= Alter) {
             this->keyword = static_cast<StatementKeywordEnum>(val);
         } else {

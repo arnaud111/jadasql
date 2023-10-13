@@ -22,7 +22,7 @@ std::vector<Statement*> Parser::parse(std::vector<Symbol> symbols) {
 Statement *Parser::createStatement(Symbol symbol) {
     Statement* statement;
 
-    if (symbol.group == StatementKeyword) {
+    if (symbol.group == g_StatementKeyword) {
 
     }
 /*

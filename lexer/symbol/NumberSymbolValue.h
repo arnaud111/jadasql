@@ -13,11 +13,12 @@ public:
     int value;
 
     explicit NumberSymbolValue(int val) {
+        this->symbolValueType = v_Number;
         this->value = val;
     }
 
     void display() override {
-        printf("Number : %d", this->value);
+        printf("g_Number : %d", this->value);
     }
 };
 

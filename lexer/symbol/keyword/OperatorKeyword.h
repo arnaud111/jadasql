@@ -35,7 +35,7 @@ enum OperatorKeywordEnum {
     BitXorEqual,
 };
 
-class OperatorKeyword: SymbolValue {
+class OperatorKeyword: public SymbolValue {
 
 public:
     static int size;
@@ -43,6 +43,7 @@ public:
     OperatorKeywordEnum keyword;
 
     explicit OperatorKeyword(int val) {
+        this->symbolValueType = v_Operator;
         if (val >= Greater && val <= BitXorEqual) {
             this->keyword = static_cast<OperatorKeywordEnum>(val);
         } else {
@@ -51,7 +52,7 @@ public:
     }
 
     void display() override {
-        printf("Operator : %s", OperatorKeyword::stringValues[this->keyword].c_str());
+        printf("g_Operator : %s", OperatorKeyword::stringValues[this->keyword].c_str());
     }
 };
 

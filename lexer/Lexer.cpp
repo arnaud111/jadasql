@@ -10,6 +10,7 @@
 #include "symbol/StringSymbolValue.h"
 #include "symbol/NumberSymbolValue.h"
 #include "symbol/keyword/DelimiterKeyword.h"
+#include "symbol/keyword/StatementKeyword.h"
 
 vector<Symbol> Lexer::scan(const string &request) {
 
@@ -27,21 +28,21 @@ vector<Symbol> Lexer::scan(const string &request) {
         } else {
             if (request[right] == '"' || request[right] == '\'') {
                 char_string_definition = request[right];
-                convert_to_symbol(request);
+                list_symbol.push_back(convert_to_symbol(request.substr(left, right)));
                 left = right + 1;
             } else if (request[right] == ' ' || request[right] == '\t' || request[right] == '\n' || request[right] == '(' || request[right] == ')' || request[right] == ',' || request[right] == ';' || request[right] == '.') {
-                convert_to_symbol(request);
+                list_symbol.push_back(convert_to_symbol(request.substr(left, right)));
                 add_delimiter(request);
                 left = right + 1;
             } else if ((request[right] == '<' || request[right] == '>' || request[right] == '=' || request[right] == '+' || request[right] == '-' || request[right] == '*' || request[right] == '/' || request[right] == '%' || request[right] == '&' || request[right] == '|' || request[right] == '^') && !is_operator) {
-                convert_to_symbol(request);
+                list_symbol.push_back(convert_to_symbol(request.substr(left, right)));
                 is_operator = true;
             }
         }
     }
 
     if (left < right) {
-        convert_to_symbol(request);
+        list_symbol.push_back(convert_to_symbol(request.substr(left, right)));
     }
 
     return list_symbol;
@@ -104,6 +105,9 @@ Symbol Lexer::convert_to_symbol(const string &val) {
     symbol.value = try_convert_to_keywords(val);
     symbol.group = g_Keyword;
     if (symbol.value == nullptr) {
+        symbol.value = try_convert_to_statement(val);
+        symbol.group = g_StatementKeyword;
+    } if (symbol.value == nullptr) {
         symbol.value = try_convert_to_operator(val);
         symbol.group = g_Operator;
     } if (symbol.value == nullptr) {
@@ -154,8 +158,20 @@ SymbolValue * Lexer::try_convert_to_number(const string& val) {
     return new NumberSymbolValue(number);
 }
 
+SymbolValue * Lexer::try_convert_to_statement(const string &val) {
+    StatementKeyword* statementKeyword = nullptr;
+    int tmp;
+
+    tmp = is_in_array(string_to_upper(val), StatementKeyword::stringValues, StatementKeyword::size);
+    if (tmp != -1) {
+        statementKeyword = new StatementKeyword(tmp);
+    }
+
+    return statementKeyword;
+}
+
 SymbolValue * Lexer::try_convert_to_keywords(const string &val) {
-    Keyword* keyword;
+    Keyword* keyword = nullptr;
     int tmp;
 
     tmp = is_in_array(string_to_upper(val), Keyword::stringValues, Keyword::size);

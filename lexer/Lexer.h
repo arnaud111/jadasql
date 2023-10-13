@@ -34,6 +34,7 @@ private:
     static SymbolValue * try_convert_to_full_text(const string& val);
     static SymbolValue * try_convert_to_number(const string& val);
     static SymbolValue * try_convert_to_keywords(const string& val);
+    static SymbolValue * try_convert_to_statement(const string& val);
     static SymbolValue* try_convert_to_datatype(const string& val);
     static SymbolValue* try_convert_to_operator(const string& val);
     static SymbolValue* try_convert_to_delimiter(char val);

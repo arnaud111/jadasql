@@ -35,7 +35,7 @@ public:
     }
 
     void display() override {
-        printf("Statement : %s", StatementKeyword::stringValues[this->keyword].c_str());
+        printf("Statement : %s\n", StatementKeyword::stringValues[this->keyword].c_str());
     }
 };
 

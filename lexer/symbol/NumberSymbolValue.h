@@ -18,7 +18,7 @@ public:
     }
 
     void display() override {
-        printf("g_Number : %d", this->value);
+        printf("Number : %d\n", this->value);
     }
 };
 

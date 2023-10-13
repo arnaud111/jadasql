@@ -33,7 +33,7 @@ public:
     }
 
     void display() override {
-        printf("g_Delimiter : %s", DelimiterKeyword::stringValues[this->keyword].c_str());
+        printf("Delimiter : %s\n", DelimiterKeyword::stringValues[this->keyword].c_str());
     }
 };
 

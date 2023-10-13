@@ -39,7 +39,7 @@ public:
     }
 
     void display() override {
-        printf("Data Type : %s", DataTypeKeyword::stringValues[this->keyword].c_str());
+        printf("Data Type : %s\n", DataTypeKeyword::stringValues[this->keyword].c_str());
     }
 };
 

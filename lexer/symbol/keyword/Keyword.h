@@ -80,7 +80,7 @@ public:
     }
 
     void display() override {
-        printf("g_Keyword : %s", Keyword::stringValues[this->keyword].c_str());
+        printf("Keyword : %s\n", Keyword::stringValues[this->keyword].c_str());
     }
 };
 

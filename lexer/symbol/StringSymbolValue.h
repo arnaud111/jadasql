@@ -20,7 +20,7 @@ public:
     }
 
     void display() override {
-        printf("g_String : %s", this->value.c_str());
+        printf("String : %s\n", this->value.c_str());
     }
 };
 

@@ -52,7 +52,7 @@ public:
     }
 
     void display() override {
-        printf("g_Operator : %s", OperatorKeyword::stringValues[this->keyword].c_str());
+        printf("Operator : %s\n", OperatorKeyword::stringValues[this->keyword].c_str());
     }
 };
 

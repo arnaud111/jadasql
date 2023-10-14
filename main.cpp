@@ -149,3 +149,33 @@ int main() {
 //	}
 	return 0;
 }
+
+int mainOld3() {
+	LeafNode<MyInt, MyInt> *test = new LeafNode<MyInt, MyInt>(6);
+
+	test->keys[0] = new MyInt(0);
+	test->keys[1] = new MyInt(1);
+	test->keys[2] = new MyInt(2);
+	test->keys[3] = new MyInt(3);
+	test->keys[4] = new MyInt(4);
+	test->keys[5] = new MyInt(5);
+	test->records[0] = (MyInt*)0;
+	test->records[1] = (MyInt*)1;
+	test->records[2] = (MyInt*)2;
+	test->records[3] = (MyInt*)3;
+	test->records[4] = (MyInt*)4;
+	test->records[5] = (MyInt*)5;
+
+	LeafNode<MyInt, MyInt> *test1 = (LeafNode<MyInt, MyInt>*)test->split();
+	for(int i = 0; i < test->n; ++i) {
+		printf("%d [%d] ", test->records[i], test->keys[i]->value);
+	}
+	printf("%d\n", test->records[test->n]);
+
+	for(int i = 0; i < test1->n; ++i) {
+		printf("%d [%d] ", test1->records[i], test1->keys[i]->value);
+	}
+	printf("%d\n", test1->records[test1->n]);
+
+	return 0;
+}

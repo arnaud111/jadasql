@@ -78,15 +78,15 @@ public:
 
 	virtual Node<V, K> *split() {
 		auto *newNode = new Node<V, K>(max);
-		for (int i = (max + 1) / 2; i < max; ++i) {
-			newNode->children[i - (max + 1 / 2)] = children[i];
-			newNode->keys[i - (max + 1) / 2] = keys[i];
-			children[i] = nullptr;
-			keys[i] = nullptr;
+		for (int i = 0; i < (max - 1) / 2; ++i) {
+			newNode->children[i] = children[(max / 2 + 1) + i];
+			newNode->keys[i] = keys[(max / 2 + 1) + i];
+			children[(max / 2 + 1) + i] = nullptr;
+			keys[(max / 2 + 1) + i] = nullptr;
 		}
-		newNode->n = max / 2;
 		this->n = max / 2;
-		newNode->children[max - (max + 1) / 2] = children[max];
+		newNode->n = (max - 1) / 2;
+		newNode->children[(max - 1 ) / 2] = children[max];
 		children[max] = nullptr;
 		return newNode;
 	}
@@ -170,16 +170,14 @@ public:
 
 	Node<V, K> *split() {
 		auto *newNode = new LeafNode<V, K>(this->max);
-		for (int i = (this->max + 1) / 2; i < this->max; ++i) {
-			newNode->records[i - (this->max + 1) / 2] = this->records[i];
-			newNode->keys[i - (this->max + 1) / 2] = this->keys[i];
-			this->records[i] = nullptr;
-			this->keys[i] = nullptr;
+		for (int i = 0; i <= this->max / 2; ++i) {
+			newNode->records[i] = this->records[this->max / 2 + i];
+			newNode->keys[i] = this->keys[this->max / 2 + i];
+			this->records[this->max / 2 + i] = nullptr;
+			this->keys[this->max / 2 + i] = nullptr;
 		}
-		newNode->n = this->max / 2;
-		this->n = (this->max + 1) / 2;
-		newNode->records[this->max - (this->max + 1) / 2] = this->records[this->max];
-		this->records[this->max] = nullptr;
+		newNode->n = (this->max + 1) / 2;
+		this->n = this->max / 2;
 		return newNode;
 	}
 

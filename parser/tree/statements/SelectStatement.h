@@ -7,25 +7,28 @@
 
 #include <vector>
 #include <string>
+#include "Statement.h"
+#include "../field/Field.h"
 #include "../from/From.h"
 #include "../condition/Condition.h"
-#include "Statement.h"
+#include "../../../lexer/symbol/Symbol.h"
 
 
 class SelectStatement: public Statement {
 
 public:
-    std::vector<std::string> field;
-    From from;
-    Condition where;
+    std::vector<Field*> field;
+    From* from;
+    Condition* where;
+    std::vector<Field*> groupBy;
+    std::vector<Field*> orderBy;
     int limit;
     bool distinct;
 
-    SelectStatement() : Statement() {
-        this->statementType = Select;
-        this->limit = -1;
-        this->distinct = false;
-    }
+    explicit SelectStatement(const std::vector<Symbol*>& symbols);
+
+private:
+    static bool isDistinct(std::vector<Symbol*> symbols);
 };
 
 

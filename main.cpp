@@ -9,20 +9,19 @@ int main() {
     cout << "SQL -> ";
     getline (cin, request);
     Lexer lexicalScanner = Lexer();
-    vector<Symbol> result = lexicalScanner.scan(request);
+    vector<Symbol*> result = lexicalScanner.scan(request);
 
     for (auto & i : result) {
-        i.value->display();
+        i->display();
     }
-/*
-    vector<Statement*> listStatement = Parser::parse(result);
-    SelectStatement* selectStatement = (SelectStatement*) listStatement[0];
-    SelectStatement* selectStatement2 = (SelectStatement*) listStatement[1];
 
-    printf("%d\n", selectStatement->limit);
-    printf("%d\n", selectStatement2->limit);
-*/
+    vector<Statement*> listStatement = Parser::parse(result);
+
+    printf("size : %zu\n", listStatement.size());
+
     return 0;
 }
 
 // INSERT into test,(test AS t) FROM users.test IS not NULL "test\"'uwu" <= 3|*=1 test;
+// Select 1; Select 2
+// SELECT * FROM test GROUP BY test1 ORDER BY test2 LIMIT 1

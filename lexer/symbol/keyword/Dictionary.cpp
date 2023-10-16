@@ -2,29 +2,29 @@
 // Created by nono on 11/10/23.
 //
 
-#include "DataTypeKeyword.h"
-#include "OperatorKeyword.h"
-#include "StatementKeyword.h"
-#include "Keyword.h"
-#include "DelimiterKeyword.h"
+#include "DataTypeSymbol.h"
+#include "OperatorSymbol.h"
+#include "StatementSymbol.h"
+#include "KeywordSymbol.h"
+#include "DelimiterSymbol.h"
 #include <string>
 
-int DataTypeKeyword::size = 10;
-std::string DataTypeKeyword::stringValues[10] = {
-    "CHAR",
-    "VARCHAR",
-    "TINYINT",
-    "BOOLEAN",
-    "INT",
-    "FLOAT",
-    "DOUBLE",
-    "DATE",
-    "DATETIME",
-    "TIMESTAMP",
+int DataTypeSymbol::size = 10;
+std::string DataTypeSymbol::stringValues[10] = {
+        "CHAR",
+        "VARCHAR",
+        "TINYINT",
+        "BOOLEAN",
+        "INT",
+        "FLOAT",
+        "DOUBLE",
+        "DATE",
+        "DATETIME",
+        "TIMESTAMP",
 };
 
-int OperatorKeyword::size = 24;
-std::string OperatorKeyword::stringValues[24] = {
+int OperatorSymbol::size = 24;
+std::string OperatorSymbol::stringValues[24] = {
         ">",
         "<",
         ">=",
@@ -51,8 +51,8 @@ std::string OperatorKeyword::stringValues[24] = {
         "^-=",
 };
 
-int StatementKeyword::size = 7;
-std::string StatementKeyword::stringValues[7] = {
+int StatementSymbol::size = 7;
+std::string StatementSymbol::stringValues[7] = {
         "SELECT",
         "UPDATE",
         "DELETE",
@@ -62,8 +62,8 @@ std::string StatementKeyword::stringValues[7] = {
         "ALTER",
 };
 
-int Keyword::size = 55;
-std::string Keyword::stringValues[55] = {
+int KeywordSymbol::size = 55;
+std::string KeywordSymbol::stringValues[55] = {
         "FROM",
         "WHERE",
         "AS",
@@ -118,11 +118,12 @@ std::string Keyword::stringValues[55] = {
         "COALESCE",
 };
 
-int DelimiterKeyword::size = 5;
-std::string DelimiterKeyword::stringValues[5] = {
-    "(",
-    ")",
-    ",",
-    ";",
-    ".",
+int DelimiterSymbol::size = 6;
+std::string DelimiterSymbol::stringValues[6] = {
+        "(",
+        ")",
+        "@",
+        ",",
+        ";",
+        ".",
 };

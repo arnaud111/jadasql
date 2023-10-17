@@ -10,13 +10,15 @@
 #include "../structure/TableReference.h"
 #include "Joint.h"
 
-class From {
+class From : public TreeItem {
 
 public:
     TableReference *table;
     std::vector<Joint *> listJoint;
 
     explicit From(const std::vector<Symbol *> &symbols);
+
+    void display() override;
 
 private:
     static TableReference *getTableReference(const std::vector<Symbol *> &symbols);

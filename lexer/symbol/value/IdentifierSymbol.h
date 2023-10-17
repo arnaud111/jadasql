@@ -9,7 +9,7 @@
 #include <utility>
 #include "../Symbol.h"
 
-class IdentifierSymbol: public Symbol {
+class IdentifierSymbol : public Symbol {
 
 public:
     std::string value;

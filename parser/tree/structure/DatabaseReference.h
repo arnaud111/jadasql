@@ -6,8 +6,9 @@
 #define JADA_DATABASEREFERENCE_H
 
 #include <string>
+#include "../tree_item/TreeItem.h"
 
-class DatabaseReference {
+class DatabaseReference : public TreeItem {
 
 public:
     std::string databaseName;
@@ -15,6 +16,8 @@ public:
     explicit DatabaseReference(std::string databaseName) {
         this->databaseName = std::move(databaseName);
     }
+
+    void display() override;
 };
 
 #endif //JADA_DATABASEREFERENCE_H

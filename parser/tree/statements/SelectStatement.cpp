@@ -2,17 +2,17 @@
 // Created by nono on 16/10/2023.
 //
 
-#include <stdexcept>
 #include "SelectStatement.h"
 #include "../../../lexer/symbol/keyword/KeywordSymbol.h"
 #include "../../../lexer/symbol/value/NumberSymbol.h"
+#include "../../../error/Error.h"
 
-SelectStatement::SelectStatement(const std::vector<Symbol *>& symbols) : Statement() {
+SelectStatement::SelectStatement(const std::vector<Symbol *> &symbols) : Statement() {
     std::vector<Symbol *> splitSymbols;
     int index = 1;
 
     if (symbols.size() < 2) {
-        throw std::invalid_argument("Syntax Error");
+        Error::syntaxError("SELECT");
     }
 
     this->statementType = Select;
@@ -31,7 +31,7 @@ SelectStatement::SelectStatement(const std::vector<Symbol *>& symbols) : Stateme
 
     if (index == symbols.size()) return;
 
-    if (((KeywordSymbol*) symbols[index])->keyword == v_From) {
+    if (((KeywordSymbol *) symbols[index])->keyword == v_From) {
         splitSymbols = SelectStatement::splitUntilKeywords(symbols, index + 1, {v_Where, v_Group, v_Order, v_Limit});
         this->from = new From(splitSymbols);
         index += (int) splitSymbols.size() + 1;
@@ -39,7 +39,7 @@ SelectStatement::SelectStatement(const std::vector<Symbol *>& symbols) : Stateme
 
     if (index == symbols.size()) return;
 
-    if (((KeywordSymbol*) symbols[index])->keyword == v_Where) {
+    if (((KeywordSymbol *) symbols[index])->keyword == v_Where) {
         splitSymbols = SelectStatement::splitUntilKeywords(symbols, index + 1, {v_Group, v_Order, v_Limit});
         this->where = new Condition(splitSymbols);
         index += (int) splitSymbols.size() + 1;
@@ -47,10 +47,11 @@ SelectStatement::SelectStatement(const std::vector<Symbol *>& symbols) : Stateme
 
     if (index == symbols.size()) return;
 
-    if (((KeywordSymbol*) symbols[index])->keyword == v_Group) {
+    if (((KeywordSymbol *) symbols[index])->keyword == v_Group) {
         index++;
-        if (index == symbols.size() || symbols[index]->symbolValueType != s_Keyword || ((KeywordSymbol*) symbols[index])->keyword != v_By) {
-            throw std::invalid_argument("Syntax Error");
+        if (index == symbols.size() || symbols[index]->symbolValueType != s_Keyword ||
+            ((KeywordSymbol *) symbols[index])->keyword != v_By) {
+            Error::syntaxError("GROUP");
         }
         splitSymbols = SelectStatement::splitUntilKeywords(symbols, index + 1, {v_Order, v_Limit});
         this->groupBy = Field::createListField(splitSymbols);
@@ -59,10 +60,11 @@ SelectStatement::SelectStatement(const std::vector<Symbol *>& symbols) : Stateme
 
     if (index == symbols.size()) return;
 
-    if (((KeywordSymbol*) symbols[index])->keyword == v_Order) {
+    if (((KeywordSymbol *) symbols[index])->keyword == v_Order) {
         index++;
-        if (index == symbols.size() || symbols[index]->symbolValueType != s_Keyword || ((KeywordSymbol*) symbols[index])->keyword != v_By) {
-            throw std::invalid_argument("Syntax Error");
+        if (index == symbols.size() || symbols[index]->symbolValueType != s_Keyword ||
+            ((KeywordSymbol *) symbols[index])->keyword != v_By) {
+            Error::syntaxError("ORDER");
         }
         splitSymbols = SelectStatement::splitUntilKeywords(symbols, index + 1, {v_Limit});
         this->orderBy = Field::createListField(splitSymbols);
@@ -71,26 +73,28 @@ SelectStatement::SelectStatement(const std::vector<Symbol *>& symbols) : Stateme
 
     if (index == symbols.size()) return;
 
-    if (((KeywordSymbol*) symbols[index])->keyword == v_Limit) {
+    if (((KeywordSymbol *) symbols[index])->keyword == v_Limit) {
         index++;
         if (index == symbols.size() || symbols[index]->symbolValueType != s_Number) {
-            throw std::invalid_argument("Syntax Error");
+            Error::syntaxError("LIMIT");
         }
         this->limit = ((NumberSymbol *) symbols[index])->value;
         if (this->limit < 0) {
-            throw std::invalid_argument("Syntax Error");
+            Error::syntaxError("LIMIT");
         }
     }
 
-    if (index + 1 != symbols.size()) throw std::invalid_argument("Syntax Error");
+    if (index + 1 != symbols.size()) {
+        Error::syntaxError("After SELECT");
+    }
 }
 
 bool SelectStatement::isDistinct(std::vector<Symbol *> symbols) {
     if (symbols[1]->symbolValueType == s_Keyword) {
-        if (((KeywordSymbol*) symbols[1])->keyword == v_Distinct) {
+        if (((KeywordSymbol *) symbols[1])->keyword == v_Distinct) {
             return true;
         }
-        throw std::invalid_argument("Syntax Error");
+        Error::syntaxError("SELECT");
     }
     return false;
 }

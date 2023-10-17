@@ -14,21 +14,23 @@
 #include "../../../lexer/symbol/Symbol.h"
 
 
-class SelectStatement: public Statement {
+class SelectStatement : public Statement {
 
 public:
-    std::vector<Field*> field;
-    From* from;
-    Condition* where;
-    std::vector<Field*> groupBy;
-    std::vector<Field*> orderBy;
+    std::vector<Field *> field;
+    From *from;
+    Condition *where;
+    std::vector<Field *> groupBy;
+    std::vector<Field *> orderBy;
     int limit;
     bool distinct;
 
-    explicit SelectStatement(const std::vector<Symbol*>& symbols);
+    explicit SelectStatement(const std::vector<Symbol *> &symbols);
+
+    void display() override;
 
 private:
-    static bool isDistinct(std::vector<Symbol*> symbols);
+    static bool isDistinct(std::vector<Symbol *> symbols);
 };
 
 

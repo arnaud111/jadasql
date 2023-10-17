@@ -18,7 +18,7 @@ enum StatementSymbolEnum {
     v_Alter,
 };
 
-class StatementSymbol: public Symbol {
+class StatementSymbol : public Symbol {
 
 public:
     static int size;

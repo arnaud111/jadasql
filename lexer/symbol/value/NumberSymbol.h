@@ -7,7 +7,7 @@
 
 #include "../Symbol.h"
 
-class NumberSymbol: public Symbol {
+class NumberSymbol : public Symbol {
 
 public:
     int value;

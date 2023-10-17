@@ -5,7 +5,9 @@
 #ifndef JADA_EXPRESSION_H
 #define JADA_EXPRESSION_H
 
-class Expression {
+#include "../tree_item/TreeItem.h"
+
+class Expression : public TreeItem {
     virtual bool evaluate() = 0;
 };
 

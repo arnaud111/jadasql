@@ -15,12 +15,14 @@ enum JointTypeEnum {
     RightJoin,
 };
 
-class Joint {
+class Joint : public TreeItem {
 
 public:
     JointTypeEnum joinType;
-    TableReference* table;
-    Condition* on;
+    TableReference *table;
+    Condition *on;
+
+    void display() override;
 };
 
 #endif //JADA_JOINT_H

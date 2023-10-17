@@ -64,11 +64,11 @@ enum KeywordSymbolEnum {
     v_Coalesce,
 };
 
-class KeywordSymbol: public Symbol {
+class KeywordSymbol : public Symbol {
 
 public:
     static int size;
-    static std::string stringValues[55];
+    static std::string stringValues[56];
     KeywordSymbolEnum keyword;
 
     explicit KeywordSymbol(int val) {

@@ -62,10 +62,11 @@ std::string StatementSymbol::stringValues[7] = {
         "ALTER",
 };
 
-int KeywordSymbol::size = 55;
-std::string KeywordSymbol::stringValues[55] = {
+int KeywordSymbol::size = 56;
+std::string KeywordSymbol::stringValues[56] = {
         "FROM",
         "WHERE",
+        "DISTINCT",
         "AS",
         "AND",
         "OR",
@@ -120,8 +121,8 @@ std::string KeywordSymbol::stringValues[55] = {
 
 int DelimiterSymbol::size = 6;
 std::string DelimiterSymbol::stringValues[6] = {
-        "(",
         ")",
+        "(",
         "@",
         ",",
         ";",

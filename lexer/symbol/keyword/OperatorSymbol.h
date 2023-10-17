@@ -35,7 +35,7 @@ enum OperatorSymbolEnum {
     v_BitXorEqual,
 };
 
-class OperatorSymbol: public Symbol {
+class OperatorSymbol : public Symbol {
 
 public:
     static int size;

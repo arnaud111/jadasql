@@ -17,7 +17,7 @@ enum DelimiterSymbolEnum {
     v_Dot,
 };
 
-class DelimiterSymbol: public Symbol {
+class DelimiterSymbol : public Symbol {
 
 public:
     static int size;

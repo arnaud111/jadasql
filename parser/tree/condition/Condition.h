@@ -6,11 +6,14 @@
 #define JADA_CONDITION_H
 
 #include <vector>
+#include <cstdio>
 #include "LogicalKeyword.h"
 #include "../expression/Expression.h"
 #include "../../../lexer/symbol/Symbol.h"
 
-class Condition: public Expression {
+class Condition : public Expression {
+
+public:
     Expression *expression1;
     LogicalKeyword *logicalKeyword;
     Expression *expression2;
@@ -19,8 +22,9 @@ class Condition: public Expression {
         return true;
     }
 
-public:
-    explicit Condition(const std::vector<Symbol *>& symbols);
+    explicit Condition(const std::vector<Symbol *> &symbols);
+
+    void display() override;
 };
 
 #endif //JADA_CONDITION_H

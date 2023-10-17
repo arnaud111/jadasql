@@ -22,7 +22,7 @@ enum DataTypeSymbolEnum {
     v_Timestamp,
 };
 
-class DataTypeSymbol: public Symbol {
+class DataTypeSymbol : public Symbol {
 
 public:
     static int size;

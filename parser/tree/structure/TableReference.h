@@ -8,13 +8,14 @@
 #include <string>
 #include <utility>
 #include "DatabaseReference.h"
+#include "../tree_item/TreeItem.h"
 
-class TableReference {
+class TableReference : public TreeItem {
 
 public:
     std::string alias;
     std::string tableName;
-    DatabaseReference* databaseReference;
+    DatabaseReference *databaseReference;
 
     explicit TableReference(std::string tableName) {
         this->tableName = std::move(tableName);
@@ -27,16 +28,18 @@ public:
         this->databaseReference = nullptr;
     }
 
-    explicit TableReference(std::string tableName, DatabaseReference* databaseReference) {
+    explicit TableReference(std::string tableName, DatabaseReference *databaseReference) {
         this->tableName = std::move(tableName);
         this->databaseReference = databaseReference;
     }
 
-    explicit TableReference(std::string tableName, DatabaseReference* databaseReference, std::string alias) {
+    explicit TableReference(std::string tableName, DatabaseReference *databaseReference, std::string alias) {
         this->tableName = std::move(tableName);
         this->alias = std::move(alias);
         this->databaseReference = databaseReference;
     }
+
+    void display() override;
 };
 
 #endif //JADA_TABLEREFERENCE_H

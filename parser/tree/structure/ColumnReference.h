@@ -7,8 +7,9 @@
 
 #include <string>
 #include <utility>
+#include "../field/Field.h"
 
-class ColumnReference {
+class ColumnReference : public Field {
 
 public:
     std::string tableName;
@@ -22,6 +23,8 @@ public:
         this->columnName = std::move(columnName);
         this->tableName = std::move(tableName);
     }
+
+    void display() override;
 };
 
 #endif //JADA_COLUMNREFERENCE_H

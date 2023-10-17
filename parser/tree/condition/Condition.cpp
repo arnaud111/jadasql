@@ -3,7 +3,7 @@
 //
 #include "Condition.h"
 
-Condition::Condition(const std::vector<Symbol *>& symbols) {
+Condition::Condition(const std::vector<Symbol *> &symbols) {
 
 }
 

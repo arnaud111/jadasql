@@ -1,5 +1,5 @@
 //
-// Created by a833444 on 17/10/2023.
+// Created by nono on 17/10/2023.
 //
 
 #ifndef JADA_CONSTSTRINGFIELD_H

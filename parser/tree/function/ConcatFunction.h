@@ -2,15 +2,15 @@
 // Created by nono on 17/10/2023.
 //
 
-#ifndef JADA_LEFTFUNCTION_H
-#define JADA_LEFTFUNCTION_H
+#ifndef JADA_CONCATFUNCTION_H
+#define JADA_CONCATFUNCTION_H
 
 #include <utility>
 #include <vector>
-#include "FunctionField.h"
+#include "Function.h"
 #include "../expression/Expression.h"
 
-class ConcatFunction : public FunctionField {
+class ConcatFunction : public Function {
 
 public:
 
@@ -20,6 +20,8 @@ public:
         this->function = f_Concat;
         this->fields = std::move(fields);
     };
+
+    void display() override;
 };
 
-#endif //JADA_LEFTFUNCTION_H
+#endif //JADA_CONCATFUNCTION_H

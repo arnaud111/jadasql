@@ -28,5 +28,4 @@ int main() {
     return 0;
 }
 
-// INSERT into test,(test AS t) FROM users.test IS not NULL "test\"'uwu" <= 3|*=1 test;
-// SELECT DISTINCT T.col, _Uwu1, "UwU\"'", 3, MAX(10) FROM test@t_test T GROUP BY test1 ORDER BY test2 LIMIT 1
+// SELECT DISTINCT T.col, _Uwu1, "UwU\"'", 3, MAX(CONCAT("test", c.coucou)), (SELECT 1) FROM test@t_test T GROUP BY test1 ORDER BY test2 LIMIT 1

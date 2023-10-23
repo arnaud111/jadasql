@@ -2,15 +2,15 @@
 // Created by nono on 17/10/2023.
 //
 
-#ifndef JADA_LEFTFUNCTION_H
-#define JADA_LEFTFUNCTION_H
+#ifndef JADA_COALESCEFUNCTION_H
+#define JADA_COALESCEFUNCTION_H
 
 #include <utility>
 #include <vector>
-#include "FunctionField.h"
+#include "Function.h"
 #include "../expression/Expression.h"
 
-class CoalesceFunction : public FunctionField {
+class CoalesceFunction : public Function {
 
 public:
 
@@ -20,6 +20,8 @@ public:
         this->function = f_Coalesce;
         this->fields = std::move(fields);
     };
+
+    void display() override;
 };
 
-#endif //JADA_LEFTFUNCTION_H
+#endif //JADA_COALESCEFUNCTION_H

@@ -2,13 +2,13 @@
 // Created by nono on 17/10/2023.
 //
 
-#ifndef JADA_LEFTFUNCTION_H
-#define JADA_LEFTFUNCTION_H
+#ifndef JADA_RIGHTFUNCTION_H
+#define JADA_RIGHTFUNCTION_H
 
-#include "FunctionField.h"
+#include "Function.h"
 #include "../expression/Expression.h"
 
-class RightFunction : public FunctionField {
+class RightFunction : public Function {
 
 public:
 
@@ -20,6 +20,8 @@ public:
         this->field1 = field1;
         this->field2 = field2;
     };
+
+    void display() override;
 };
 
-#endif //JADA_LEFTFUNCTION_H
+#endif //JADA_RIGHTFUNCTION_H

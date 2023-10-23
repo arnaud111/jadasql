@@ -39,6 +39,8 @@ public:
     static Field *tryConvertToStatement(const std::vector<Symbol *> &symbols);
 
     static Field *tryConvertToOperation(const std::vector<Symbol *> &symbols);
+
+    static Field *tryConvertToFunctionField(const std::vector<Symbol *> &symbols, int function);
 };
 
 #endif //JADA_FIELD_H

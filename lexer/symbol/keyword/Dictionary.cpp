@@ -23,13 +23,12 @@ std::string DataTypeSymbol::stringValues[10] = {
         "TIMESTAMP",
 };
 
-int OperatorSymbol::size = 24;
-std::string OperatorSymbol::stringValues[24] = {
+int OperatorSymbol::size = 23;
+std::string OperatorSymbol::stringValues[23] = {
         ">",
         "<",
         ">=",
         "<=",
-        "==",
         "!=",
         "<>",
         "=",

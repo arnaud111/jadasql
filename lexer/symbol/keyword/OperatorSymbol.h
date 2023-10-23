@@ -10,10 +10,9 @@
 
 enum OperatorSymbolEnum {
     v_Greater,
-    v_Less,
+    v_Lower,
     v_GreaterEqual,
-    v_LessEqual,
-    v_EqualEqual,
+    v_LowerEqual,
     v_NotEqual,
     v_NotEqual2,
     v_Equal,
@@ -39,7 +38,7 @@ class OperatorSymbol : public Symbol {
 
 public:
     static int size;
-    static std::string stringValues[24];
+    static std::string stringValues[23];
     OperatorSymbolEnum keyword;
 
     explicit OperatorSymbol(int val) {

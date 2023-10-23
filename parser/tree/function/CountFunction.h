@@ -2,13 +2,13 @@
 // Created by nono on 17/10/2023.
 //
 
-#ifndef JADA_LEFTFUNCTION_H
-#define JADA_LEFTFUNCTION_H
+#ifndef JADA_COUNTFUNCTION_H
+#define JADA_COUNTFUNCTION_H
 
-#include "FunctionField.h"
+#include "Function.h"
 #include "../expression/Expression.h"
 
-class CountFunction : public FunctionField {
+class CountFunction : public Function {
 
 public:
 
@@ -18,6 +18,8 @@ public:
         this->function = f_Count;
         this->field = field;
     };
+
+    void display() override;
 };
 
-#endif //JADA_LEFTFUNCTION_H
+#endif //JADA_COUNTFUNCTION_H

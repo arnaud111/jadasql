@@ -5,10 +5,10 @@
 #ifndef JADA_LEFTFUNCTION_H
 #define JADA_LEFTFUNCTION_H
 
-#include "FunctionField.h"
+#include "Function.h"
 #include "../expression/Expression.h"
 
-class LeftFunction : public FunctionField {
+class LeftFunction : public Function {
 
 public:
 
@@ -20,6 +20,8 @@ public:
         this->field1 = field1;
         this->field2 = field2;
     };
+
+    void display() override;
 };
 
 #endif //JADA_LEFTFUNCTION_H

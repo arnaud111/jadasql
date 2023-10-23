@@ -46,10 +46,11 @@ add_executable(jada main.cpp
         parser/tree/function/MaxFunction.h
         parser/tree/function/LeftFunction.h
         parser/tree/function/IfNullFunction.h
-        parser/tree/function/FunctionField.cpp
+        parser/tree/function/Function.cpp
         parser/tree/function/FormatFunction.h
         parser/tree/function/CountFunction.h
         parser/tree/function/ConcatFunction.h
         parser/tree/function/CoalesceFunction.h
         parser/tree/function/AvgFunction.h
-        error/Error.cpp)
+        error/Error.cpp
+        parser/tree/condition/OperationPriority.h)

@@ -6,7 +6,17 @@
 #include "../structure/ColumnReference.h"
 #include "../field/ConstStringField.h"
 #include "../field/ConstNumberField.h"
-#include "../function/FunctionField.h"
+#include "../function/AvgFunction.h"
+#include "../function/CoalesceFunction.h"
+#include "../function/ConcatFunction.h"
+#include "../function/CountFunction.h"
+#include "../function/FormatFunction.h"
+#include "../function/IfNullFunction.h"
+#include "../function/LeftFunction.h"
+#include "../function/RightFunction.h"
+#include "../function/MinFunction.h"
+#include "../function/MaxFunction.h"
+#include "../function/SumFunction.h"
 
 void SelectStatement::display() {
     printf("SELECT ");
@@ -120,40 +130,84 @@ void ConstNumberField::display() {
     printf("%d ", this->value);
 }
 
-void FunctionField::display() {
-    switch (this->function) {
-        case f_Left:
-            printf("LEFT() ");
-            break;
-        case f_Right:
-            printf("RIGHT() ");
-            break;
-        case f_Max:
-            printf("MAX() ");
-            break;
-        case f_Min:
-            printf("MIN() ");
-            break;
-        case f_Sum:
-            printf("SUM() ");
-            break;
-        case f_Count:
-            printf("COUNT() ");
-            break;
-        case f_Concat:
-            printf("CONCAT() ");
-            break;
-        case f_Format:
-            printf("FORMAT() ");
-            break;
-        case f_Avg:
-            printf("AVG() ");
-            break;
-        case f_IfNull:
-            printf("IFNULL() ");
-            break;
-        case f_Coalesce:
-            printf("COALESCE() ");
-            break;
+void AvgFunction::display() {
+    printf("AVG(");
+    field->display();
+    printf(") ");
+}
+
+void CoalesceFunction::display() {
+    printf("COALESCE(");
+    for (int i = 0; i < fields.size(); i++) {
+        fields[i]->display();
+        if (i < fields.size() - 1)
+            printf(", ");
     }
+    printf(") ");
+}
+
+void ConcatFunction::display() {
+    printf("CONCAT(");
+    for (int i = 0; i < fields.size(); i++) {
+        fields[i]->display();
+        if (i < fields.size() - 1)
+            printf(", ");
+    }
+    printf(") ");
+}
+
+void CountFunction::display() {
+    printf("COUNT(");
+    field->display();
+    printf(") ");
+}
+
+void FormatFunction::display() {
+    printf("FORMAT(");
+    field1->display();
+    printf(", ");
+    field2->display();
+    printf(") ");
+}
+
+void IfNullFunction::display() {
+    printf("IFNULL(");
+    field1->display();
+    printf(", ");
+    field2->display();
+    printf(") ");
+}
+
+void LeftFunction::display() {
+    printf("LEFT(");
+    field1->display();
+    printf(", ");
+    field2->display();
+    printf(") ");
+}
+
+void RightFunction::display() {
+    printf("RIGHT(");
+    field1->display();
+    printf(", ");
+    field2->display();
+    printf(") ");
+}
+
+void MinFunction::display() {
+    printf("MIN(");
+    field->display();
+    printf(") ");
+}
+
+void MaxFunction::display() {
+    printf("MAX(");
+    field->display();
+    printf(") ");
+}
+
+void SumFunction::display() {
+    printf("SUM(");
+    field->display();
+    printf(") ");
 }

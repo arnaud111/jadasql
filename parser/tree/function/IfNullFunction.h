@@ -2,14 +2,14 @@
 // Created by nono on 17/10/2023.
 //
 
-#ifndef JADA_LEFTFUNCTION_H
-#define JADA_LEFTFUNCTION_H
+#ifndef JADA_IFNULLFUNCTION_H
+#define JADA_IFNULLFUNCTION_H
 
 #include <vector>
-#include "FunctionField.h"
+#include "Function.h"
 #include "../expression/Expression.h"
 
-class IfNullFunction : public FunctionField {
+class IfNullFunction : public Function {
 
 public:
 
@@ -21,6 +21,8 @@ public:
         this->field1 = field1;
         this->field2 = field2;
     };
+
+    void display() override;
 };
 
-#endif //JADA_LEFTFUNCTION_H
+#endif //JADA_IFNULLFUNCTION_H

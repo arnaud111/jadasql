@@ -7,7 +7,6 @@
 #include "../lexer/symbol/keyword/StatementSymbol.h"
 #include "tree/statements/SelectStatement.h"
 #include "../lexer/symbol/keyword/DelimiterSymbol.h"
-#include "../lexer/symbol/keyword/KeywordSymbol.h"
 
 std::vector<Statement*> Parser::parse(const std::vector<Symbol*>& symbols) {
     std::vector<Statement*> listStatement;

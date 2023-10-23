@@ -2,13 +2,13 @@
 // Created by nono on 17/10/2023.
 //
 
-#ifndef JADA_LEFTFUNCTION_H
-#define JADA_LEFTFUNCTION_H
+#ifndef JADA_SUMFUNCTION_H
+#define JADA_SUMFUNCTION_H
 
-#include "FunctionField.h"
+#include "Function.h"
 #include "../expression/Expression.h"
 
-class SumFunction : public FunctionField {
+class SumFunction : public Function {
 
 public:
 
@@ -18,6 +18,8 @@ public:
         this->function = f_Sum;
         this->field = field;
     };
+
+    void display() override;
 };
 
-#endif //JADA_LEFTFUNCTION_H
+#endif //JADA_SUMFUNCTION_H

@@ -9,15 +9,17 @@
 #include <vector>
 #include "tree/statements/Statement.h"
 #include "../lexer/symbol/Symbol.h"
+#include "tree/function/Function.h"
 
 class Parser {
 
 public:
-    static std::vector<Statement*> parse(const std::vector<Symbol*>& symbols);
+    static std::vector<Statement *> parse(const std::vector<Symbol *> &symbols);
+
+    static Statement *createStatement(std::vector<Symbol *> symbol);
 
 private:
-    static std::vector<std::vector<Symbol*>> splitRequests(const std::vector<Symbol*>& symbols);
-    static Statement* createStatement(std::vector<Symbol*> symbol);
+    static std::vector<std::vector<Symbol *>> splitRequests(const std::vector<Symbol *> &symbols);
 
 };
 

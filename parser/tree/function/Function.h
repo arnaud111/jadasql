@@ -2,8 +2,8 @@
 // Created by nono on 17/10/2023.
 //
 
-#ifndef JADA_FUNCTIONFIELD_H
-#define JADA_FUNCTIONFIELD_H
+#ifndef JADA_FUNCTION_H
+#define JADA_FUNCTION_H
 
 #include <vector>
 #include "../field/Field.h"
@@ -23,21 +23,17 @@ enum FunctionEnum {
     f_Coalesce,
 };
 
-class FunctionField : public Field {
+class Function : public Field {
 
 public:
 
     FunctionEnum function;
 
-    explicit FunctionField();
+    explicit Function();
 
-    explicit FunctionField(int val);
+    explicit Function(int val);
 
     static int tryConvertToFunctionEnum(KeywordSymbolEnum keywordSymbolEnum);
-
-    static FunctionField *tryConvertToFunctionField(const std::vector<Symbol *> &symbols, FunctionEnum function);
-
-    void display() override;
 };
 
-#endif //JADA_FUNCTIONFIELD_H
+#endif //JADA_FUNCTION_H

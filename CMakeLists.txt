@@ -13,7 +13,6 @@ add_executable(jada main.cpp
         parser/tree/condition/Condition.h
         parser/tree/from/From.h
         parser/tree/from/Joint.h
-        parser/tree/condition/LogicalKeyword.h
         parser/tree/expression/Expression.h
         parser/Parser.cpp
         parser/Parser.h
@@ -34,7 +33,6 @@ add_executable(jada main.cpp
         parser/tree/field/Field.h
         parser/tree/field/ConstNumberField.h
         parser/tree/field/ConstStringField.h
-        parser/tree/condition/Condition.cpp
         parser/tree/structure/ColumnReference.h
         parser/tree/structure/DatabaseReference.h
         parser/tree/structure/TableReference.h

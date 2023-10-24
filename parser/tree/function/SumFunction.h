@@ -6,7 +6,6 @@
 #define JADA_SUMFUNCTION_H
 
 #include "Function.h"
-#include "../expression/Expression.h"
 
 class SumFunction : public Function {
 

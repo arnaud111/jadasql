@@ -5,9 +5,7 @@
 #ifndef JADA_FORMATFUNCTION_H
 #define JADA_FORMATFUNCTION_H
 
-#include <vector>
 #include "Function.h"
-#include "../expression/Expression.h"
 
 class FormatFunction : public Function {
 

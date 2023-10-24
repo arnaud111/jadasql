@@ -8,7 +8,6 @@
 #include <utility>
 #include <vector>
 #include "Function.h"
-#include "../expression/Expression.h"
 
 class CoalesceFunction : public Function {
 

@@ -6,7 +6,6 @@
 #define JADA_LEFTFUNCTION_H
 
 #include "Function.h"
-#include "../expression/Expression.h"
 
 class LeftFunction : public Function {
 

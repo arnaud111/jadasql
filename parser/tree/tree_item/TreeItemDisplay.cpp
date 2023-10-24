@@ -110,16 +110,9 @@ void From::display() {
 }
 
 void Condition::display() {
-    this->expression1->display();
-    switch (*this->logicalKeyword) {
-        case AND:
-            printf("AND ");
-            break;
-        case OR:
-            printf("OR ");
-            break;
-    }
-    this->expression2->display();
+    this->field1->display();
+    printf("cond ");
+    this->field2->display();
 }
 
 void ConstStringField::display() {

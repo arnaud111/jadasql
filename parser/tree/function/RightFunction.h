@@ -6,7 +6,6 @@
 #define JADA_RIGHTFUNCTION_H
 
 #include "Function.h"
-#include "../expression/Expression.h"
 
 class RightFunction : public Function {
 

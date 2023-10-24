@@ -7,7 +7,6 @@
 
 #include <vector>
 #include "Function.h"
-#include "../expression/Expression.h"
 
 class IfNullFunction : public Function {
 

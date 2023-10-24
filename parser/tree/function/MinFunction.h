@@ -6,7 +6,6 @@
 #define JADA_MINFUNCTION_H
 
 #include "Function.h"
-#include "../expression/Expression.h"
 
 class MinFunction : public Function {
 

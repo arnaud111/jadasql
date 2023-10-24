@@ -6,7 +6,6 @@
 #define JADA_COUNTFUNCTION_H
 
 #include "Function.h"
-#include "../expression/Expression.h"
 
 class CountFunction : public Function {
 

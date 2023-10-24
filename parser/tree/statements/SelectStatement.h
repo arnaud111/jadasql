@@ -19,7 +19,7 @@ class SelectStatement : public Statement {
 public:
     std::vector<Field *> field;
     From *from;
-    Condition *where;
+    Field * where;
     std::vector<Field *> groupBy;
     std::vector<Field *> orderBy;
     int limit;

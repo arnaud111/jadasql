@@ -5,9 +5,7 @@
 #ifndef JADA_AVGFUNCTION_H
 #define JADA_AVGFUNCTION_H
 
-#include <vector>
 #include "Function.h"
-#include "../expression/Expression.h"
 
 class AvgFunction : public Function {
 

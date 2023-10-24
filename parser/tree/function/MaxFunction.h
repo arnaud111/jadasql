@@ -6,7 +6,6 @@
 #define JADA_MAXFUNCTION_H
 
 #include "Function.h"
-#include "../expression/Expression.h"
 
 class MaxFunction : public Function {
 

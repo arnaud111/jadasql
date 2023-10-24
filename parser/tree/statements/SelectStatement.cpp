@@ -41,7 +41,7 @@ SelectStatement::SelectStatement(const std::vector<Symbol *> &symbols) : Stateme
 
     if (((KeywordSymbol *) symbols[index])->keyword == v_Where) {
         splitSymbols = SelectStatement::splitUntilKeywords(symbols, index + 1, {v_Group, v_Order, v_Limit});
-        this->where = new Condition(splitSymbols);
+        this->where = Field::convertToField(splitSymbols);
         index += (int) splitSymbols.size() + 1;
     }
 

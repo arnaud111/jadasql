@@ -7,22 +7,16 @@
 
 #include <vector>
 #include <cstdio>
-#include "LogicalKeyword.h"
-#include "../expression/Expression.h"
 #include "../../../lexer/symbol/Symbol.h"
+#include "../field/Field.h"
+#include "OperationPriority.h"
 
-class Condition : public Expression {
+class Condition : public Field {
 
 public:
-    Expression *expression1;
-    LogicalKeyword *logicalKeyword;
-    Expression *expression2;
-
-    bool evaluate() override {
-        return true;
-    }
-
-    explicit Condition(const std::vector<Symbol *> &symbols);
+    Field *field1;
+    OperationPriorityEnum *operation;
+    Field *field2;
 
     void display() override;
 };

@@ -1,9 +1,10 @@
 #include <iostream>
 #include "lexer/Lexer.h"
 #include "parser/Parser.h"
+#include "server/server.h"
 
 int main() {
-
+    tamerelapute();
     string request;
     cout << "SQL -> ";
     getline(cin, request);

@@ -10,6 +10,7 @@
 
 enum KeywordSymbolEnum {
     v_From,
+    v_Values,
     v_Where,
     v_Distinct,
     v_As,
@@ -68,7 +69,7 @@ class KeywordSymbol : public Symbol {
 
 public:
     static int size;
-    static std::string stringValues[56];
+    static std::string stringValues[57];
     KeywordSymbolEnum keyword;
 
     explicit KeywordSymbol(int val) {

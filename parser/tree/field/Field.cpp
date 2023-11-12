@@ -175,8 +175,53 @@ Field *Field::tryConvertToStatement(const std::vector<Symbol *> &symbols) {
 }
 
 Field *Field::tryConvertToOperation(const std::vector<Symbol *> &symbols) {
+    int parenthesis_count = 0;
+    int min_parenthesis_count = -1;
+    int min_operator = -1;
+    int min_index = -1;
 
+    for (int i = 0; i < symbols.size(); i++) {
+        if (parenthesis_count < 0) {
+            Error::syntaxError(")");
+        }
+        if (symbols[i]->symbolValueType == s_Delimiter) {
+            if (((DelimiterSymbol *) symbols[i])->keyword == v_ParenthesisLeft) {
+                parenthesis_count++;
+            } else if (((DelimiterSymbol *) symbols[i])->keyword == v_ParenthesisRight) {
+                parenthesis_count--;
+            }
+            continue;
+        }
+    }
 
+    if (min_index != -1) {
+
+    }
+
+    return nullptr;
+}
+
+OperationPriorityEnum *Field::tryConvertToOperatorEnum(Symbol * symbol) {
+
+    if (symbol->symbolValueType == s_Operator) {
+
+    } else if (symbol->symbolValueType == s_Keyword) {
+        if (((KeywordSymbol *) symbol)->keyword == v_And) {
+
+        } else if (((KeywordSymbol *) symbol)->keyword == v_Or) {
+
+        } else if (((KeywordSymbol *) symbol)->keyword == v_Not) {
+
+        } else if (((KeywordSymbol *) symbol)->keyword == v_In) {
+
+        } else if (((KeywordSymbol *) symbol)->keyword == v_Between) {
+
+        } else if (((KeywordSymbol *) symbol)->keyword == v_Like) {
+
+        } else if (((KeywordSymbol *) symbol)->keyword == v_) {
+
+        }
+    }
     return nullptr;
 }
 

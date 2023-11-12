@@ -8,6 +8,7 @@
 #include <vector>
 #include "../../../lexer/symbol/Symbol.h"
 #include "../tree_item/TreeItem.h"
+#include "../condition/OperationPriority.h"
 
 enum FieldType {
     f_Column,
@@ -27,6 +28,8 @@ public:
     static std::vector<Field *> createListField(const std::vector<Symbol *> &symbols);
 
     static std::vector<Symbol *> getSymbolsBeforeComma(const std::vector<Symbol *> &symbols, int start);
+
+    static OperationPriorityEnum* tryConvertToOperatorEnum(Symbol * symbol);
 
     static Field *convertToField(const std::vector<Symbol *> &symbols);
 

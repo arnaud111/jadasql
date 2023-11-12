@@ -61,9 +61,10 @@ std::string StatementSymbol::stringValues[7] = {
         "ALTER",
 };
 
-int KeywordSymbol::size = 56;
-std::string KeywordSymbol::stringValues[56] = {
+int KeywordSymbol::size = 57;
+std::string KeywordSymbol::stringValues[57] = {
         "FROM",
+        "VALUES",
         "WHERE",
         "DISTINCT",
         "AS",

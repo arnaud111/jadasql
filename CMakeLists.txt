@@ -51,4 +51,4 @@ add_executable(jada main.cpp
         parser/tree/function/CoalesceFunction.h
         parser/tree/function/AvgFunction.h
         error/Error.cpp
-        parser/tree/condition/OperationPriority.h)
+        parser/tree/condition/OperationPriority.h parser/tree/condition/Condition.cpp parser/tree/statements/UpdateStatement.cpp parser/tree/statements/UpdateStatement.h parser/tree/statements/DeleteStatement.cpp parser/tree/statements/DeleteStatement.h parser/tree/statements/DropStatement.cpp parser/tree/statements/DropStatement.h parser/tree/statements/InsertStatement.cpp parser/tree/statements/InsertStatement.h parser/tree/statements/CreateStatement.cpp parser/tree/statements/CreateStatement.h parser/tree/statements/AlterStatement.cpp parser/tree/statements/AlterStatement.h parser/tree/alter/ColumnModification.cpp parser/tree/alter/ColumnModification.h)

@@ -15,8 +15,10 @@ class Condition : public Field {
 
 public:
     Field *field1;
-    OperationPriorityEnum *operation;
+    OperationPriorityEnum operation;
     Field *field2;
+
+    explicit Condition(Field *field1, OperationPriorityEnum operation, Field *field2);
 
     void display() override;
 };

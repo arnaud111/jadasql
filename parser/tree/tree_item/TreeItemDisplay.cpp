@@ -111,7 +111,74 @@ void From::display() {
 
 void Condition::display() {
     this->field1->display();
-    printf("cond ");
+    switch (this->operation) {
+        case o_Or:
+            printf("OR ");
+            break;
+        case o_And:
+            printf("AND ");
+            break;
+        case o_Not:
+            printf("NOT ");
+            break;
+        case o_In:
+            printf("IN ");
+            break;
+        case o_Between:
+            printf("BETWEEN ");
+            break;
+        case o_Like:
+            printf("LIKE ");
+            break;
+        case o_Some:
+            printf("SOME ");
+            break;
+        case o_Exists:
+            printf("EXISTS ");
+            break;
+        case o_Greater:
+            printf("> ");
+            break;
+        case o_GreaterEqual:
+            printf(">= ");
+            break;
+        case o_Lower:
+            printf("< ");
+            break;
+        case o_LowerEqual:
+            printf("<= ");
+            break;
+        case o_NotEqual:
+            printf("<> ");
+            break;
+        case o_Equal:
+            printf("= ");
+            break;
+        case o_BitAnd:
+            printf("& ");
+            break;
+        case o_BitOr:
+            printf("| ");
+            break;
+        case o_BitXor:
+            printf("^ ");
+            break;
+        case o_Add:
+            printf("+ ");
+            break;
+        case o_Sub:
+            printf("- ");
+            break;
+        case o_Mul:
+            printf("* ");
+            break;
+        case o_Div:
+            printf("/ ");
+            break;
+        case o_Mod:
+            printf("%% ");
+            break;
+    }
     this->field2->display();
 }
 

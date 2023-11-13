@@ -42,15 +42,7 @@ void Error::syntaxError(const Symbol *symbolError) {
             fullError.append(StatementSymbol::stringValues[((StatementSymbol *) symbolError)->keyword]);
             break;
         case s_Number:
-            tmp = ((NumberSymbol *) symbolError)->value;
-            while (tmp > 9) {
-                tmp_c = tmp % 10 + 48;
-                s.insert(0, &tmp_c);
-                tmp /=10;
-            }
-            tmp_c = tmp + 48;
-            s.insert(0, &tmp_c);
-            fullError.append(s);
+            fullError = "Syntax Error: " + std::to_string(((NumberSymbol *) symbolError)->value);
             break;
         case s_String:
             fullError.append(((StringSymbol *) symbolError)->value);

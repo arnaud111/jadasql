@@ -1,12 +1,11 @@
-#include <iostream>
 #include "lexer/Lexer.h"
 #include "parser/Parser.h"
 
 int main() {
 
-    string request;
-    cout << "SQL -> ";
-    getline(cin, request);
+    string request = "SELECT DISTINCT T.col, _Uwu1, \"UwU\\\"'\", 3, MAX(CONCAT(\"test\", c.coucou)), (SELECT 1) FROM test@t_test T WHERE 1 > (1 % 1) GROUP BY test1 ORDER BY test2 LIMIT 1";
+    //cout << "SQL -> ";
+    //getline(cin, request);
     printf("---LEXER---\n");
     Lexer lexicalScanner = Lexer();
     vector<Symbol *> result = lexicalScanner.scan(request);

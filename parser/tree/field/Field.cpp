@@ -23,6 +23,8 @@
 #include "../function/IfNullFunction.h"
 #include "../function/CoalesceFunction.h"
 #include "../../Parser.h"
+#include "../../../lexer/symbol/keyword/OperatorSymbol.h"
+#include "../condition/Condition.h"
 
 std::vector<Field *> Field::createListField(const std::vector<Symbol *> &symbols) {
     std::vector<Field *> listFields;
@@ -69,24 +71,32 @@ std::vector<Symbol *> Field::getSymbolsBeforeComma(const std::vector<Symbol *> &
 }
 
 Field *Field::convertToField(const std::vector<Symbol *> &symbols) {
+    std::vector<Symbol *> usableSymbols = symbols;
+    bool parenthesis = false;
     Field *field;
 
-    field = tryConvertToColumnReference(symbols);
+    if (symbols.size() > 2 && symbols[0]->symbolValueType == s_Delimiter && ((DelimiterSymbol *) symbols[0])->keyword == v_ParenthesisLeft
+        && symbols[symbols.size() - 1]->symbolValueType == s_Delimiter && ((DelimiterSymbol *) symbols[symbols.size() - 1])->keyword == v_ParenthesisRight) {
+        usableSymbols = cut_symbol_vector(symbols, 1, symbols.size() - 1);
+        parenthesis = true;
+    }
+
+    field = tryConvertToColumnReference(usableSymbols);
     if (field == nullptr) {
-        field = tryConvertToConst(symbols);
+        field = tryConvertToConst(usableSymbols);
     }
     if (field == nullptr) {
-        field = tryConvertToFunction(symbols);
+        field = tryConvertToFunction(usableSymbols);
     }
     if (field == nullptr) {
-        field = tryConvertToOperation(symbols);
+        field = tryConvertToOperation(usableSymbols);
     }
-    if (field == nullptr) {
-        field = tryConvertToStatement(symbols);
+    if (field == nullptr && parenthesis) {
+        field = tryConvertToStatement(usableSymbols);
     }
 
     if (field == nullptr) {
-        Error::syntaxError(symbols[0]);
+        Error::syntaxError(usableSymbols[0]);
     }
 
     return field;
@@ -158,20 +168,21 @@ Field *Field::tryConvertToFunction(const std::vector<Symbol *> &symbols) {
 Field *Field::tryConvertToStatement(const std::vector<Symbol *> &symbols) {
     std::vector<Symbol *> listSymbolStatement;
 
-    if (symbols.size() < 3) return nullptr;
-    if (symbols[0]->symbolValueType != s_Delimiter
-        || symbols[symbols.size() - 1]->symbolValueType != s_Delimiter
-        || ((DelimiterSymbol *) symbols[0])->keyword != v_ParenthesisLeft
-        || ((DelimiterSymbol *) symbols[symbols.size() - 1])->keyword != v_ParenthesisRight
-        || symbols[1]->symbolValueType != s_Statement ) {
+    if (symbols.empty() || symbols[0]->symbolValueType != s_Statement) {
         return nullptr;
     }
 
-    for (int i = 1; i < symbols.size() - 1 ; i++) {
-        listSymbolStatement.push_back(symbols[i]);
+    return Parser::createStatement(symbols);
+}
+
+std::vector<Symbol *> Field::cut_symbol_vector(const std::vector<Symbol *> &symbols, int start, int end) {
+    std::vector<Symbol *> newListSymbol;
+
+    for (int i = start; i < end; i++) {
+        newListSymbol.push_back(symbols[i]);
     }
 
-    return Parser::createStatement(listSymbolStatement);
+    return newListSymbol;
 }
 
 Field *Field::tryConvertToOperation(const std::vector<Symbol *> &symbols) {
@@ -179,8 +190,9 @@ Field *Field::tryConvertToOperation(const std::vector<Symbol *> &symbols) {
     int min_parenthesis_count = -1;
     int min_operator = -1;
     int min_index = -1;
+    int tmp_val;
 
-    for (int i = 0; i < symbols.size(); i++) {
+    for (int i = 1; i < symbols.size() - 1; i++) {
         if (parenthesis_count < 0) {
             Error::syntaxError(")");
         }
@@ -192,37 +204,91 @@ Field *Field::tryConvertToOperation(const std::vector<Symbol *> &symbols) {
             }
             continue;
         }
+        if (symbols[i]->symbolValueType == s_Keyword || symbols[i]->symbolValueType == s_Operator) {
+            tmp_val = tryConvertToOperatorEnum(symbols[i]);
+            if (tmp_val != -1) {
+                if (min_index == -1) {
+                    min_index = i;
+                    min_operator = tmp_val;
+                    min_parenthesis_count = parenthesis_count;
+                } else {
+                    if (min_parenthesis_count > parenthesis_count) {
+                        min_index = i;
+                        min_operator = tmp_val;
+                        min_parenthesis_count = parenthesis_count;
+                    } else if (min_parenthesis_count == parenthesis_count && min_operator > tmp_val) {
+                        min_index = i;
+                        min_operator = tmp_val;
+                        min_parenthesis_count = parenthesis_count;
+                    }
+                }
+            }
+        }
     }
 
     if (min_index != -1) {
-
+        return new Condition(
+                    convertToField(cut_symbol_vector(symbols, 0, min_index)),
+                    (OperationPriorityEnum) min_operator,
+                    convertToField(cut_symbol_vector(symbols, min_index + 1, symbols.size()))
+                );
     }
 
     return nullptr;
 }
 
-OperationPriorityEnum *Field::tryConvertToOperatorEnum(Symbol * symbol) {
+int Field::tryConvertToOperatorEnum(Symbol *symbol) {
 
     if (symbol->symbolValueType == s_Operator) {
-
+        if (((OperatorSymbol*) symbol)->keyword == v_Greater) {
+            return o_Greater;
+        } else if (((OperatorSymbol*) symbol)->keyword == v_GreaterEqual) {
+            return o_GreaterEqual;
+        } else if (((OperatorSymbol*) symbol)->keyword == v_Lower) {
+            return o_Lower;
+        } else if (((OperatorSymbol*) symbol)->keyword == v_LowerEqual) {
+            return o_LowerEqual;
+        } else if (((OperatorSymbol*) symbol)->keyword == v_NotEqual) {
+            return o_NotEqual;
+        } else if (((OperatorSymbol*) symbol)->keyword == v_Equal) {
+            return o_Equal;
+        } else if (((OperatorSymbol*) symbol)->keyword == v_BitAnd) {
+            return o_BitAnd;
+        } else if (((OperatorSymbol*) symbol)->keyword == v_BitOr) {
+            return o_BitOr;
+        } else if (((OperatorSymbol*) symbol)->keyword == v_BitXor) {
+            return o_BitXor;
+        } else if (((OperatorSymbol*) symbol)->keyword == v_Add) {
+            return o_Add;
+        } else if (((OperatorSymbol*) symbol)->keyword == v_Sub) {
+            return o_Sub;
+        } else if (((OperatorSymbol*) symbol)->keyword == v_Mul) {
+            return o_Mul;
+        } else if (((OperatorSymbol*) symbol)->keyword == v_Div) {
+            return o_Div;
+        } else if (((OperatorSymbol*) symbol)->keyword == v_Modulo) {
+            return o_Mod;
+        }
     } else if (symbol->symbolValueType == s_Keyword) {
         if (((KeywordSymbol *) symbol)->keyword == v_And) {
-
+            return o_And;
         } else if (((KeywordSymbol *) symbol)->keyword == v_Or) {
-
+            return o_Or;
         } else if (((KeywordSymbol *) symbol)->keyword == v_Not) {
-
+            return o_Not;
         } else if (((KeywordSymbol *) symbol)->keyword == v_In) {
-
+            return o_In;
         } else if (((KeywordSymbol *) symbol)->keyword == v_Between) {
-
+            return o_Between;
         } else if (((KeywordSymbol *) symbol)->keyword == v_Like) {
-
-        } else if (((KeywordSymbol *) symbol)->keyword == v_) {
-
+            return o_Like;
+        } else if (((KeywordSymbol *) symbol)->keyword == v_Some) {
+            return o_Some;
+        } else if (((KeywordSymbol *) symbol)->keyword == v_Exists) {
+            return o_Exists;
         }
     }
-    return nullptr;
+    return -1;
 }
 
 Field *Field::tryConvertToFunctionField(const std::vector<Symbol *> &symbols, int function) {

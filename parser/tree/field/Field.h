@@ -29,7 +29,9 @@ public:
 
     static std::vector<Symbol *> getSymbolsBeforeComma(const std::vector<Symbol *> &symbols, int start);
 
-    static OperationPriorityEnum* tryConvertToOperatorEnum(Symbol * symbol);
+    static std::vector<Symbol *> cut_symbol_vector(const std::vector<Symbol *> &symbols, int start, int end);
+
+    static int tryConvertToOperatorEnum(Symbol *symbol);
 
     static Field *convertToField(const std::vector<Symbol *> &symbols);
 

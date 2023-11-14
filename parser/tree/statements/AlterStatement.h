@@ -8,7 +8,7 @@
 
 #include "Statement.h"
 #include "../structure/TableReference.h"
-#include "../alter/ColumnModification.h"
+#include "../column_actions/ColumnModification.h"
 
 class AlterStatement : public Statement {
 

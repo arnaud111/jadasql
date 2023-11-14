@@ -20,8 +20,6 @@ public:
 
     void display() override;
 
-private:
-    static TableReference *getTableReference(const std::vector<Symbol *> &symbols);
 };
 
 #endif //JADA_FROM_H

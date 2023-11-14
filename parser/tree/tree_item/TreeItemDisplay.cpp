@@ -17,6 +17,74 @@
 #include "../function/MinFunction.h"
 #include "../function/MaxFunction.h"
 #include "../function/SumFunction.h"
+#include "../statements/DropStatement.h"
+#include "../statements/DeleteStatement.h"
+#include "../assign/Assign.h"
+#include "../statements/UpdateStatement.h"
+#include "../statements/InsertStatement.h"
+
+void InsertStatement::display() {
+    printf("INSERT INTO ");
+    this->tableReference->display();
+    if (this->columnsExplicit) {
+        printf("(");
+        for (auto & column : this->columns) {
+            column->display();
+            printf(", ");
+        }
+        printf(") ");
+    }
+    printf("VALUES ");
+    for (auto & row : this->values) {
+        printf("(");
+        for (auto & value : row) {
+            value->display();
+        }
+        printf("), ");
+    }
+    printf(";\n");
+}
+
+void UpdateStatement::display() {
+    printf("UPDATE ");
+    this->tableReference->display();
+    printf("SET ");
+    for (auto & assign : this->set) {
+        assign->display();
+    }
+    if (this->where != nullptr) {
+        printf("WHERE ");
+        this->where->display();
+    }
+    printf(";\n");
+}
+
+void DeleteStatement::display() {
+    printf("DELETE FROM ");
+    this->table->display();
+    if (this->where != nullptr) {
+        printf("WHERE ");
+        this->where->display();
+    }
+    printf(";\n");
+}
+
+void DropStatement::display() {
+    printf("DROP ");
+    switch (this->type) {
+        case DropTable:
+            printf("TABLE ");
+            break;
+        case DropDatabase:
+            printf("DATABASE ");
+            break;
+    }
+    if (this->ifExist) {
+        printf("IF EXISTS ");
+    }
+    this->droppedField->display();
+    printf(";\n");
+}
 
 void SelectStatement::display() {
     printf("SELECT ");
@@ -59,6 +127,12 @@ void SelectStatement::display() {
         printf("LIMIT %d", this->limit);
     }
     printf(";\n");
+}
+
+void Assign::display() {
+    this->column->display();
+    printf(" = ");
+    this->value->display();
 }
 
 void TableReference::display() {
@@ -110,6 +184,7 @@ void From::display() {
 }
 
 void Condition::display() {
+    printf("(");
     this->field1->display();
     switch (this->operation) {
         case o_Or:
@@ -180,6 +255,7 @@ void Condition::display() {
             break;
     }
     this->field2->display();
+    printf(")");
 }
 
 void ConstStringField::display() {

@@ -61,13 +61,14 @@ std::string StatementSymbol::stringValues[7] = {
         "ALTER",
 };
 
-int KeywordSymbol::size = 57;
-std::string KeywordSymbol::stringValues[57] = {
+int KeywordSymbol::size = 60;
+std::string KeywordSymbol::stringValues[60] = {
         "FROM",
         "VALUES",
         "WHERE",
         "DISTINCT",
         "AS",
+        "IF",
         "AND",
         "OR",
         "NOT",
@@ -91,6 +92,9 @@ std::string KeywordSymbol::stringValues[57] = {
         "END",
         "SOME",
         "INTO",
+        "MODIFY",
+        "CHANGE",
+        "ADD",
         "DATABASE",
         "TABLE",
         "UNIQUE",

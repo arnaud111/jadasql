@@ -6,9 +6,9 @@
 #define JADA_DATABASEREFERENCE_H
 
 #include <string>
-#include "../tree_item/TreeItem.h"
+#include "../field/Field.h"
 
-class DatabaseReference : public TreeItem {
+class DatabaseReference : public Field {
 
 public:
     std::string databaseName;

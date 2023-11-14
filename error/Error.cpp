@@ -20,7 +20,7 @@ void Error::syntaxError(const std::string &error) {
 }
 
 void Error::syntaxError(const Symbol *symbolError) {
-    std::string fullError = "Syntax Error: ";
+    std::string fullError = "Syntax Error at: ";
     int tmp;
     char tmp_c;
     std::string s;

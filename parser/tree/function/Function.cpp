@@ -19,27 +19,27 @@ Function::Function(int val) {
 
 int Function::tryConvertToFunctionEnum(KeywordSymbolEnum keywordSymbolEnum) {
     switch (keywordSymbolEnum) {
-        case v_Left:
+        case k_Left:
             return f_Left;
-        case v_Right:
+        case k_Right:
             return f_Right;
-        case v_Max:
+        case k_Max:
             return f_Max;
-        case v_Sum:
+        case k_Sum:
             return f_Sum;
-        case v_Count:
+        case k_Count:
             return f_Count;
-        case v_Concat:
+        case k_Concat:
             return f_Concat;
-        case v_Format:
+        case k_Format:
             return f_Format;
-        case v_Min:
+        case k_Min:
             return f_Min;
-        case v_Avg:
+        case k_Avg:
             return f_Avg;
-        case v_IfNull:
+        case k_IfNull:
             return f_IfNull;
-        case v_Coalesce:
+        case k_Coalesce:
             return f_Coalesce;
         default:
             return -1;

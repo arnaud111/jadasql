@@ -17,9 +17,16 @@ class DropStatement : public Statement {
 
 public:
     DropStatementTypeEnum type;
-    Field* droppedField;
+    Field* droppedField{};
     bool ifExist;
 
+    explicit DropStatement(const std::vector<Symbol *> &symbols);
+
+    void display() override;
+
+private:
+
+    static DropStatementTypeEnum getDropType(Symbol *symbol);
 };
 
 

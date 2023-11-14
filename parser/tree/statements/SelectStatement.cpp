@@ -25,55 +25,55 @@ SelectStatement::SelectStatement(const std::vector<Symbol *> &symbols) : Stateme
         index = 2;
     }
 
-    splitSymbols = SelectStatement::splitUntilKeywords(symbols, index, {v_From, v_Where, v_Group, v_Order, v_Limit});
+    splitSymbols = SelectStatement::splitUntilKeywords(symbols, index, {k_From, k_Where, k_Group, k_Order, k_Limit});
     this->field = Field::createListField(splitSymbols);
     index += (int) splitSymbols.size();
 
     if (index == symbols.size()) return;
 
-    if (((KeywordSymbol *) symbols[index])->keyword == v_From) {
-        splitSymbols = SelectStatement::splitUntilKeywords(symbols, index + 1, {v_Where, v_Group, v_Order, v_Limit});
+    if (((KeywordSymbol *) symbols[index])->keyword == k_From) {
+        splitSymbols = SelectStatement::splitUntilKeywords(symbols, index + 1, {k_Where, k_Group, k_Order, k_Limit});
         this->from = new From(splitSymbols);
         index += (int) splitSymbols.size() + 1;
     }
 
     if (index == symbols.size()) return;
 
-    if (((KeywordSymbol *) symbols[index])->keyword == v_Where) {
-        splitSymbols = SelectStatement::splitUntilKeywords(symbols, index + 1, {v_Group, v_Order, v_Limit});
+    if (((KeywordSymbol *) symbols[index])->keyword == k_Where) {
+        splitSymbols = SelectStatement::splitUntilKeywords(symbols, index + 1, {k_Group, k_Order, k_Limit});
         this->where = Field::convertToField(splitSymbols);
         index += (int) splitSymbols.size() + 1;
     }
 
     if (index == symbols.size()) return;
 
-    if (((KeywordSymbol *) symbols[index])->keyword == v_Group) {
+    if (((KeywordSymbol *) symbols[index])->keyword == k_Group) {
         index++;
         if (index == symbols.size() || symbols[index]->symbolValueType != s_Keyword ||
-            ((KeywordSymbol *) symbols[index])->keyword != v_By) {
+            ((KeywordSymbol *) symbols[index])->keyword != k_By) {
             Error::syntaxError("GROUP");
         }
-        splitSymbols = SelectStatement::splitUntilKeywords(symbols, index + 1, {v_Order, v_Limit});
+        splitSymbols = SelectStatement::splitUntilKeywords(symbols, index + 1, {k_Order, k_Limit});
         this->groupBy = Field::createListField(splitSymbols);
         index += (int) splitSymbols.size() + 1;
     }
 
     if (index == symbols.size()) return;
 
-    if (((KeywordSymbol *) symbols[index])->keyword == v_Order) {
+    if (((KeywordSymbol *) symbols[index])->keyword == k_Order) {
         index++;
         if (index == symbols.size() || symbols[index]->symbolValueType != s_Keyword ||
-            ((KeywordSymbol *) symbols[index])->keyword != v_By) {
+            ((KeywordSymbol *) symbols[index])->keyword != k_By) {
             Error::syntaxError("ORDER");
         }
-        splitSymbols = SelectStatement::splitUntilKeywords(symbols, index + 1, {v_Limit});
+        splitSymbols = SelectStatement::splitUntilKeywords(symbols, index + 1, {k_Limit});
         this->orderBy = Field::createListField(splitSymbols);
         index += (int) splitSymbols.size() + 1;
     }
 
     if (index == symbols.size()) return;
 
-    if (((KeywordSymbol *) symbols[index])->keyword == v_Limit) {
+    if (((KeywordSymbol *) symbols[index])->keyword == k_Limit) {
         index++;
         if (index == symbols.size() || symbols[index]->symbolValueType != s_Number) {
             Error::syntaxError("LIMIT");
@@ -91,7 +91,7 @@ SelectStatement::SelectStatement(const std::vector<Symbol *> &symbols) : Stateme
 
 bool SelectStatement::isDistinct(std::vector<Symbol *> symbols) {
     if (symbols[1]->symbolValueType == s_Keyword) {
-        if (((KeywordSymbol *) symbols[1])->keyword == v_Distinct) {
+        if (((KeywordSymbol *) symbols[1])->keyword == k_Distinct) {
             return true;
         }
         Error::syntaxError("SELECT");

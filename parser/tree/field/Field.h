@@ -16,6 +16,7 @@ enum FieldType {
     f_Function,
     f_ConstString,
     f_ConstNumber,
+    f_Reference,
     f_Operation,
 };
 
@@ -29,7 +30,7 @@ public:
 
     static std::vector<Symbol *> getSymbolsBeforeComma(const std::vector<Symbol *> &symbols, int start);
 
-    static std::vector<Symbol *> cut_symbol_vector(const std::vector<Symbol *> &symbols, int start, int end);
+    static std::vector<Symbol *> cut_symbol_vector(const std::vector<Symbol *> &symbols, unsigned long long start, unsigned long long end);
 
     static int tryConvertToOperatorEnum(Symbol *symbol);
 

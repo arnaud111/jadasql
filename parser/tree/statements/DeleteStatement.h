@@ -15,6 +15,9 @@ public:
     TableReference *table;
     Field * where;
 
+    explicit DeleteStatement(std::vector<Symbol *> symbols);
+
+    void display() override;
 };
 
 

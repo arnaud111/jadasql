@@ -14,8 +14,18 @@ class InsertStatement : public Statement {
 
 public:
     TableReference *tableReference;
+    bool columnsExplicit;
     std::vector<ColumnReference*> columns;
-    std::vector<Field *> values;
+    std::vector<std::vector<Field *>> values;
+
+    explicit InsertStatement(std::vector<Symbol *> symbols);
+
+    void display() override;
+
+private:
+
+    static std::vector<Symbol *> getInParenthesis(unsigned long long start, std::vector<Symbol *> symbols);
+
 };
 
 

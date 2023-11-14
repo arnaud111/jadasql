@@ -175,10 +175,10 @@ Field *Field::tryConvertToStatement(const std::vector<Symbol *> &symbols) {
     return Parser::createStatement(symbols);
 }
 
-std::vector<Symbol *> Field::cut_symbol_vector(const std::vector<Symbol *> &symbols, int start, int end) {
+std::vector<Symbol *> Field::cut_symbol_vector(const std::vector<Symbol *> &symbols, unsigned long long start, unsigned long long end) {
     std::vector<Symbol *> newListSymbol;
 
-    for (int i = start; i < end; i++) {
+    for (unsigned long long i = start; i < end; i++) {
         newListSymbol.push_back(symbols[i]);
     }
 
@@ -270,21 +270,21 @@ int Field::tryConvertToOperatorEnum(Symbol *symbol) {
             return o_Mod;
         }
     } else if (symbol->symbolValueType == s_Keyword) {
-        if (((KeywordSymbol *) symbol)->keyword == v_And) {
+        if (((KeywordSymbol *) symbol)->keyword == k_And) {
             return o_And;
-        } else if (((KeywordSymbol *) symbol)->keyword == v_Or) {
+        } else if (((KeywordSymbol *) symbol)->keyword == k_Or) {
             return o_Or;
-        } else if (((KeywordSymbol *) symbol)->keyword == v_Not) {
+        } else if (((KeywordSymbol *) symbol)->keyword == k_Not) {
             return o_Not;
-        } else if (((KeywordSymbol *) symbol)->keyword == v_In) {
+        } else if (((KeywordSymbol *) symbol)->keyword == k_In) {
             return o_In;
-        } else if (((KeywordSymbol *) symbol)->keyword == v_Between) {
+        } else if (((KeywordSymbol *) symbol)->keyword == k_Between) {
             return o_Between;
-        } else if (((KeywordSymbol *) symbol)->keyword == v_Like) {
+        } else if (((KeywordSymbol *) symbol)->keyword == k_Like) {
             return o_Like;
-        } else if (((KeywordSymbol *) symbol)->keyword == v_Some) {
+        } else if (((KeywordSymbol *) symbol)->keyword == k_Some) {
             return o_Some;
-        } else if (((KeywordSymbol *) symbol)->keyword == v_Exists) {
+        } else if (((KeywordSymbol *) symbol)->keyword == k_Exists) {
             return o_Exists;
         }
     }

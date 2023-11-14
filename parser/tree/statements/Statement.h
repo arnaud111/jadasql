@@ -14,6 +14,8 @@ enum StatementType {
     Update,
     Drop,
     Delete,
+    Create,
+    Alter,
 };
 
 class Statement : public Field {
@@ -21,8 +23,11 @@ class Statement : public Field {
 public:
     StatementType statementType;
 
-    static std::vector<Symbol *>
-    splitUntilKeywords(std::vector<Symbol *> symbols, int start, const std::vector<int> &keywords);
+    static std::vector<Symbol *> splitUntilKeywords(std::vector<Symbol *> symbols, unsigned long long start, const std::vector<int> &keywords);
+
+    static std::vector<Symbol *> splitUntilParenthesisOrKeyword(std::vector<Symbol *> symbols, unsigned long long start, const std::vector<int> &keywords);
+
+    static std::vector<std::vector<Symbol *>> splitComa(const std::vector<Symbol *>& symbols);
 };
 
 #endif //JADA_STATEMENT_H

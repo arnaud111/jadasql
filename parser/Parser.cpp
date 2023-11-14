@@ -7,6 +7,10 @@
 #include "../lexer/symbol/keyword/StatementSymbol.h"
 #include "tree/statements/SelectStatement.h"
 #include "../lexer/symbol/keyword/DelimiterSymbol.h"
+#include "tree/statements/DropStatement.h"
+#include "tree/statements/DeleteStatement.h"
+#include "tree/statements/UpdateStatement.h"
+#include "tree/statements/InsertStatement.h"
 
 std::vector<Statement*> Parser::parse(const std::vector<Symbol*>& symbols) {
     std::vector<Statement*> listStatement;
@@ -53,12 +57,16 @@ Statement* Parser::createStatement(std::vector<Symbol*> symbols) {
             statement = new SelectStatement(symbols);
             break;
         case v_Update:
+            statement = new UpdateStatement(symbols);
             break;
         case v_Delete:
+            statement = new DeleteStatement(symbols);
             break;
         case v_Drop:
+            statement = new DropStatement(symbols);
             break;
         case v_Insert:
+            statement = new InsertStatement(symbols);
             break;
         case v_Create:
             break;

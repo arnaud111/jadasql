@@ -8,13 +8,18 @@
 
 #include "Statement.h"
 #include "../structure/TableReference.h"
+#include "../assign/Assign.h"
 
 class UpdateStatement : public Statement {
 
 public:
     TableReference *tableReference;
-    std::vector<Field *> set;
+    std::vector<Assign *> set;
     Field * where;
+
+    explicit UpdateStatement(std::vector<Symbol *> symbols);
+
+    void display() override;
 };
 
 

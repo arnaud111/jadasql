@@ -53,6 +53,8 @@ enum KeywordSymbolEnum {
     k_Is,
     k_Order,
     k_By,
+    k_Asc,
+    k_Desc,
     k_Inner,
     k_Left,
     k_Right,
@@ -73,7 +75,7 @@ class KeywordSymbol : public Symbol {
 
 public:
     static int size;
-    static std::string stringValues[60];
+    static std::string stringValues[62];
     KeywordSymbolEnum keyword;
 
     explicit KeywordSymbol(int val) {

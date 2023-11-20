@@ -6,6 +6,7 @@
 #include "../../../error/Error.h"
 #include "../../../lexer/symbol/keyword/OperatorSymbol.h"
 #include "../../../lexer/symbol/value/IdentifierSymbol.h"
+#include "../statements/Statement.h"
 
 Assign::Assign(std::vector<Symbol *> symbols) {
     this->column = nullptr;
@@ -24,7 +25,7 @@ Assign::Assign(std::vector<Symbol *> symbols) {
     }
 
     this->column = new ColumnReference(((IdentifierSymbol *) symbols[0])->value);
-    this->value = Field::convertToField(Field::cut_symbol_vector(symbols, 2, symbols.size()));
+    this->value = Field::convertToField(Statement::cut_symbol_vector(symbols, 2, symbols.size()));
 }
 
 std::vector<Assign *> Assign::convert_to_list_assign(std::vector<Symbol *> symbols) {
@@ -32,9 +33,8 @@ std::vector<Assign *> Assign::convert_to_list_assign(std::vector<Symbol *> symbo
     Assign *tmpAssign;
     std::vector<Symbol *> tmpSymbolList;
 
-    for (int start = 0; start < symbols.size(); start += (int) tmpSymbolList.size() + 1) {
-        tmpSymbolList = Field::getSymbolsBeforeComma(symbols, start);
-        tmpAssign = new Assign(tmpSymbolList);
+    for(auto & symbolList: Statement::splitComa(symbols)) {
+        tmpAssign = new Assign(symbolList);
         list.push_back(tmpAssign);
     }
 

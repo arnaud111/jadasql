@@ -23,11 +23,14 @@ class Statement : public Field {
 public:
     StatementType statementType;
 
-    static std::vector<Symbol *> splitUntilKeywords(std::vector<Symbol *> symbols, unsigned long long start, const std::vector<int> &keywords);
+    static std::vector<Symbol *> splitUntilKeywords(std::vector<Symbol *> symbols, unsigned long long start, const std::vector<int> &keywords = {});
 
     static std::vector<Symbol *> splitUntilParenthesisOrKeyword(std::vector<Symbol *> symbols, unsigned long long start, const std::vector<int> &keywords);
 
     static std::vector<std::vector<Symbol *>> splitComa(const std::vector<Symbol *>& symbols);
+
+    static std::vector<Symbol *> cut_symbol_vector(const std::vector<Symbol *> &symbols, unsigned long long int start, unsigned long long int end);
+
 };
 
 #endif //JADA_STATEMENT_H

@@ -3,12 +3,11 @@
 
 int main() {
 
-    string request = "SELECT DISTINCT T.col, _Uwu1, \"UwU\\\"'\", 3, MAX(CONCAT(\"test\", c.coucou)) FROM test@t_test T LEFT JOIN test2 WHERE 1 > (1 % 1) GROUP BY test1, 1 ORDER BY test2, 1 DESC LIMIT 1;"
+    string request = "SELECT DISTINCT T.col, _Uwu1, \"UwU\\\"'\", 3, MAX(CONCAT(\"test\", c.coucou)) FROM test@t_test T LEFT JOIN ta ON ta.id = T.id WHERE 1 > (1 % 1) GROUP BY test1, 1 ORDER BY test2, 1 DESC LIMIT 1;"
                      "DROP TABLE IF EXISTS test;"
                      "DELETE FROM test WHERE 1 = 1 AND 1 > 2 + 3 * 5;"
                      "UPDATE test SET a = 1 WHERE aaa < BBBB;"
                      "INSERT INTO test (a, b, c) VALUES (\"val\"), (2);";
-    // TODO: Jointure sur le SELECT, GROUP BY avec ASC / DESC
     //cout << "SQL -> ";
     //getline(cin, request);
     printf("---LEXER---\n");

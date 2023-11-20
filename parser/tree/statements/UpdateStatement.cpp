@@ -31,7 +31,7 @@ UpdateStatement::UpdateStatement(std::vector<Symbol *> symbols) {
 
     index += tmpArraySymbol.size();
     if (symbols.size() > index) {
-        tmpArraySymbol = Field::cut_symbol_vector(symbols, index + 1, symbols.size());
+        tmpArraySymbol = Statement::cut_symbol_vector(symbols, index + 1, symbols.size());
         this->where = Field::convertToField(tmpArraySymbol);
     }
 }

@@ -22,6 +22,9 @@
 #include "../assign/Assign.h"
 #include "../statements/UpdateStatement.h"
 #include "../statements/InsertStatement.h"
+#include "../operation/Operation.h"
+#include "../from/Joint.h"
+
 
 void InsertStatement::display() {
     printf("INSERT INTO ");
@@ -122,6 +125,11 @@ void SelectStatement::display() {
                 printf(", ");
             }
         }
+        if (this->asc) {
+            printf("ASC ");
+        } else {
+            printf("DESC ");
+        }
     }
     if (limit != -1) {
         printf("LIMIT %d", this->limit);
@@ -158,9 +166,6 @@ void ColumnReference::display() {
 
 void Joint::display() {
     switch (this->joinType) {
-        case Join:
-            printf("JOIN ");
-            break;
         case InnerJoin:
             printf("INNER JOIN ");
             break;
@@ -171,9 +176,13 @@ void Joint::display() {
             printf("RIGHT JOIN ");
             break;
     }
-    table->display();
-    printf("ON ");
-    on->display();
+    if (this->table != nullptr) {
+        this->table->display();
+    }
+    if (this->on != nullptr) {
+        printf("ON ");
+        this->on->display();
+    }
 }
 
 void From::display() {
@@ -183,7 +192,7 @@ void From::display() {
     }
 }
 
-void Condition::display() {
+void Operation::display() {
     printf("(");
     this->field1->display();
     switch (this->operation) {

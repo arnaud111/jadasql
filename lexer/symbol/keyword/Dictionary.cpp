@@ -61,8 +61,8 @@ std::string StatementSymbol::stringValues[7] = {
         "ALTER",
 };
 
-int KeywordSymbol::size = 60;
-std::string KeywordSymbol::stringValues[60] = {
+int KeywordSymbol::size = 62;
+std::string KeywordSymbol::stringValues[62] = {
         "FROM",
         "VALUES",
         "WHERE",
@@ -107,6 +107,8 @@ std::string KeywordSymbol::stringValues[60] = {
         "IS",
         "ORDER",
         "BY",
+        "ASC",
+        "DESC",
         "INNER",
         "LEFT",
         "RIGHT",

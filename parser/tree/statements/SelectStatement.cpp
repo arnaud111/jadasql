@@ -18,6 +18,7 @@ SelectStatement::SelectStatement(const std::vector<Symbol *> &symbols) : Stateme
     this->statementType = Select;
     this->from = nullptr;
     this->where = nullptr;
+    this->asc = true;
     this->limit = -1;
     this->distinct = SelectStatement::isDistinct(symbols);
 
@@ -66,9 +67,16 @@ SelectStatement::SelectStatement(const std::vector<Symbol *> &symbols) : Stateme
             ((KeywordSymbol *) symbols[index])->keyword != k_By) {
             Error::syntaxError("ORDER");
         }
-        splitSymbols = SelectStatement::splitUntilKeywords(symbols, index + 1, {k_Limit});
+        splitSymbols = SelectStatement::splitUntilKeywords(symbols, index + 1, {k_Limit, k_Asc, k_Desc});
         this->orderBy = Field::createListField(splitSymbols);
         index += (int) splitSymbols.size() + 1;
+        if (index == symbols.size()) return;
+        if (((KeywordSymbol *) symbols[index])->keyword == k_Desc) {
+            this->asc = false;
+            index++;
+        } else if (((KeywordSymbol *) symbols[index])->keyword == k_Asc) {
+            index++;
+        }
     }
 
     if (index == symbols.size()) return;

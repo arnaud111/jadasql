@@ -6,10 +6,9 @@
 #define JADA_JOINT_H
 
 #include "../structure/TableReference.h"
-#include "../condition/Condition.h"
+#include "../operation/Operation.h"
 
 enum JointTypeEnum {
-    Join,
     InnerJoin,
     LeftJoin,
     RightJoin,
@@ -20,9 +19,11 @@ class Joint : public TreeItem {
 public:
     JointTypeEnum joinType;
     TableReference *table;
-    Condition *on;
+    Field *on;
 
     void display() override;
+
+    explicit Joint(std::vector<Symbol *> symbols);
 };
 
 #endif //JADA_JOINT_H

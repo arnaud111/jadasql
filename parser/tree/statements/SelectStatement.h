@@ -10,7 +10,7 @@
 #include "Statement.h"
 #include "../field/Field.h"
 #include "../from/From.h"
-#include "../condition/Condition.h"
+#include "../operation/Operation.h"
 #include "../../../lexer/symbol/Symbol.h"
 
 
@@ -22,6 +22,7 @@ public:
     Field * where;
     std::vector<Field *> groupBy;
     std::vector<Field *> orderBy;
+    bool asc;
     int limit;
     bool distinct;
 

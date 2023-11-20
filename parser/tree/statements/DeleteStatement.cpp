@@ -29,6 +29,6 @@ DeleteStatement::DeleteStatement(std::vector<Symbol *> symbols) {
         if (symbols[tableSymbols.size() + 2]->symbolValueType != s_Keyword || ((KeywordSymbol *) symbols[tableSymbols.size() + 2])->keyword != k_Where) {
             Error::syntaxError(symbols[tableSymbols.size() + 2]);
         }
-        this->where = Field::convertToField(Field::cut_symbol_vector(symbols, tableSymbols.size() + 3, symbols.size()));
+        this->where = Field::convertToField(Statement::cut_symbol_vector(symbols, tableSymbols.size() + 3, symbols.size()));
     }
 }

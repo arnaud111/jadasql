@@ -39,7 +39,7 @@ DropStatement::DropStatement(const std::vector<Symbol *> &symbols) {
         if (symbols.size() != field_pos + 1 && symbols.size() != field_pos + 3) {
             Error::syntaxError(symbols[symbols.size() - 1]);
         }
-        this->droppedField = new TableReference(Field::cut_symbol_vector(symbols, field_pos, symbols.size()));
+        this->droppedField = new TableReference(Statement::cut_symbol_vector(symbols, field_pos, symbols.size()));
     }
 
     if (this->droppedField == nullptr) {

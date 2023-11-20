@@ -54,7 +54,7 @@ InsertStatement::InsertStatement(std::vector<Symbol *> symbols) {
         Error::syntaxError("Expected VALUES data");
     }
 
-    rowList = Statement::splitComa(Field::cut_symbol_vector(symbols, index, symbols.size()));
+    rowList = Statement::splitComa(Statement::cut_symbol_vector(symbols, index, symbols.size()));
 
     for (auto & row: rowList) {
         tmpSymbolsArray = getInParenthesis(0, row);

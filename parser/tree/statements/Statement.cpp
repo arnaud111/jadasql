@@ -29,6 +29,9 @@ std::vector<Symbol *> Statement::splitUntilKeywords(std::vector<Symbol *> symbol
         }
 
         if (parenthesis == 0 && symbols[i]->symbolValueType == s_Keyword) {
+            if (keywords.empty()) {
+                return fields;
+            }
             for (int keyword: keywords) {
                 if (((KeywordSymbol *) symbols[i])->keyword == keyword) {
                     return fields;
@@ -90,4 +93,14 @@ std::vector<std::vector<Symbol *>> Statement::splitComa(const std::vector<Symbol
     fields.push_back(tmpArray);
 
     return fields;
+}
+
+std::vector<Symbol *> Statement::cut_symbol_vector(const std::vector<Symbol *> &symbols, unsigned long long start, unsigned long long end) {
+    std::vector<Symbol *> newListSymbol;
+
+    for (unsigned long long i = start; i < end; i++) {
+        newListSymbol.push_back(symbols[i]);
+    }
+
+    return newListSymbol;
 }

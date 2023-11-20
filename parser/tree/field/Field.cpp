@@ -24,50 +24,18 @@
 #include "../function/CoalesceFunction.h"
 #include "../../Parser.h"
 #include "../../../lexer/symbol/keyword/OperatorSymbol.h"
-#include "../condition/Condition.h"
+#include "../operation/Operation.h"
 
 std::vector<Field *> Field::createListField(const std::vector<Symbol *> &symbols) {
     std::vector<Field *> listFields;
     Field *tmpField;
-    std::vector<Symbol *> tmpSymbolList;
 
-    for (int start = 0; start < symbols.size(); start += (int) tmpSymbolList.size() + 1) {
-        tmpSymbolList = getSymbolsBeforeComma(symbols, start);
-        tmpField = convertToField(tmpSymbolList);
+    for(auto & symbolList: Statement::splitComa(symbols)) {
+        tmpField = convertToField(symbolList);
         listFields.push_back(tmpField);
     }
 
     return listFields;
-}
-
-std::vector<Symbol *> Field::getSymbolsBeforeComma(const std::vector<Symbol *> &symbols, int start) {
-    std::vector<Symbol *> symbolList;
-    int parenthesis = 0;
-
-    for (int i = start; i < symbols.size(); i++) {
-        if (symbols[i]->symbolValueType == s_Delimiter) {
-            if (((DelimiterSymbol *) symbols[i])->keyword == v_ParenthesisLeft) {
-                parenthesis += 1;
-                symbolList.push_back(symbols[i]);
-                continue;
-            }
-            if (((DelimiterSymbol *) symbols[i])->keyword == v_ParenthesisRight) {
-                parenthesis -= 1;
-                if (parenthesis < 0) {
-                    Error::syntaxError(")");
-                }
-                symbolList.push_back(symbols[i]);
-                continue;
-            }
-            if (parenthesis == 0 && ((DelimiterSymbol *) symbols[i])->keyword == v_Comma) {
-                return symbolList;
-            }
-        }
-
-        symbolList.push_back(symbols[i]);
-    }
-
-    return symbolList;
 }
 
 Field *Field::convertToField(const std::vector<Symbol *> &symbols) {
@@ -77,7 +45,7 @@ Field *Field::convertToField(const std::vector<Symbol *> &symbols) {
 
     if (symbols.size() > 2 && symbols[0]->symbolValueType == s_Delimiter && ((DelimiterSymbol *) symbols[0])->keyword == v_ParenthesisLeft
         && symbols[symbols.size() - 1]->symbolValueType == s_Delimiter && ((DelimiterSymbol *) symbols[symbols.size() - 1])->keyword == v_ParenthesisRight) {
-        usableSymbols = cut_symbol_vector(symbols, 1, symbols.size() - 1);
+        usableSymbols = Statement::cut_symbol_vector(symbols, 1, symbols.size() - 1);
         parenthesis = true;
     }
 
@@ -175,16 +143,6 @@ Field *Field::tryConvertToStatement(const std::vector<Symbol *> &symbols) {
     return Parser::createStatement(symbols);
 }
 
-std::vector<Symbol *> Field::cut_symbol_vector(const std::vector<Symbol *> &symbols, unsigned long long start, unsigned long long end) {
-    std::vector<Symbol *> newListSymbol;
-
-    for (unsigned long long i = start; i < end; i++) {
-        newListSymbol.push_back(symbols[i]);
-    }
-
-    return newListSymbol;
-}
-
 Field *Field::tryConvertToOperation(const std::vector<Symbol *> &symbols) {
     int parenthesis_count = 0;
     int min_parenthesis_count = -1;
@@ -227,10 +185,10 @@ Field *Field::tryConvertToOperation(const std::vector<Symbol *> &symbols) {
     }
 
     if (min_index != -1) {
-        return new Condition(
-                    convertToField(cut_symbol_vector(symbols, 0, min_index)),
+        return new Operation(
+                    convertToField(Statement::cut_symbol_vector(symbols, 0, min_index)),
                     (OperationPriorityEnum) min_operator,
-                    convertToField(cut_symbol_vector(symbols, min_index + 1, symbols.size()))
+                    convertToField(Statement::cut_symbol_vector(symbols, min_index + 1, symbols.size()))
                 );
     }
 

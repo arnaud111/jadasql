@@ -22,9 +22,52 @@
 #include "../assign/Assign.h"
 #include "../statements/UpdateStatement.h"
 #include "../statements/InsertStatement.h"
-#include "../operation/Operation.h"
-#include "../from/Joint.h"
+#include "../statements/CreateStatement.h"
+#include "../datatype/Boolean.h"
+#include "../datatype/Char.h"
+#include "../datatype/Date.h"
+#include "../datatype/DateTime.h"
+#include "../datatype/Double.h"
+#include "../datatype/Float.h"
+#include "../datatype/Int.h"
+#include "../datatype/Timestamp.h"
+#include "../datatype/TinyInt.h"
+#include "../datatype/VarChar.h"
+#include "../field/NullField.h"
+#include "../column_actions/ColumnConstraints.h"
+#include "../column_actions/constraints/Unique.h"
+#include "../column_actions/constraints/ForeignKey.h"
+#include "../column_actions/constraints/PrimaryKey.h"
+#include "../column_actions/constraints/Check.h"
+#include "../column_actions/ColumnDetail.h"
 
+
+void CreateStatement::display() {
+    printf("CREATE ");
+    switch (this->type) {
+        case CreateTable:
+            printf("TABLE ");
+            break;
+        case CreateDatabase:
+            printf("DATABASE ");
+            break;
+    }
+    if (this->ifNotExist) {
+        printf("IF NOT EXISTS ");
+    }
+    this->createdField->display();
+    if (!this->columns.empty()) {
+        printf("(");
+        for (auto & c: this->columns) {
+            if (c != nullptr) {
+                c->display();
+                printf(", ");
+            }
+        }
+        printf(")");
+    }
+    printf(";\n");
+}
 
 void InsertStatement::display() {
     printf("INSERT INTO ");
@@ -135,6 +178,105 @@ void SelectStatement::display() {
         printf("LIMIT %d", this->limit);
     }
     printf(";\n");
+}
+
+void ColumnDetail::display() {
+    this->name->display();
+    this->dataType->display();
+    if (this->notNull) {
+        printf("NOT NULL ");
+    }
+    if (this->defaultValue) {
+        printf("DEFAULT ");
+        this->defaultValue->display();
+    }
+    if (this->autoIncrement) {
+        printf("AUTO_INCREMENT ");
+    }
+}
+
+void Unique::display() {
+    printf("UNIQUE(");
+    for (auto &col: this->columns) {
+        col->display();
+    }
+    printf(", ");
+    printf(") ");
+}
+
+void ForeignKey::display() {
+    printf("FOREIGN KEY(");
+    for (auto &col: this->columns) {
+        col->display();
+        printf(", ");
+    }
+    printf(") REFERENCES ");
+    this->tableReference->display();
+    printf("(");
+    for (auto &col: this->references) {
+        col->display();
+        printf(", ");
+    }
+    printf(") ");
+}
+
+void PrimaryKey::display() {
+    printf("PRIMARY KEY(");
+    for (auto &col: this->columns) {
+        col->display();
+        printf(", ");
+    }
+    printf(") ");
+}
+
+void Check::display() {
+    printf("CHECK(");
+    this->condition->display();
+    printf(") ");
+}
+
+void Boolean::display() {
+    printf("BOOL ");
+}
+
+void Char::display() {
+    printf("CHAR(%llu) ", this->size);
+}
+
+void Date::display() {
+    printf("DATE ");
+}
+
+void DateTime::display() {
+    printf("DATETIME ");
+}
+
+void Double::display() {
+    printf("DOUBLE ");
+}
+
+void Float::display() {
+    printf("FLOAT ");
+}
+
+void Int::display() {
+    printf("INT ");
+}
+
+void Timestamp::display() {
+    printf("TIMESTAMP ");
+}
+
+void TinyInt::display() {
+    printf("TINYINT ");
+}
+
+void VarChar::display() {
+    printf("VARCHAR(%llu) ", this->size);
+}
+
+void NullField::display() {
+    printf("NULL ");
 }
 
 void Assign::display() {

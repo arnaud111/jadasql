@@ -16,6 +16,7 @@ enum FieldType {
     f_Function,
     f_ConstString,
     f_ConstNumber,
+    f_Null,
     f_Reference,
     f_Operation,
 };

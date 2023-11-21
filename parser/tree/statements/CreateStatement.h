@@ -7,7 +7,7 @@
 
 
 #include "Statement.h"
-#include "../column_actions/ColumnDetail.h"
+#include "../column_actions/ColumnCreationInfo.h"
 
 enum CreateStatementTypeEnum {
     CreateTable,
@@ -18,10 +18,19 @@ class CreateStatement : public Statement {
 
 public:
     CreateStatementTypeEnum type;
-    bool ifExist;
+    bool ifNotExist;
     Field *createdField;
-    std::vector<ColumnDetail *> columns;
+    std::vector<ColumnCreationInfo *> columns;
 
+    explicit CreateStatement(std::vector<Symbol *> symbols);
+
+    void display() override;
+
+private:
+
+    void createDatabase(std::vector<Symbol *> symbols);
+
+    void createTable(std::vector<Symbol *> symbols);
 };
 
 

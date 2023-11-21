@@ -9,6 +9,7 @@
 #include <vector>
 #include "../ColumnConstraints.h"
 #include "../../field/Field.h"
+#include "../../structure/TableReference.h"
 
 class ForeignKey: public ColumnConstraints {
 
@@ -16,9 +17,12 @@ public:
 
     std::string name;
     std::vector<Field *> columns;
+    TableReference * tableReference;
     std::vector<Field *> references;
 
     explicit ForeignKey(std::vector<Symbol *> symbols);
+
+    void display() override;
 
 };
 

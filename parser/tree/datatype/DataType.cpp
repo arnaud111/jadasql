@@ -22,8 +22,22 @@ Boolean::Boolean() : DataType() {
     this->type = d_Boolean;
 }
 
-Char::Char(): DataType() {
+Char::Char(std::vector<Symbol *> symbol): DataType() {
     this->type = d_Char;
+
+    if (symbol[1]->symbolValueType != s_Delimiter || ((DelimiterSymbol *) symbol[1])->keyword != v_ParenthesisLeft) {
+        Error::syntaxError(symbol[1]);
+    }
+
+    if (symbol[3]->symbolValueType != s_Delimiter || ((DelimiterSymbol *) symbol[3])->keyword != v_ParenthesisRight) {
+        Error::syntaxError(symbol[3]);
+    }
+
+    if (symbol[2]->symbolValueType != s_Number) {
+        Error::syntaxError(symbol[2]);
+    }
+
+    this->size = ((NumberSymbol *) symbol[2])->value;
 }
 
 Date::Date(): DataType() {
@@ -77,7 +91,7 @@ DataType *DataType::convertToDataType(std::vector<Symbol *> symbols) {
     if (symbols.size() == 1 && symbols[0]->symbolValueType == s_DataType) {
         switch (((DataTypeSymbol *) symbols[0])->keyword) {
             case v_Char:
-                return new Char();
+                break;
             case v_Tinyint:
                 return new TinyInt();
             case v_Boolean:
@@ -97,8 +111,12 @@ DataType *DataType::convertToDataType(std::vector<Symbol *> symbols) {
             case v_Varchar:
                 break;
         }
-    } else if (symbols.size() == 4 && symbols[0]->symbolValueType == s_DataType && ((DataTypeSymbol *) symbols[0])->keyword == v_Varchar) {
-        return new VarChar(symbols);
+    } else if (symbols.size() == 4 && symbols[0]->symbolValueType == s_DataType) {
+        if (((DataTypeSymbol *) symbols[0])->keyword == v_Varchar) {
+            return new VarChar(symbols);
+        } else if (((DataTypeSymbol *) symbols[0])->keyword == v_Char) {
+            return new Char(symbols);
+        }
     }
 
     return nullptr;

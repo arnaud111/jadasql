@@ -13,6 +13,8 @@ class Boolean: public DataType {
 public:
 
     explicit Boolean();
+
+    void display() override;
 };
 
 

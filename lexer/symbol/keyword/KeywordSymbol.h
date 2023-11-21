@@ -46,9 +46,11 @@ enum KeywordSymbolEnum {
     k_Unique,
     k_Primary,
     k_Foreign,
+    k_References,
     k_Key,
     k_Check,
     k_Default,
+    k_AutoIncrement,
     k_Index,
     k_Is,
     k_Order,
@@ -75,7 +77,7 @@ class KeywordSymbol : public Symbol {
 
 public:
     static int size;
-    static std::string stringValues[62];
+    static std::string stringValues[64];
     KeywordSymbolEnum keyword;
 
     explicit KeywordSymbol(int val) {

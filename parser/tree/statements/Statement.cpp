@@ -104,3 +104,25 @@ std::vector<Symbol *> Statement::cut_symbol_vector(const std::vector<Symbol *> &
 
     return newListSymbol;
 }
+
+std::vector<Symbol *> Statement::splitUntilRightParenthesis(std::vector<Symbol *> symbols, unsigned long long int start) {
+    std::vector<Symbol *> fields;
+    int parenthesis = 0;
+
+    for (unsigned long long i = start; i < symbols.size(); i++) {
+        if (symbols[i]->symbolValueType == s_Delimiter) {
+            if (((DelimiterSymbol *) symbols[i])->keyword == v_ParenthesisLeft) {
+                parenthesis++;
+            } else if (((DelimiterSymbol *) symbols[i])->keyword == v_ParenthesisRight) {
+                if (parenthesis == 0) {
+                    break;
+                }
+                parenthesis--;
+            }
+        }
+
+        fields.push_back(symbols[i]);
+    }
+
+    return fields;
+}

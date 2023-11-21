@@ -17,6 +17,8 @@ public:
 
     explicit PrimaryKey(std::vector<Symbol *> symbols);
 
+    void display() override;
+
 };
 
 #endif //JADA_PRIMARYKEY_H

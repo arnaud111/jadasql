@@ -13,6 +13,8 @@ class TinyInt: public DataType {
 public:
 
     explicit TinyInt();
+
+    void display() override;
 };
 
 

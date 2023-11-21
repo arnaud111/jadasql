@@ -13,9 +13,9 @@ class DatabaseReference : public Field {
 public:
     std::string databaseName;
 
-    explicit DatabaseReference(std::string databaseName) {
-        this->databaseName = std::move(databaseName);
-    }
+    explicit DatabaseReference(std::string databaseName);
+
+    explicit DatabaseReference(std::vector<Symbol *> symbols);
 
     void display() override;
 };

@@ -35,3 +35,18 @@ TableReference::TableReference(std::vector<Symbol *> symbols) {
         Error::syntaxError(symbols[0]);
     }
 }
+
+DatabaseReference::DatabaseReference(std::vector<Symbol *> symbols) {
+
+    if (symbols.size() != 1) {
+        Error::syntaxError(symbols[symbols.size() - 1]);
+    } if (symbols[0]->symbolValueType != s_Identifier) {
+        Error::syntaxError(symbols[0]);
+    }
+
+    this->databaseName = ((IdentifierSymbol *) symbols[0])->value;
+}
+
+DatabaseReference::DatabaseReference(std::string databaseName)  {
+    this->databaseName = std::move(databaseName);
+}

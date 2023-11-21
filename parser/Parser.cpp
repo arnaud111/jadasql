@@ -11,6 +11,7 @@
 #include "tree/statements/DeleteStatement.h"
 #include "tree/statements/UpdateStatement.h"
 #include "tree/statements/InsertStatement.h"
+#include "tree/statements/CreateStatement.h"
 
 std::vector<Statement*> Parser::parse(const std::vector<Symbol*>& symbols) {
     std::vector<Statement*> listStatement;
@@ -69,6 +70,7 @@ Statement* Parser::createStatement(std::vector<Symbol*> symbols) {
             statement = new InsertStatement(symbols);
             break;
         case v_Create:
+            statement = new CreateStatement(symbols);
             break;
         case v_Alter:
             break;

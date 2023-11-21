@@ -12,7 +12,11 @@ class Char: public DataType {
 
 public:
 
-    explicit Char();
+    unsigned long long size;
+
+    explicit Char(std::vector<Symbol *> symbol);
+
+    void display() override;
 };
 
 

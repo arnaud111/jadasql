@@ -13,6 +13,8 @@ class Int: public DataType {
 public:
 
     explicit Int();
+
+    void display() override;
 };
 
 

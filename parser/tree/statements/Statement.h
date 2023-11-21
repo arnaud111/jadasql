@@ -27,6 +27,8 @@ public:
 
     static std::vector<Symbol *> splitUntilParenthesisOrKeyword(std::vector<Symbol *> symbols, unsigned long long start, const std::vector<int> &keywords);
 
+    static std::vector<Symbol *> splitUntilRightParenthesis(std::vector<Symbol *> symbols, unsigned long long start);
+
     static std::vector<std::vector<Symbol *>> splitComa(const std::vector<Symbol *>& symbols);
 
     static std::vector<Symbol *> cut_symbol_vector(const std::vector<Symbol *> &symbols, unsigned long long int start, unsigned long long int end);

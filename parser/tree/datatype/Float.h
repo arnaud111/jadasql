@@ -13,6 +13,8 @@ class Float: public DataType {
 public:
 
     explicit Float();
+
+    void display() override;
 };
 
 

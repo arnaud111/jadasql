@@ -13,6 +13,8 @@ class Double: public DataType {
 public:
 
     explicit Double();
+
+    void display() override;
 };
 
 

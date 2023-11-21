@@ -13,6 +13,8 @@ class DateTime: public DataType {
 public:
 
     explicit DateTime();
+
+    void display() override;
 };
 
 

@@ -7,6 +7,7 @@
 
 #include <vector>
 #include "../../../lexer/symbol/Symbol.h"
+#include "../tree_item/TreeItem.h"
 
 enum DataTypeEnum {
     d_Boolean,
@@ -21,7 +22,7 @@ enum DataTypeEnum {
     d_VarChar,
 };
 
-class DataType {
+class DataType: public TreeItem {
 
 public:
     DataTypeEnum type;

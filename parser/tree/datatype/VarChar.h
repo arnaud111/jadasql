@@ -15,6 +15,8 @@ public:
     unsigned long long size;
 
     explicit VarChar(std::vector<Symbol *> symbol);
+
+    void display() override;
 };
 
 

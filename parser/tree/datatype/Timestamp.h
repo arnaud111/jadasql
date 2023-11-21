@@ -13,6 +13,8 @@ class Timestamp: public DataType {
 public:
 
     explicit Timestamp();
+
+    void display() override;
 };
 
 

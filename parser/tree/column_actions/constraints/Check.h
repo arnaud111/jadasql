@@ -15,6 +15,8 @@ public:
 
     explicit Check(std::vector<Symbol *> symbols);
 
+    void display() override;
+
 };
 
 #endif //JADA_CHECK_H

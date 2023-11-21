@@ -13,6 +13,8 @@ class Date: public DataType {
 public:
 
     explicit Date();
+
+    void display() override;
 };
 
 

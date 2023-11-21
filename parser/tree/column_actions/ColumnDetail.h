@@ -6,20 +6,22 @@
 #define JADA_COLUMNDETAIL_H
 
 
-#include "../tree_item/TreeItem.h"
 #include "../structure/ColumnReference.h"
 #include "../datatype/DataType.h"
+#include "ColumnCreationInfo.h"
 
-class ColumnDetail: public TreeItem {
+class ColumnDetail: public ColumnCreationInfo {
 
 public:
     ColumnReference *name;
     DataType *dataType;
-    bool unique;
+    bool autoIncrement;
     bool notNull;
     Field *defaultValue;
 
     explicit ColumnDetail(std::vector<Symbol *> symbols);
+
+    void display() override;
 };
 
 

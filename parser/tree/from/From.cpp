@@ -24,6 +24,6 @@ From::From(const std::vector<Symbol *> &symbols) {
         symbolList = Statement::splitUntilKeywords(symbols, index + 1, {k_Left, k_Right, k_Inner});
         symbolList.insert(symbolList.begin(), symbols[index]);
         this->listJoint.push_back(new Joint(symbolList));
-        index += symbolList.size() + 1;
+        index += symbolList.size();
     }
 }

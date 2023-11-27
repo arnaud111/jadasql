@@ -19,14 +19,18 @@ int main() {
                      "UNIQUE(LastName, FirstName),"
                      "PRIMARY KEY (PersonID, LastName, FirstName),"
                      "FOREIGN KEY (PersonID, LastName, FirstName) REFERENCES tt@aa(id, tmp, name)"
-                     ");";
+                     ");"
+                     "ALTER TABLE tmp ADD aaa VARCHAR(256),"
+                     "CHANGE aaa bbb,"
+                     "MODIFY bbb INT,"
+                     "DROP bbb;";
     printf("---LEXER---\n");
     Lexer lexicalScanner = Lexer();
     vector<Symbol *> result = lexicalScanner.scan(request);
 
-    for (auto &i: result) {
+    /*for (auto &i: result) {
         i->display();
-    }
+    }*/
 
     printf("---PARSER---\n");
 
@@ -34,8 +38,13 @@ int main() {
 
     printf("size : %zu\n", listStatement.size());
 
+    for (auto &i: result) {
+        delete i;
+    }
+
     for (auto &i: listStatement) {
         i->display();
+        delete i;
     }
 
     return 0;

@@ -40,6 +40,16 @@
 #include "../column_actions/constraints/PrimaryKey.h"
 #include "../column_actions/constraints/Check.h"
 #include "../column_actions/ColumnDetail.h"
+#include "../statements/AlterStatement.h"
+
+void AlterStatement::display() {
+    printf("ALTER TABLE ");
+    this->table->display();
+    for (auto &m: this->modifications) {
+        m->display();
+    }
+    printf(";\n");
+}
 
 
 void CreateStatement::display() {
@@ -178,6 +188,30 @@ void SelectStatement::display() {
         printf("LIMIT %d", this->limit);
     }
     printf(";\n");
+}
+
+void ColumnModification::display() {
+    switch (this->modificationType) {
+        case m_Add:
+            printf("ADD ");
+            break;
+        case m_Drop:
+            printf("DROP ");
+            break;
+        case m_Modify:
+            printf("MODIFY ");
+            break;
+        case m_Change:
+            printf("CHANGE ");
+            break;
+    }
+    this->columnReference->display();
+    if (this->dataType != nullptr) {
+        this->dataType->display();
+    }
+    if (this->renameValue != nullptr) {
+        this->renameValue->display();
+    }
 }
 
 void ColumnDetail::display() {

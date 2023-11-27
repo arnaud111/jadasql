@@ -16,6 +16,10 @@ public:
     TableReference *table;
     std::vector<ColumnModification *> modifications;
 
+    explicit AlterStatement(std::vector<Symbol *> symbols);
+
+    void display() override;
+
 };
 
 

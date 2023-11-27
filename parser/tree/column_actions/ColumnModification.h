@@ -6,9 +6,29 @@
 #define JADA_COLUMNMODIFICATION_H
 
 
-class ColumnModification {
+#include "../tree_item/TreeItem.h"
+#include "../structure/ColumnReference.h"
+#include "../datatype/DataType.h"
 
+enum ModificationType {
+    m_Add,
+    m_Drop,
+    m_Modify,
+    m_Change,
+};
 
+class ColumnModification: public TreeItem {
+
+public:
+
+    ModificationType modificationType;
+    ColumnReference *columnReference;
+    DataType *dataType;
+    ColumnReference *renameValue;
+
+    explicit ColumnModification(std::vector<Symbol *> symbols);
+
+    void display() override;
 };
 
 

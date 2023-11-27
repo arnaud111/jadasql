@@ -6,8 +6,9 @@
 #include "../../../lexer/symbol/keyword/DelimiterSymbol.h"
 #include "../../../lexer/symbol/keyword/KeywordSymbol.h"
 #include "../../../error/Error.h"
+#include "../../../lexer/symbol/keyword/StatementSymbol.h"
 
-std::vector<Symbol *> Statement::splitUntilKeywords(std::vector<Symbol *> symbols, unsigned long long start, const std::vector<int> &keywords) {
+std::vector<Symbol *> Statement::splitUntilKeywords(std::vector<Symbol *> symbols, unsigned long long start, const std::vector<int> &keywords, const std::vector<int> &statement) {
     std::vector<Symbol *> fields;
     int parenthesis = 0;
 
@@ -25,6 +26,14 @@ std::vector<Symbol *> Statement::splitUntilKeywords(std::vector<Symbol *> symbol
                 }
                 fields.push_back(symbols[i]);
                 continue;
+            }
+        }
+
+        if (parenthesis == 0 && symbols[i]->symbolValueType == s_Statement) {
+            for (int s: statement) {
+                if (((StatementSymbol *) symbols[i])->keyword == s) {
+                    return fields;
+                }
             }
         }
 
@@ -67,28 +76,28 @@ std::vector<Symbol *> Statement::splitUntilParenthesisOrKeyword(std::vector<Symb
     return fields;
 }
 
-std::vector<std::vector<Symbol *>> Statement::splitComa(const std::vector<Symbol *>& symbols) {
+std::vector<std::vector<Symbol *>> Statement::splitComa(const std::vector<Symbol *>& symbols, unsigned long long start) {
     std::vector<std::vector<Symbol *>> fields;
     std::vector<Symbol *> tmpArray;
     int parenthesis = 0;
 
-    for (auto & symbol : symbols) {
-        if (symbol->symbolValueType == s_Delimiter) {
-            if (((DelimiterSymbol *) symbol)->keyword == v_Comma && parenthesis == 0) {
+    for (unsigned long long i = start; i < symbols.size(); i++) {
+        if (symbols[i]->symbolValueType == s_Delimiter) {
+            if (((DelimiterSymbol *) symbols[i])->keyword == v_Comma && parenthesis == 0) {
                 fields.push_back(tmpArray);
                 tmpArray = {};
                 continue;
             }
-            if (((DelimiterSymbol *) symbol)->keyword == v_ParenthesisLeft) {
+            if (((DelimiterSymbol *) symbols[i])->keyword == v_ParenthesisLeft) {
                 parenthesis += 1;
-            } else if (((DelimiterSymbol *) symbol)->keyword == v_ParenthesisRight) {
+            } else if (((DelimiterSymbol *) symbols[i])->keyword == v_ParenthesisRight) {
                 parenthesis -= 1;
                 if (parenthesis < 0) {
                     Error::syntaxError("Expected ')'");
                 }
             }
         }
-        tmpArray.push_back(symbol);
+        tmpArray.push_back(symbols[i]);
     }
     fields.push_back(tmpArray);
 

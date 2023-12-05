@@ -14,7 +14,7 @@ public:
 	}
 
 	V* operator[](K* key) {
-		root->getValueAt(key);
+		return root->getValueAt(key);
 	}
 
 	void insert(K* key, V* value) {

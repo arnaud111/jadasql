@@ -1,6 +1,7 @@
 #include <index/UniqueIndex.hpp>
 #include <cstdlib>
 #include <cstdio>
+#include <tuple/Tuple.hpp>
 
 class MyInt: Comparable<MyInt> {
 public:
@@ -114,9 +115,13 @@ int main() {
 	test.insert(new MyInt(19), new MyInt(19));
 	test.insert(new MyInt(20), new MyInt(20));
 
-	auto f = test.root->firstLeaf();
 
+	test.insert(new MyInt(21), new MyInt(21));
+	test.insert(new MyInt(22), new MyInt(22));
+	test.insert(new MyInt(23), new MyInt(23));
+	auto f = test.root->firstLeaf();
 	int j = 0;
+
 	while(f != nullptr) {
 		for(int i = 0; i < f->n; ++i) {
 			printf("test[%d] = %d\n", j++, f->records[i]->value);
@@ -124,11 +129,16 @@ int main() {
 		printf("\n");
 		f = f->next;
 	}
-	test.insert(new MyInt(21), new MyInt(21));
-	test.insert(new MyInt(22), new MyInt(22));
-	test.insert(new MyInt(23), new MyInt(23));
 
 	f = test.root->firstLeaf();
+
+	if(f == nullptr) {
+		return -1;
+	}
+
+	test.root->remove(new MyInt(1));
+
+	printf("\nNEWWWWW\n");
 
 	j = 0;
 	while(f != nullptr) {
@@ -178,4 +188,8 @@ int mainOld3() {
 	printf("%d\n", test1->records[test1->n]);
 
 	return 0;
+}
+
+int mainNew() {
+	auto a = Tuple<int, char>(1, 'c');
 }

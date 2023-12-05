@@ -127,6 +127,93 @@ public:
 		return children[0]->firstLeaf();
 	}
 
+	virtual void remove(K *key) {
+		for(int i = 0; i < this->n; ++i) {
+			if(*key < *this->keys[i]) {
+				this->children[i]->remove(key);
+				if(this->children[i]->n < this->max / 2) {
+					if(equilibrate(this->children[i], this->children[i+1], false)) {
+						this->keys[i] = this->children[i+1]->keys[0];
+					} else {
+						delete this->removeChild(i);
+						delete this->removeKey(i);
+						this->n--;
+					}
+				}
+				return;
+			}
+		}
+		this->children[max]->remove(key);
+		if(this->children[max]->n < this->max / 2) {
+			if(equilibrate(this->children[max], this->children[max - 1], true)) {
+				this->keys[max - 1] = this->children[max]->keys[0];
+			} else {
+				delete this->removeKey(max - 1);
+				delete this->removeChild(max);
+				this->n--;
+			}
+		}
+
+	}
+
+	K *removeKey(int index) {
+		K *tmp = this->keys[index];
+		this->keys[index] = nullptr;
+		for(int i = index; i < this->n - 1; ++i) {
+			this->keys[i] = this->keys[i + 1];
+		}
+		return tmp;
+	}
+
+	Node<K, V> *removeChild(int index) {
+		Node<K, V> *tmp = this->children[index];
+		this->children[index] = nullptr;
+		for(int i = 0; i < this->n; ++i) {
+			this->children[i] = this->children[i + 1];
+		}
+		return tmp;
+	}
+
+	bool equilibrate(Node<K, V> *current, Node<K, V> *equilibrateNode, bool prev) {
+		if(instanceof<LeafNode<K, V>>(current)) {
+			return equilibrateLeaf((LeafNode<K, V> *)current, (LeafNode<K, V> *)equilibrateNode, prev);
+		}else {
+			return equilibrateInternalNode(current, equilibrateNode, prev);
+		}
+	}
+
+	bool equilibrateInternalNode(Node<K, V> *current, Node<K, V> *equilibrateNode, bool prev) {
+		if(equilibrateNode->n > max / 2) {
+			auto tmp = equilibrateNode->removeChild(prev ? equilibrateNode->n : 0);
+			current->insertChild(prev ? 0 : current->n , tmp);
+			equilibrateNode->n--;
+			current->n++;
+			return true;
+		} else {
+			for(int i = 0; i < current->n + 1; ++i) {
+				equilibrateNode->insertChild(equilibrateNode->n + 1 + i, current->children[i]);
+			}
+			equilibrateNode->n += current->n;
+			return false;
+		}
+	}
+
+	bool equilibrateLeaf(LeafNode<K, V> *current, LeafNode<K, V> *equilibrateNode, bool prev) {
+		if(equilibrateNode->n > max / 2) {
+			auto tmp = equilibrateNode->removeRecord(prev ? equilibrateNode->n : 0);
+			current->insertRecord(prev ? 0 : current->n, tmp);
+			equilibrateNode->n--;
+			current->n++;
+			return true;
+		} else {
+			for(int i = 0; i < current->n; ++i) {
+				equilibrateNode->insertRecord(equilibrateNode->n + 1 + i, current->records[i]);
+			}
+			equilibrateNode->n += current->n;
+			return false;
+		}
+	}
+
 protected:
 
 };
@@ -136,7 +223,7 @@ class LeafNode : public Node<V, K> {
 public:
 	explicit LeafNode(int m) : Node<V, K>(m) {
 		this->max = m;
-		this->keys = (K **) malloc(sizeof(K *) * m);
+		free(this->children);
 		this->children = nullptr;
 		this->records = (V **) malloc(sizeof(V *) * (m + 1));
 	};
@@ -185,7 +272,25 @@ public:
 		return this;
 	}
 
-private:
+	void remove(K *key) {
+		for(int i = 0; i < this->n; ++i) {
+			if(*key == *this->keys[i]) {
+				delete this->removeKey(i);
+				delete removeRecord(i);
+				this->n--;
+				return;
+			}
+		}
+	}
+
+	V* removeRecord(int index) {
+		V *tmp = this->records[index];
+		this->records[index] = nullptr;
+		for(int i = index; i < this->n - 1; ++i) {
+			this->records[i] = this->records[i + 1];
+		}
+		return tmp;
+	}
 
 	bool canInsert(K *key) {
 		return this->n < this->max;

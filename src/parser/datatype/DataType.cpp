@@ -90,6 +90,7 @@ DataType *DataType::convertToDataType(std::vector<Symbol *> symbols) {
 
     if (symbols.size() == 1 && symbols[0]->symbolValueType == s_DataType) {
         switch (((DataTypeSymbol *) symbols[0])->keyword) {
+            case v_Varchar:
             case v_Char:
                 break;
             case v_Tinyint:
@@ -108,8 +109,6 @@ DataType *DataType::convertToDataType(std::vector<Symbol *> symbols) {
                 return new DateTime();
             case v_Timestamp:
                 return new Timestamp();
-            case v_Varchar:
-                break;
         }
     } else if (symbols.size() == 4 && symbols[0]->symbolValueType == s_DataType) {
         if (((DataTypeSymbol *) symbols[0])->keyword == v_Varchar) {

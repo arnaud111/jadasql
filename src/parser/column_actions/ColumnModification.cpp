@@ -13,6 +13,8 @@ ColumnModification::ColumnModification(std::vector<Symbol *> symbols) {
 
     std::vector<Symbol *> tmpSymbolList;
 
+    this->dataType = nullptr;
+
     if (symbols.size() < 2) {
         printf("here\n");
         Error::syntaxError(symbols[symbols.size() - 1]);

@@ -20,9 +20,9 @@ int main() {
                      "PRIMARY KEY (PersonID, LastName, FirstName),"
                      "FOREIGN KEY (PersonID, LastName, FirstName) REFERENCES tt@aa(id, tmp, name)"
                      ");"
-                     "ALTER TABLE tmp ADD aaa VARCHAR(256),"
+                     "ALTER TABLE tmp ADD aaa INT,"
                      "CHANGE aaa bbb,"
-                     "MODIFY bbb INT,"
+                     "MODIFY bbb CHAR(5),"
                      "DROP bbb;";
     printf("---LEXER---\n");
     Lexer lexicalScanner = Lexer();

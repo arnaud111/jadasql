@@ -46,3 +46,7 @@ Joint::Joint(std::vector<Symbol *> symbols) {
     tmpSymbolList = Statement::cut_symbol_vector(symbols, tmpSymbolList.size() + 3, symbols.size());
     this->on = Field::convertToField(tmpSymbolList);
 }
+
+ReturnedValue *Joint::execute() {
+    return nullptr;
+}

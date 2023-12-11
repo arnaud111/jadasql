@@ -30,10 +30,4 @@ enum OperationPriorityEnum {
     o_Mod,
 };
 
-class OperationPriority {
-
-public:
-
-};
-
 #endif //JADA_OPERATIONPRIORITY_H

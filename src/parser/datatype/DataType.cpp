@@ -120,3 +120,43 @@ DataType *DataType::convertToDataType(std::vector<Symbol *> symbols) {
 
     return nullptr;
 }
+
+ReturnedValue *Boolean::execute() {
+    return nullptr;
+}
+
+ReturnedValue *Char::execute() {
+    return nullptr;
+}
+
+ReturnedValue *Date::execute() {
+    return nullptr;
+}
+
+ReturnedValue *DateTime::execute() {
+    return nullptr;
+}
+
+ReturnedValue *Double::execute() {
+    return nullptr;
+}
+
+ReturnedValue *Float::execute() {
+    return nullptr;
+}
+
+ReturnedValue *Int::execute() {
+    return nullptr;
+}
+
+ReturnedValue *Timestamp::execute() {
+    return nullptr;
+}
+
+ReturnedValue *TinyInt::execute() {
+    return nullptr;
+}
+
+ReturnedValue *VarChar::execute() {
+    return nullptr;
+}

@@ -83,3 +83,7 @@ ColumnDetail::ColumnDetail(std::vector<Symbol *> symbols) {
         Error::syntaxError(symbols[index]);
     }
 }
+
+ReturnedValue *ColumnDetail::execute() {
+    return nullptr;
+}

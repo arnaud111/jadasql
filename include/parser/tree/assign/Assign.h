@@ -19,6 +19,8 @@ public:
 
     void display() override;
 
+    ReturnedValue *execute() override;
+
     static std::vector<Assign *> convert_to_list_assign(std::vector<Symbol *> symbols);
 };
 

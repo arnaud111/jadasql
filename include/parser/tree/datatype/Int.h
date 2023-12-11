@@ -15,6 +15,8 @@ public:
     explicit Int();
 
     void display() override;
+
+    ReturnedValue *execute() override;
 };
 
 

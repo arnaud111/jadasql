@@ -15,6 +15,8 @@ public:
     explicit TinyInt();
 
     void display() override;
+
+    ReturnedValue *execute() override;
 };
 
 

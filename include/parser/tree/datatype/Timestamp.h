@@ -15,6 +15,8 @@ public:
     explicit Timestamp();
 
     void display() override;
+
+    ReturnedValue *execute() override;
 };
 
 

@@ -28,3 +28,7 @@ AlterStatement::AlterStatement(std::vector<Symbol *> symbols) {
         this->modifications.push_back(new ColumnModification(m));
     }
 }
+
+ReturnedValue *AlterStatement::execute() {
+    return nullptr;
+}

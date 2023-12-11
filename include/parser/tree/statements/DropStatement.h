@@ -24,6 +24,8 @@ public:
 
     void display() override;
 
+    ReturnedValue *execute() override;
+
 private:
 
     static DropStatementTypeEnum getDropType(Symbol *symbol);

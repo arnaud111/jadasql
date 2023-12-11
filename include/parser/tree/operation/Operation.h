@@ -21,6 +21,8 @@ public:
     explicit Operation(Field *field1, OperationPriorityEnum operation, Field *field2);
 
     void display() override;
+
+    ReturnedValue *execute() override;
 };
 
 #endif //JADA_OPERATION_H

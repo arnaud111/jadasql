@@ -18,6 +18,8 @@ public:
     explicit DatabaseReference(std::vector<Symbol *> symbols);
 
     void display() override;
+
+    ReturnedValue *execute() override;
 };
 
 #endif //JADA_DATABASEREFERENCE_H

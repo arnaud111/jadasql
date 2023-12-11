@@ -213,3 +213,19 @@ ColumnConstraints *ColumnConstraints::convertToColumnConstraints(std::vector<Sym
 
     return columnConstraints;
 }
+
+ReturnedValue *Check::execute() {
+    return nullptr;
+}
+
+ReturnedValue *ForeignKey::execute() {
+    return nullptr;
+}
+
+ReturnedValue *PrimaryKey::execute() {
+    return nullptr;
+}
+
+ReturnedValue *Unique::execute() {
+    return nullptr;
+}

@@ -7,6 +7,7 @@
 #include "../../../include/lexer/symbol/keyword/DelimiterSymbol.h"
 #include "../../../include/lexer/symbol/value/IdentifierSymbol.h"
 #include "../../../include/error/Error.h"
+#include "parser/tree/structure/ColumnReference.h"
 
 TableReference::TableReference(std::vector<Symbol *> symbols) {
     int index = 1;
@@ -49,4 +50,16 @@ DatabaseReference::DatabaseReference(std::vector<Symbol *> symbols) {
 
 DatabaseReference::DatabaseReference(std::string databaseName)  {
     this->databaseName = std::move(databaseName);
+}
+
+ReturnedValue *ColumnReference::execute() {
+    return nullptr;
+}
+
+ReturnedValue *DatabaseReference::execute() {
+    return nullptr;
+}
+
+ReturnedValue *TableReference::execute() {
+    return nullptr;
 }

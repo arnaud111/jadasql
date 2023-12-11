@@ -10,3 +10,7 @@ Operation::Operation(Field *field1, OperationPriorityEnum operation, Field *fiel
     this->field2 = field2;
     this->fieldType = f_Operation;
 }
+
+ReturnedValue *Operation::execute() {
+    return nullptr;
+}

@@ -18,6 +18,8 @@ public:
     explicit DeleteStatement(std::vector<Symbol *> symbols);
 
     void display() override;
+
+    ReturnedValue *execute() override;
 };
 
 

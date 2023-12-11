@@ -35,3 +35,7 @@ UpdateStatement::UpdateStatement(std::vector<Symbol *> symbols) {
         this->where = Field::convertToField(tmpArraySymbol);
     }
 }
+
+ReturnedValue *UpdateStatement::execute() {
+    return nullptr;
+}

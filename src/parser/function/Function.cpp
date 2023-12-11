@@ -3,6 +3,17 @@
 //
 
 #include "../../../include/parser/tree/function/Function.h"
+#include "parser/tree/function/AvgFunction.h"
+#include "parser/tree/function/CoalesceFunction.h"
+#include "parser/tree/function/ConcatFunction.h"
+#include "parser/tree/function/CountFunction.h"
+#include "parser/tree/function/FormatFunction.h"
+#include "parser/tree/function/IfNullFunction.h"
+#include "parser/tree/function/LeftFunction.h"
+#include "parser/tree/function/RightFunction.h"
+#include "parser/tree/function/MaxFunction.h"
+#include "parser/tree/function/MinFunction.h"
+#include "parser/tree/function/SumFunction.h"
 
 Function::Function()  {
     this->function = f_Left;
@@ -44,4 +55,48 @@ int Function::tryConvertToFunctionEnum(KeywordSymbolEnum keywordSymbolEnum) {
         default:
             return -1;
     }
+}
+
+ReturnedValue *AvgFunction::execute() {
+    return nullptr;
+}
+
+ReturnedValue *CoalesceFunction::execute() {
+    return nullptr;
+}
+
+ReturnedValue *ConcatFunction::execute() {
+    return nullptr;
+}
+
+ReturnedValue *CountFunction::execute() {
+    return nullptr;
+}
+
+ReturnedValue *FormatFunction::execute() {
+    return nullptr;
+}
+
+ReturnedValue *IfNullFunction::execute() {
+    return nullptr;
+}
+
+ReturnedValue *LeftFunction::execute() {
+    return nullptr;
+}
+
+ReturnedValue *RightFunction::execute() {
+    return nullptr;
+}
+
+ReturnedValue *MaxFunction::execute() {
+    return nullptr;
+}
+
+ReturnedValue *MinFunction::execute() {
+    return nullptr;
+}
+
+ReturnedValue *SumFunction::execute() {
+    return nullptr;
 }

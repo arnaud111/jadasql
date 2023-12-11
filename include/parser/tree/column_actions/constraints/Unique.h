@@ -18,6 +18,7 @@ public:
 
     void display() override;
 
+    ReturnedValue *execute() override;
 };
 
 #endif //JADA_UNIQUE_H

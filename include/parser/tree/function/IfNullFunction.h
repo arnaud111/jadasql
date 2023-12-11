@@ -22,6 +22,8 @@ public:
     };
 
     void display() override;
+
+    ReturnedValue *execute() override;
 };
 
 #endif //JADA_IFNULLFUNCTION_H

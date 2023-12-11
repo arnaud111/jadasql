@@ -25,6 +25,7 @@
 #include "../../../include/parser/Parser.h"
 #include "../../../include/lexer/symbol/keyword/OperatorSymbol.h"
 #include "../../../include/parser/tree/operation/Operation.h"
+#include "parser/tree/field/NullField.h"
 
 std::vector<Field *> Field::createListField(const std::vector<Symbol *> &symbols) {
     std::vector<Field *> listFields;
@@ -295,5 +296,17 @@ Field *Field::tryConvertToFunctionField(const std::vector<Symbol *> &symbols, in
             break;
     }
 
+    return nullptr;
+}
+
+ReturnedValue *ConstNumberField::execute() {
+    return nullptr;
+}
+
+ReturnedValue *ConstStringField::execute() {
+    return nullptr;
+}
+
+ReturnedValue *NullField::execute() {
     return nullptr;
 }

@@ -17,6 +17,8 @@ public:
     explicit VarChar(std::vector<Symbol *> symbol);
 
     void display() override;
+
+    ReturnedValue *execute() override;
 };
 
 

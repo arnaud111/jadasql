@@ -18,6 +18,8 @@ public:
     explicit TableReference(std::vector<Symbol *> symbols);
 
     void display() override;
+
+    ReturnedValue *execute() override;
 };
 
 #endif //JADA_TABLEREFERENCE_H

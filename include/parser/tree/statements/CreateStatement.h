@@ -26,6 +26,8 @@ public:
 
     void display() override;
 
+    ReturnedValue *execute() override;
+
 private:
 
     void createDatabase(std::vector<Symbol *> symbols);

@@ -15,6 +15,8 @@ public:
     explicit Double();
 
     void display() override;
+
+    ReturnedValue *execute() override;
 };
 
 

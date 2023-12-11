@@ -15,6 +15,8 @@ public:
     explicit Boolean();
 
     void display() override;
+
+    ReturnedValue *execute() override;
 };
 
 

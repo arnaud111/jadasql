@@ -27,3 +27,7 @@ From::From(const std::vector<Symbol *> &symbols) {
         index += symbolList.size();
     }
 }
+
+ReturnedValue *From::execute() {
+    return nullptr;
+}

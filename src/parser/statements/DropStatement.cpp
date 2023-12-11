@@ -61,3 +61,7 @@ DropStatementTypeEnum DropStatement::getDropType(Symbol *symbol) {
     Error::syntaxError(symbol);
     return DropTable;
 }
+
+ReturnedValue *DropStatement::execute() {
+    return nullptr;
+}

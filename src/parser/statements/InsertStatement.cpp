@@ -93,3 +93,7 @@ std::vector<Symbol *> InsertStatement::getInParenthesis(unsigned long long start
 
     return list;
 }
+
+ReturnedValue *InsertStatement::execute() {
+    return nullptr;
+}

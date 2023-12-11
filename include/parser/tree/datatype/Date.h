@@ -15,6 +15,8 @@ public:
     explicit Date();
 
     void display() override;
+
+    ReturnedValue *execute() override;
 };
 
 

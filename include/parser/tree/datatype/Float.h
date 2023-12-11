@@ -15,6 +15,8 @@ public:
     explicit Float();
 
     void display() override;
+
+    ReturnedValue *execute() override;
 };
 
 

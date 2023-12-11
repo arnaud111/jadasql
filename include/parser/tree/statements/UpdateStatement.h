@@ -20,6 +20,8 @@ public:
     explicit UpdateStatement(std::vector<Symbol *> symbols);
 
     void display() override;
+
+    ReturnedValue *execute() override;
 };
 
 

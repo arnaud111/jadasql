@@ -32,3 +32,7 @@ DeleteStatement::DeleteStatement(std::vector<Symbol *> symbols) {
         this->where = Field::convertToField(Statement::cut_symbol_vector(symbols, tableSymbols.size() + 3, symbols.size()));
     }
 }
+
+ReturnedValue *DeleteStatement::execute() {
+    return nullptr;
+}

@@ -22,6 +22,8 @@ public:
 
     void display() override;
 
+    ReturnedValue *execute() override;
+
 private:
 
     static std::vector<Symbol *> getInParenthesis(unsigned long long start, std::vector<Symbol *> symbols);

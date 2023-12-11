@@ -18,6 +18,10 @@ int main() {
         Lexer lexicalScanner = Lexer();
         vector<Symbol *> result = lexicalScanner.scan(request);
         vector<Statement *> listStatement = Parser::parse(result);
+
+        for (auto &statement: listStatement) {
+            statement->execute();
+        }
     }
 
     printf("Bye <3\n");

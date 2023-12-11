@@ -33,5 +33,6 @@ add_executable(jada main.cpp
         src/parser/from/Joint.cpp
         src/parser/from/Joint.cpp
         src/parser/column_actions/ColumnCreationInfo.cpp
-        include/interpreter/ReturnedValue.h
+        src/data/DatabaseStructure.cpp
+        src/data/TableStructure.cpp
 )

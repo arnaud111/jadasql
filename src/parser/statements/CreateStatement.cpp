@@ -9,6 +9,7 @@
 #include "../../../include/parser/tree/structure/TableReference.h"
 #include "../../../include/lexer/symbol/keyword/DelimiterSymbol.h"
 #include "../../../include/parser/tree/column_actions/ColumnConstraints.h"
+#include "data/DatabaseStructure.h"
 
 CreateStatement::CreateStatement(std::vector<Symbol *> symbols) {
 
@@ -94,5 +95,16 @@ void CreateStatement::createDatabase(std::vector<Symbol *> symbols) {
 }
 
 ReturnedValue *CreateStatement::execute() {
+
+    bool created;
+
+    switch (this->type) {
+        case CreateTable:
+            break;
+        case CreateDatabase:
+            created = DatabaseStructure::createDatabase(((DatabaseReference *) this->createdField)->databaseName);
+            break;
+    }
+
     return nullptr;
 }

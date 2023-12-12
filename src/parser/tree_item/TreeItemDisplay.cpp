@@ -41,6 +41,28 @@
 #include "../../../include/parser/tree/column_actions/constraints/Check.h"
 #include "../../../include/parser/tree/column_actions/ColumnDetail.h"
 #include "../../../include/parser/tree/statements/AlterStatement.h"
+#include "parser/tree/statements/ShowStatement.h"
+#include "parser/tree/statements/UseStatement.h"
+
+void UseStatement::display() {
+
+    printf("USE ");
+    this->database->display();
+    printf(";\n");
+}
+
+void ShowStatement::display() {
+    printf("SHOW ");
+    switch (this->type) {
+        case ShowDatabases:
+            printf("DATABASES");
+            break;
+        case ShowTables:
+            printf("TABLES");
+            break;
+    }
+    printf(";\n");
+}
 
 void AlterStatement::display() {
     printf("ALTER TABLE ");

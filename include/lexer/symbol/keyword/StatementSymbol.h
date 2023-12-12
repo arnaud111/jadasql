@@ -10,6 +10,8 @@
 
 enum StatementSymbolEnum {
     v_Select,
+    v_Use,
+    v_Show,
     v_Update,
     v_Delete,
     v_Drop,
@@ -22,7 +24,7 @@ class StatementSymbol : public Symbol {
 
 public:
     static int size;
-    static std::string stringValues[7];
+    static std::string stringValues[9];
     StatementSymbolEnum keyword;
 
     explicit StatementSymbol(int val) {

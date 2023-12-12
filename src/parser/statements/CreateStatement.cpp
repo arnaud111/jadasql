@@ -103,6 +103,12 @@ ReturnedValue *CreateStatement::execute() {
             break;
         case CreateDatabase:
             created = DatabaseStructure::createDatabase(((DatabaseReference *) this->createdField)->databaseName);
+            if (!created) {
+                if (this->ifNotExist) {
+                    return ReturnedValue::rowCount(0);
+                }
+                Error::syntaxError("Database already exist");
+            }
             break;
     }
 

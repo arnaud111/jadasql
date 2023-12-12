@@ -43,6 +43,8 @@ enum KeywordSymbolEnum {
     k_Add,
     k_Database,
     k_Table,
+    k_Databases,
+    k_Tables,
     k_Unique,
     k_Primary,
     k_Foreign,
@@ -77,7 +79,7 @@ class KeywordSymbol : public Symbol {
 
 public:
     static int size;
-    static std::string stringValues[64];
+    static std::string stringValues[66];
     KeywordSymbolEnum keyword;
 
     explicit KeywordSymbol(int val) {

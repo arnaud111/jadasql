@@ -50,9 +50,11 @@ std::string OperatorSymbol::stringValues[23] = {
         "^-=",
 };
 
-int StatementSymbol::size = 7;
-std::string StatementSymbol::stringValues[7] = {
+int StatementSymbol::size = 9;
+std::string StatementSymbol::stringValues[9] = {
         "SELECT",
+        "SHOW",
+        "USE",
         "UPDATE",
         "DELETE",
         "DROP",
@@ -61,8 +63,8 @@ std::string StatementSymbol::stringValues[7] = {
         "ALTER",
 };
 
-int KeywordSymbol::size = 64;
-std::string KeywordSymbol::stringValues[64] = {
+int KeywordSymbol::size = 66;
+std::string KeywordSymbol::stringValues[66] = {
         "FROM",
         "VALUES",
         "WHERE",
@@ -97,6 +99,8 @@ std::string KeywordSymbol::stringValues[64] = {
         "ADD",
         "DATABASE",
         "TABLE",
+        "DATABASES",
+        "TABLES",
         "UNIQUE",
         "PRIMARY",
         "FOREIGN",

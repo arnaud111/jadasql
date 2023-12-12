@@ -10,8 +10,8 @@
 
 enum StatementSymbolEnum {
     v_Select,
-    v_Use,
     v_Show,
+    v_Use,
     v_Update,
     v_Delete,
     v_Drop,

@@ -11,3 +11,7 @@ ReturnedRowCount::ReturnedRowCount(int affected) : ReturnedValue() {
     this->affected = affected;
 
 }
+
+void ReturnedRowCount::display() {
+    printf("%d row affected\n", this->affected);
+}

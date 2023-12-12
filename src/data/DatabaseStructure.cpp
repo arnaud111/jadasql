@@ -3,6 +3,7 @@
 //
 
 #include <sys/stat.h>
+#include <filesystem>
 #include "../../include/data/DatabaseStructure.h"
 
 const std::string DatabaseStructure::BASE_DATA_PATH = "./data/";
@@ -21,8 +22,17 @@ bool DatabaseStructure::createDatabase(const std::string& name) {
     return !created;
 }
 
-std::vector<std::string> DatabaseStructure::getListDatabase() {
-    return std::vector<std::string>();
+std::vector<std::vector<std::string>> DatabaseStructure::getListDatabase() {
+
+    std::vector<std::vector<std::string>> listDatabases;
+
+    for(auto& element : std::filesystem::recursive_directory_iterator(BASE_DATA_PATH)) {
+        if (element.is_directory()) {
+            listDatabases.push_back({element.path().filename().string()});
+        }
+    }
+
+    return listDatabases;
 }
 
 bool DatabaseStructure::databaseExist(const std::string& name) {

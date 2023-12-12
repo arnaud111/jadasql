@@ -15,6 +15,7 @@ public:
 
     explicit ReturnedRowCount(int affected);
 
+    void display() override;
 };
 
 #endif //JADA_RETURNEDROWCOUNT_H

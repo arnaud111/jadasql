@@ -5,6 +5,7 @@
 #include "../../../include/parser/tree/statements/ShowStatement.h"
 #include "error/Error.h"
 #include "lexer/symbol/keyword/KeywordSymbol.h"
+#include "data/DatabaseStructure.h"
 
 
 ShowStatement::ShowStatement(std::vector<Symbol *> symbols) {
@@ -27,5 +28,13 @@ ShowStatement::ShowStatement(std::vector<Symbol *> symbols) {
 }
 
 ReturnedValue *ShowStatement::execute() {
-    return nullptr;
+
+    switch (this->type) {
+        case ShowDatabases:
+            return ReturnedValue::rowData({"Databases"}, DatabaseStructure::getListDatabase());
+        case ShowTables:
+            break;
+    }
+
+    return ReturnedValue::none();
 }

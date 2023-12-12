@@ -20,7 +20,10 @@ int main() {
         vector<Statement *> listStatement = Parser::parse(result);
 
         for (auto &statement: listStatement) {
-            statement->execute();
+            ReturnedValue *returnedValue = statement->execute();
+            if (returnedValue != nullptr) {
+                returnedValue->display();
+            }
         }
     }
 

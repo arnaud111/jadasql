@@ -112,5 +112,5 @@ ReturnedValue *CreateStatement::execute() {
             break;
     }
 
-    return nullptr;
+    return ReturnedValue::none();
 }

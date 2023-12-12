@@ -39,4 +39,5 @@ add_executable(jada main.cpp
         src/interpreter/values/ReturnedRowCount.cpp
         src/parser/statements/ShowStatement.cpp
         src/parser/statements/UseStatement.cpp
+        src/interpreter/values/ReturnedRowData.cpp
 )

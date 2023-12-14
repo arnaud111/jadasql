@@ -62,6 +62,6 @@ DropStatementTypeEnum DropStatement::getDropType(Symbol *symbol) {
     return DropTable;
 }
 
-ReturnedValue *DropStatement::execute() {
+ReturnedValue *DropStatement::execute(ExecutionData *executionData) {
     return nullptr;
 }

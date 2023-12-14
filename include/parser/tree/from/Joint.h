@@ -23,7 +23,7 @@ public:
 
     void display() override;
 
-    ReturnedValue *execute() override;
+    ReturnedValue *execute(ExecutionData *executionData) override;
 
     explicit Joint(std::vector<Symbol *> symbols);
 };

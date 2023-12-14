@@ -6,13 +6,14 @@
 #define JADA_TREEITEM_H
 
 #include "interpreter/ReturnedValue.h"
+#include "interpreter/ExecutionData.h"
 
 class TreeItem {
 
 public:
     virtual void display() = 0;
 
-    virtual ReturnedValue *execute() = 0;
+    virtual ReturnedValue *execute(ExecutionData *executionData) = 0;
 };
 
 #endif //JADA_TREEITEM_H

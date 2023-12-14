@@ -30,7 +30,7 @@ public:
 
     void display() override;
 
-    ReturnedValue *execute() override;
+    ReturnedValue *execute(ExecutionData *executionData) override;
 
 private:
     static bool isDistinct(std::vector<Symbol *> symbols);

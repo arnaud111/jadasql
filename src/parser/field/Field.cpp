@@ -299,14 +299,14 @@ Field *Field::tryConvertToFunctionField(const std::vector<Symbol *> &symbols, in
     return nullptr;
 }
 
-ReturnedValue *ConstNumberField::execute() {
+ReturnedValue *ConstNumberField::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *ConstStringField::execute() {
+ReturnedValue *ConstStringField::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *NullField::execute() {
+ReturnedValue *NullField::execute(ExecutionData *executionData) {
     return nullptr;
 }

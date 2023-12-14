@@ -84,6 +84,6 @@ ColumnDetail::ColumnDetail(std::vector<Symbol *> symbols) {
     }
 }
 
-ReturnedValue *ColumnDetail::execute() {
+ReturnedValue *ColumnDetail::execute(ExecutionData *executionData) {
     return nullptr;
 }

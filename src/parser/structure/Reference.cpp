@@ -52,14 +52,14 @@ DatabaseReference::DatabaseReference(std::string databaseName)  {
     this->databaseName = std::move(databaseName);
 }
 
-ReturnedValue *ColumnReference::execute() {
+ReturnedValue *ColumnReference::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *DatabaseReference::execute() {
+ReturnedValue *DatabaseReference::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *TableReference::execute() {
+ReturnedValue *TableReference::execute(ExecutionData *executionData) {
     return nullptr;
 }

@@ -5,6 +5,7 @@
 #include "../../../include/parser/tree/statements/UseStatement.h"
 #include "error/Error.h"
 #include "lexer/symbol/value/IdentifierSymbol.h"
+#include "data/DatabaseStructure.h"
 
 
 UseStatement::UseStatement(std::vector<Symbol *> symbols) {
@@ -20,6 +21,18 @@ UseStatement::UseStatement(std::vector<Symbol *> symbols) {
     this->database = new DatabaseReference(((IdentifierSymbol *) symbols[1])->value);
 }
 
-ReturnedValue *UseStatement::execute() {
+ReturnedValue *UseStatement::execute(ExecutionData *executionData) {
+
+    std::vector<std::string> databases = DatabaseStructure::getListDatabase();
+
+    for (auto &databaseName: databases) {
+        if (databaseName == this->database->databaseName) {
+            executionData->databaseUsed = this->database->databaseName;
+            return ReturnedValue::none();
+        }
+    }
+
+    Error::syntaxError("Database does not exist");
+
     return nullptr;
 }

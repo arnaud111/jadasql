@@ -11,6 +11,6 @@ Operation::Operation(Field *field1, OperationPriorityEnum operation, Field *fiel
     this->fieldType = f_Operation;
 }
 
-ReturnedValue *Operation::execute() {
+ReturnedValue *Operation::execute(ExecutionData *executionData) {
     return nullptr;
 }

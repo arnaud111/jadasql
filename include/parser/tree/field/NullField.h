@@ -17,7 +17,7 @@ public:
 
     void display() override;
 
-    ReturnedValue *execute() override;
+    ReturnedValue *execute(ExecutionData *executionData) override;
 };
 
 #endif //JADA_NULLFIELD_H

@@ -41,6 +41,6 @@ std::vector<Assign *> Assign::convert_to_list_assign(std::vector<Symbol *> symbo
     return list;
 }
 
-ReturnedValue *Assign::execute() {
+ReturnedValue *Assign::execute(ExecutionData *executionData) {
     return nullptr;
 }

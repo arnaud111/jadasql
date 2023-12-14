@@ -121,42 +121,42 @@ DataType *DataType::convertToDataType(std::vector<Symbol *> symbols) {
     return nullptr;
 }
 
-ReturnedValue *Boolean::execute() {
+ReturnedValue *Boolean::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *Char::execute() {
+ReturnedValue *Char::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *Date::execute() {
+ReturnedValue *Date::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *DateTime::execute() {
+ReturnedValue *DateTime::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *Double::execute() {
+ReturnedValue *Double::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *Float::execute() {
+ReturnedValue *Float::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *Int::execute() {
+ReturnedValue *Int::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *Timestamp::execute() {
+ReturnedValue *Timestamp::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *TinyInt::execute() {
+ReturnedValue *TinyInt::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *VarChar::execute() {
+ReturnedValue *VarChar::execute(ExecutionData *executionData) {
     return nullptr;
 }

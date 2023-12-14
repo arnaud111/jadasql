@@ -33,6 +33,6 @@ DeleteStatement::DeleteStatement(std::vector<Symbol *> symbols) {
     }
 }
 
-ReturnedValue *DeleteStatement::execute() {
+ReturnedValue *DeleteStatement::execute(ExecutionData *executionData) {
     return nullptr;
 }

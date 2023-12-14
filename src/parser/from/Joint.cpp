@@ -47,6 +47,6 @@ Joint::Joint(std::vector<Symbol *> symbols) {
     this->on = Field::convertToField(tmpSymbolList);
 }
 
-ReturnedValue *Joint::execute() {
+ReturnedValue *Joint::execute(ExecutionData *executionData) {
     return nullptr;
 }

@@ -1,14 +1,16 @@
 #include <iostream>
 #include "include/lexer/Lexer.h"
 #include "include/parser/Parser.h"
+#include "interpreter/ExecutionData.h"
 
 int main() {
 
     std::string request;
+    ExecutionData *executionData = new ExecutionData();
 
     while (true) {
 
-        printf(">> ");
+        printf(">>> ");
         std::getline(std::cin, request);
 
         if (request == "exit") {
@@ -20,7 +22,7 @@ int main() {
         vector<Statement *> listStatement = Parser::parse(result);
 
         for (auto &statement: listStatement) {
-            ReturnedValue *returnedValue = statement->execute();
+            ReturnedValue *returnedValue = statement->execute(executionData);
             if (returnedValue != nullptr) {
                 returnedValue->display();
             }

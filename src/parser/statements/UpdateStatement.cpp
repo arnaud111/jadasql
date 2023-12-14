@@ -36,6 +36,6 @@ UpdateStatement::UpdateStatement(std::vector<Symbol *> symbols) {
     }
 }
 
-ReturnedValue *UpdateStatement::execute() {
+ReturnedValue *UpdateStatement::execute(ExecutionData *executionData) {
     return nullptr;
 }

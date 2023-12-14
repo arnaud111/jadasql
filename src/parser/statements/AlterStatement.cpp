@@ -29,6 +29,6 @@ AlterStatement::AlterStatement(std::vector<Symbol *> symbols) {
     }
 }
 
-ReturnedValue *AlterStatement::execute() {
+ReturnedValue *AlterStatement::execute(ExecutionData *executionData) {
     return nullptr;
 }

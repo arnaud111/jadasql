@@ -24,3 +24,7 @@ ReturnedValue *ReturnedValue::rowCount(int affected) {
 ReturnedValue *ReturnedValue::rowData(std::vector<std::string> columnsName, std::vector<std::vector<std::string>> rows) {
     return new ReturnedRowData(std::move(columnsName), std::move(rows));
 }
+
+ReturnedValue *ReturnedValue::rowData(std::string columnName, std::vector<std::string> rows) {
+    return new ReturnedRowData(std::move(columnName), rows);
+}

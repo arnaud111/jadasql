@@ -6,6 +6,7 @@
 #include "error/Error.h"
 #include "lexer/symbol/keyword/KeywordSymbol.h"
 #include "data/DatabaseStructure.h"
+#include "data/TableStructure.h"
 
 
 ShowStatement::ShowStatement(std::vector<Symbol *> symbols) {
@@ -27,13 +28,16 @@ ShowStatement::ShowStatement(std::vector<Symbol *> symbols) {
     }
 }
 
-ReturnedValue *ShowStatement::execute() {
+ReturnedValue *ShowStatement::execute(ExecutionData *executionData) {
 
     switch (this->type) {
         case ShowDatabases:
-            return ReturnedValue::rowData({"Databases"}, DatabaseStructure::getListDatabase());
+            return ReturnedValue::rowData("Databases", DatabaseStructure::getListDatabase());
         case ShowTables:
-            break;
+            if (executionData->databaseUsed.empty()) {
+                Error::syntaxError("No Database Selected");
+            }
+            return ReturnedValue::rowData("Tables", TableStructure::getListTable(executionData->databaseUsed));
     }
 
     return ReturnedValue::none();

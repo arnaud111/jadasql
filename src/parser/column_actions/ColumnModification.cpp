@@ -74,6 +74,6 @@ ColumnModification::ColumnModification(std::vector<Symbol *> symbols) {
     }
 }
 
-ReturnedValue *ColumnModification::execute() {
+ReturnedValue *ColumnModification::execute(ExecutionData *executionData) {
     return nullptr;
 }

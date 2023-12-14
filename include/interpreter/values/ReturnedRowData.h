@@ -18,6 +18,8 @@ public:
 
     explicit ReturnedRowData(std::vector<std::string> columnsName, std::vector<std::vector<std::string>> rows);
 
+    explicit ReturnedRowData(std::string columnName, const std::vector<std::string>& rows);
+
     void display() override;
 };
 

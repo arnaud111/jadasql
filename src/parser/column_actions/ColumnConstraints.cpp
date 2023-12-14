@@ -214,18 +214,18 @@ ColumnConstraints *ColumnConstraints::convertToColumnConstraints(std::vector<Sym
     return columnConstraints;
 }
 
-ReturnedValue *Check::execute() {
+ReturnedValue *Check::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *ForeignKey::execute() {
+ReturnedValue *ForeignKey::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *PrimaryKey::execute() {
+ReturnedValue *PrimaryKey::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *Unique::execute() {
+ReturnedValue *Unique::execute(ExecutionData *executionData) {
     return nullptr;
 }

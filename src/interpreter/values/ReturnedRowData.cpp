@@ -15,6 +15,21 @@ ReturnedRowData::ReturnedRowData(std::vector<std::string> columnsName, std::vect
 
 }
 
+ReturnedRowData::ReturnedRowData(std::string columnName, const std::vector<std::string>& rows) : ReturnedValue() {
+
+    std::vector<std::vector<std::string>> realRows;
+
+    realRows.reserve(rows.size());
+    for (auto &row: rows) {
+        realRows.push_back({row});
+    }
+
+    this->type = RowData;
+    this->columnsName = {std::move(columnName)};
+    this->rows = realRows;
+
+}
+
 void ReturnedRowData::display() {
 
     for (unsigned long long i = 0; i < this->columnsName.size(); i++) {

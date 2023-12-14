@@ -22,13 +22,13 @@ bool DatabaseStructure::createDatabase(const std::string& name) {
     return !created;
 }
 
-std::vector<std::vector<std::string>> DatabaseStructure::getListDatabase() {
+std::vector<std::string> DatabaseStructure::getListDatabase() {
 
-    std::vector<std::vector<std::string>> listDatabases;
+    std::vector<std::string> listDatabases;
 
     for(auto& element : std::filesystem::recursive_directory_iterator(BASE_DATA_PATH)) {
         if (element.is_directory()) {
-            listDatabases.push_back({element.path().filename().string()});
+            listDatabases.push_back(element.path().filename().string());
         }
     }
 

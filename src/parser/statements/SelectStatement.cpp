@@ -107,6 +107,6 @@ bool SelectStatement::isDistinct(std::vector<Symbol *> symbols) {
     return false;
 }
 
-ReturnedValue *SelectStatement::execute() {
+ReturnedValue *SelectStatement::execute(ExecutionData *executionData) {
     return nullptr;
 }

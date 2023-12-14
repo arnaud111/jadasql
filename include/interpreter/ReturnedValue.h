@@ -26,6 +26,8 @@ public:
 
     static ReturnedValue *rowData(std::vector<std::string> columnsName, std::vector<std::vector<std::string>> rows);
 
+    static ReturnedValue *rowData(std::string columnName, std::vector<std::string> rows);
+
     virtual void display() {
 
     };

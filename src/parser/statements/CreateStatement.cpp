@@ -94,7 +94,7 @@ void CreateStatement::createDatabase(std::vector<Symbol *> symbols) {
     this->createdField = new DatabaseReference(Statement::cut_symbol_vector(symbols, index, symbols.size()));
 }
 
-ReturnedValue *CreateStatement::execute() {
+ReturnedValue *CreateStatement::execute(ExecutionData *executionData) {
 
     bool created;
 

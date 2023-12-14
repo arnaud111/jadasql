@@ -57,46 +57,46 @@ int Function::tryConvertToFunctionEnum(KeywordSymbolEnum keywordSymbolEnum) {
     }
 }
 
-ReturnedValue *AvgFunction::execute() {
+ReturnedValue *AvgFunction::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *CoalesceFunction::execute() {
+ReturnedValue *CoalesceFunction::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *ConcatFunction::execute() {
+ReturnedValue *ConcatFunction::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *CountFunction::execute() {
+ReturnedValue *CountFunction::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *FormatFunction::execute() {
+ReturnedValue *FormatFunction::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *IfNullFunction::execute() {
+ReturnedValue *IfNullFunction::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *LeftFunction::execute() {
+ReturnedValue *LeftFunction::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *RightFunction::execute() {
+ReturnedValue *RightFunction::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *MaxFunction::execute() {
+ReturnedValue *MaxFunction::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *MinFunction::execute() {
+ReturnedValue *MinFunction::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
-ReturnedValue *SumFunction::execute() {
+ReturnedValue *SumFunction::execute(ExecutionData *executionData) {
     return nullptr;
 }

@@ -28,6 +28,6 @@ From::From(const std::vector<Symbol *> &symbols) {
     }
 }
 
-ReturnedValue *From::execute() {
+ReturnedValue *From::execute(ExecutionData *executionData) {
     return nullptr;
 }

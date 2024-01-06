@@ -12,9 +12,9 @@ class VarChar: public DataType {
 
 public:
 
-    unsigned long long size;
-
     explicit VarChar(std::vector<Symbol *> symbol);
+
+    explicit VarChar(int size);
 
     void display() override;
 

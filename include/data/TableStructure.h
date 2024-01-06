@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include "InsertableRow.h"
 
 class TableStructure {
 
@@ -15,6 +16,10 @@ public:
     static std::vector<std::string> getListTable(const std::string& database);
 
     static bool tableExist(const std::string& database, const std::string& name);
+
+    static bool createTable(const std::string& database, const std::string& name);
+
+    static void insertRow(const std::string& database, const std::string& table, InsertableRow *insertableRow);
 };
 
 #endif //JADA_TABLESTRUCTURE_H

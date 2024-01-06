@@ -26,6 +26,7 @@ class DataType: public TreeItem {
 
 public:
     DataTypeEnum type;
+    unsigned long long size;
 
     static DataType *convertToDataType(std::vector<Symbol *> symbols);
 

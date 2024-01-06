@@ -16,6 +16,8 @@ public:
 
     explicit Char(std::vector<Symbol *> symbol);
 
+    explicit Char(int size);
+
     void display() override;
 
     ReturnedValue *execute(ExecutionData *executionData) override;

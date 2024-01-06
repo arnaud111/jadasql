@@ -13,6 +13,12 @@
 #include "../../include/lexer/symbol/keyword/DelimiterSymbol.h"
 #include "../../include/lexer/symbol/keyword/DataTypeSymbol.h"
 
+void Error::runtimeError(const std::string &error) {
+    std::string fullError = "Error: ";
+    fullError.append(error);
+    throw std::invalid_argument(fullError);
+}
+
 void Error::syntaxError(const std::string &error) {
     std::string fullError = "Syntax Error: ";
     fullError.append(error);

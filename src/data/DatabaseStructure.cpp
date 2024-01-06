@@ -11,15 +11,19 @@ const std::string DatabaseStructure::BASE_DATA_PATH = "./data/";
 bool DatabaseStructure::createDatabase(const std::string& name) {
 
     std::string dir = BASE_DATA_PATH + name;
-    int created;
 
     if (databaseExist(name)) {
         return false;
     }
 
-    created = mkdir(dir.c_str(), 0777);
+    if (mkdir(dir.c_str(), 0777) == -1) {
+        if( errno != EEXIST ) {
+            throw errno;
+        }
+        return false;
+    }
 
-    return !created;
+    return true;
 }
 
 std::vector<std::string> DatabaseStructure::getListDatabase() {

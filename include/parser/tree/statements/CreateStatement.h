@@ -33,6 +33,10 @@ private:
     void createDatabase(std::vector<Symbol *> symbols);
 
     void createTable(std::vector<Symbol *> symbols);
+
+    ReturnedValue *executeCreateDatabase(ExecutionData *executionData) const;
+
+    ReturnedValue *executeCreateTable(ExecutionData *executionData) const;
 };
 
 

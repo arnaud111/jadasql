@@ -10,34 +10,34 @@ add_executable(jada main.cpp
         src/lexer/Lexer.cpp
         src/parser/Parser.cpp
         src/lexer/symbol/keyword/Dictionary.cpp
-        src/parser/statements/Statement.cpp
-        src/parser/statements/SelectStatement.cpp
-        src/parser/from/From.cpp
-        src/parser/field/Field.cpp
-        src/parser/tree_item/TreeItemDisplay.cpp
-        src/parser/function/Function.cpp
+        src/parser/tree/statements/Statement.cpp
+        src/parser/tree/statements/SelectStatement.cpp
+        src/parser/tree/from/From.cpp
+        src/parser/tree/field/Field.cpp
+        src/parser/tree/tree_item/TreeItemDisplay.cpp
+        src/parser/tree/function/Function.cpp
         src/error/Error.cpp
-        src/parser/operation/Operation.cpp
-        src/parser/statements/UpdateStatement.cpp
-        src/parser/statements/DeleteStatement.cpp
-        src/parser/statements/DropStatement.cpp
-        src/parser/statements/InsertStatement.cpp
-        src/parser/statements/CreateStatement.cpp
-        src/parser/statements/AlterStatement.cpp
-        src/parser/column_actions/ColumnModification.cpp
-        src/parser/structure/Reference.cpp
-        src/parser/assign/Assign.cpp
-        src/parser/column_actions/ColumnDetail.cpp
-        src/parser/datatype/DataType.cpp
-        src/parser/column_actions/ColumnConstraints.cpp
-        src/parser/from/Joint.cpp
-        src/parser/from/Joint.cpp
-        src/parser/column_actions/ColumnCreationInfo.cpp
+        src/parser/tree/operation/Operation.cpp
+        src/parser/tree/statements/UpdateStatement.cpp
+        src/parser/tree/statements/DeleteStatement.cpp
+        src/parser/tree/statements/DropStatement.cpp
+        src/parser/tree/statements/InsertStatement.cpp
+        src/parser/tree/statements/CreateStatement.cpp
+        src/parser/tree/statements/AlterStatement.cpp
+        src/parser/tree/column_actions/ColumnModification.cpp
+        src/parser/tree/structure/Reference.cpp
+        src/parser/tree/assign/Assign.cpp
+        src/parser/tree/column_actions/ColumnDetail.cpp
+        src/parser/tree/datatype/DataType.cpp
+        src/parser/tree/column_actions/ColumnConstraints.cpp
+        src/parser/tree/from/Joint.cpp
+        src/parser/tree/from/Joint.cpp
+        src/parser/tree/column_actions/ColumnCreationInfo.cpp
         src/data/DatabaseStructure.cpp
         src/data/TableStructure.cpp
         src/interpreter/ReturnedValue.cpp
         src/interpreter/values/ReturnedRowCount.cpp
-        src/parser/statements/ShowStatement.cpp
-        src/parser/statements/UseStatement.cpp
+        src/parser/tree/statements/ShowStatement.cpp
+        src/parser/tree/statements/UseStatement.cpp
         src/interpreter/values/ReturnedRowData.cpp
-)
+        src/data/InformationSchemaLine.cpp src/data/InsertableField.cpp src/data/InsertableRow.cpp)

@@ -11,6 +11,8 @@
 class Error {
 
 public:
+    static void runtimeError(const std::string &error);
+
     static void syntaxError(const std::string &error);
 
     static void syntaxError(const Symbol *symbolError);

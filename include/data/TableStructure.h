@@ -17,7 +17,7 @@ public:
 
     static bool tableExist(const std::string& database, const std::string& name);
 
-    static bool createTable(const std::string& database, const std::string& name);
+    static bool createTable(const std::string& database, const std::string& table);
 
     static void insertRow(const std::string& database, const std::string& table, InsertableRow *insertableRow);
 };

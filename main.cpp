@@ -58,3 +58,7 @@ void createInformationSchema() {
     std::ofstream Tables(DatabaseStructure::BASE_DATA_PATH + "information_schema/columns");
     Tables.close();
 }
+
+/*
+ * CREATE TABLE aaa@test (id INT);
+ */

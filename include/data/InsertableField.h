@@ -16,6 +16,9 @@ public:
 
     explicit InsertableField(DataType *dataType, Field *value);
 
+    const char *to_writable();
+
+    int size_of();
 };
 
 #endif //JADA_INSERTABLEFIELD_H

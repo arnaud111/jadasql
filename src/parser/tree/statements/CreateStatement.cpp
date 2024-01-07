@@ -11,6 +11,7 @@
 #include "parser/tree/column_actions/ColumnConstraints.h"
 #include "data/DatabaseStructure.h"
 #include "data/TableStructure.h"
+#include "data/InformationSchemaLine.h"
 
 CreateStatement::CreateStatement(std::vector<Symbol *> symbols) {
 
@@ -96,13 +97,9 @@ void CreateStatement::createDatabase(std::vector<Symbol *> symbols) {
 }
 
 ReturnedValue *CreateStatement::execute(ExecutionData *executionData) {
-
-    switch (this->type) {
-        case CreateTable:
-            return executeCreateTable(executionData);
-        case CreateDatabase:
-            return executeCreateDatabase(executionData);
-    }
+    if (this->type == CreateTable)
+        return executeCreateTable(executionData);
+    return executeCreateDatabase(executionData);
 }
 
 ReturnedValue *CreateStatement::executeCreateDatabase(ExecutionData *executionData) const {
@@ -126,10 +123,11 @@ ReturnedValue *CreateStatement::executeCreateTable(ExecutionData *executionData)
     if (((TableReference *) this->createdField)->databaseReference != nullptr) {
         database = ((TableReference *) this->createdField)->databaseReference->databaseName;
     }
+
     if (database.empty()) {
         Error::runtimeError("No Database Selected");
     }
-    if (DatabaseStructure::databaseExist(database)) {
+    if (!DatabaseStructure::databaseExist(database)) {
         Error::runtimeError("Database Does Not Exist");
     }
 
@@ -142,5 +140,13 @@ ReturnedValue *CreateStatement::executeCreateTable(ExecutionData *executionData)
     }
 
     TableStructure::createTable(database, ((TableReference *) this->createdField)->tableName);
+
+    for (auto column : this->columns) {
+        if (column->columnCreationType == t_ColumnDetail) {
+            auto *line = new InformationSchemaLine((ColumnDetail *) column, ((TableReference *) this->createdField)->tableName, database);
+            TableStructure::insertRow("information_schema", "columns", line->toInsertableRow());
+        }
+    }
+
     return ReturnedValue::rowCount(1);
 }

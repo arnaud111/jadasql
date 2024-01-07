@@ -29,16 +29,25 @@ bool TableStructure::tableExist(const std::string& database, const std::string &
     return !stat(file.c_str(), &sb);
 }
 
-bool TableStructure::createTable(const std::string &database, const std::string &name) {
+bool TableStructure::createTable(const std::string &database, const std::string &table) {
 
-    std::string file = DatabaseStructure::BASE_DATA_PATH + database + "/" + name;
+    std::string fileName = DatabaseStructure::BASE_DATA_PATH + database + "/" + table;
 
-    std::ofstream Table(file.c_str());
-    Table.close();
+    std::ofstream tableFile(fileName.c_str());
+    tableFile.close();
 
     return true;
 }
 
 void TableStructure::insertRow(const std::string& database, const std::string& table, InsertableRow *insertableRow) {
 
+    std::string fileName = DatabaseStructure::BASE_DATA_PATH + database + "/" + table;
+
+    std::ofstream file(fileName, std::ios::binary);
+
+    for (auto & insertableField : insertableRow->listField) {
+        file.write(insertableField->to_writable(), insertableField->size_of());
+    }
+
+    file.close();
 }

@@ -32,19 +32,21 @@ InformationSchemaLine::InformationSchemaLine(ColumnDetail * column, std::string 
     this->dataType = column->dataType->type;
     this->size = column->dataType->size;
 
-    switch (column->defaultValue->fieldType) {
-        case f_ConstString:
-            this->defaultValue = "NULL";
-            break;
-        case f_ConstNumber:
-            this->defaultValue = std::to_string(((ConstNumberField *) column->defaultValue)->value);
-            break;
-        case f_Null:
-            this->defaultValue = ((ConstStringField *) column->defaultValue)->value;
-            break;
-        default:
-            Error::runtimeError("Default value must be a constant value");
-            break;
+    if (column->defaultValue != nullptr) {
+        switch (column->defaultValue->fieldType) {
+            case f_ConstString:
+                this->defaultValue = "NULL";
+                break;
+            case f_ConstNumber:
+                this->defaultValue = std::to_string(((ConstNumberField *) column->defaultValue)->value);
+                break;
+            case f_Null:
+                this->defaultValue = ((ConstStringField *) column->defaultValue)->value;
+                break;
+            default:
+                Error::runtimeError("Default value must be a constant value");
+                break;
+        }
     }
 }
 
@@ -61,7 +63,7 @@ InsertableRow *InformationSchemaLine::toInsertableRow() {
     insertableFields.push_back(notNullToInsertableField());
     insertableFields.push_back(autoIncrementToInsertableField());
 
-    return nullptr;
+    return new InsertableRow(insertableFields);
 }
 
 InsertableField *InformationSchemaLine::databaseToInsertableField() const {

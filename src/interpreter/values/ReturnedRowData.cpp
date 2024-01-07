@@ -36,6 +36,7 @@ void ReturnedRowData::display() {
         printf("|%s|", this->columnsName[i].c_str());
     }
     printf("\n");
+    printf("-------\n");
 
     for (unsigned long long i = 0; i < this->rows.size(); i++) {
         for (unsigned long long j = 0; j < this->rows[i].size(); j++) {

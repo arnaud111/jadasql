@@ -31,7 +31,7 @@ bool TableStructure::tableExist(const std::string& database, const std::string &
 
 bool TableStructure::createTable(const std::string &database, const std::string &name) {
 
-    std::string file = DatabaseStructure::BASE_DATA_PATH + database + "/" + name + ".tb";
+    std::string file = DatabaseStructure::BASE_DATA_PATH + database + "/" + name;
 
     std::ofstream Table(file.c_str());
     Table.close();

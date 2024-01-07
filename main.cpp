@@ -55,6 +55,6 @@ void createInformationSchema() {
         }
     }
 
-    std::ofstream Tables("columns.tb");
+    std::ofstream Tables(DatabaseStructure::BASE_DATA_PATH + "information_schema/columns");
     Tables.close();
 }

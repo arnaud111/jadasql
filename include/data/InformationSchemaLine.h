@@ -27,6 +27,8 @@ public:
 
     InsertableRow *toInsertableRow();
 
+    static std::vector<InformationSchemaLine *> get_all_information_schema();
+
 private:
 
     static DataType *databaseDT;

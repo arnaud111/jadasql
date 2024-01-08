@@ -6,6 +6,8 @@
 #include "include/parser/Parser.h"
 #include "interpreter/ExecutionData.h"
 #include "data/DatabaseStructure.h"
+#include "data/InformationSchemaLine.h"
+#include "data/TableStructure.h"
 
 void createInformationSchema();
 
@@ -15,6 +17,7 @@ int main() {
     ExecutionData *executionData = new ExecutionData();
 
     createInformationSchema();
+    InformationSchemaLine::get_all_information_schema();
 
     while (true) {
 
@@ -55,8 +58,10 @@ void createInformationSchema() {
         }
     }
 
-    std::ofstream Tables(DatabaseStructure::BASE_DATA_PATH + "information_schema/columns");
-    Tables.close();
+    if (!TableStructure::tableExist("information_schema", "columns")) {
+        std::ofstream Tables(DatabaseStructure::BASE_DATA_PATH + "information_schema/columns");
+        Tables.close();
+    }
 }
 
 /*

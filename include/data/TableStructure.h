@@ -20,6 +20,8 @@ public:
     static bool createTable(const std::string& database, const std::string& table);
 
     static void insertRow(const std::string& database, const std::string& table, InsertableRow *insertableRow);
+
+    static std::vector<std::vector<Field *>> selectAllInTable(const std::string &database, const std::string &table, std::vector<DataType *> columnsDataType);
 };
 
 #endif //JADA_TABLESTRUCTURE_H

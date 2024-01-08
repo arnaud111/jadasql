@@ -20,7 +20,7 @@
 
 Boolean::Boolean() : DataType() {
     this->type = d_Boolean;
-    this->size = 1;
+    this->size = sizeof(bool);
 }
 
 Char::Char(std::vector<Symbol *> symbol): DataType() {
@@ -43,27 +43,27 @@ Char::Char(std::vector<Symbol *> symbol): DataType() {
 
 Date::Date(): DataType() {
     this->type = d_Date;
-    this->size = 10 * 8;
+    this->size = 10;
 }
 
 DateTime::DateTime(): DataType() {
     this->type = d_DateTime;
-    this->size = 19 * 8;
+    this->size = 19;
 }
 
 Double::Double(): DataType() {
     this->type = d_Double;
-    this->size = 8 * 8;
+    this->size = sizeof(double);
 }
 
 Float::Float(): DataType() {
     this->type = d_Float;
-    this->size = 4 * 8;
+    this->size = sizeof(float);
 }
 
 Int::Int(): DataType() {
     this->type = d_Int;
-    this->size = 4 * 8;
+    this->size = sizeof(int);
 }
 
 Timestamp::Timestamp(): DataType() {
@@ -73,7 +73,7 @@ Timestamp::Timestamp(): DataType() {
 
 TinyInt::TinyInt(): DataType() {
     this->type = d_TinyInt;
-    this->size = 1 * 8;
+    this->size = sizeof(short);
 }
 
 VarChar::VarChar(std::vector<Symbol *> symbol): DataType() {

@@ -12,6 +12,7 @@
 #include "parser/tree/datatype/TinyInt.h"
 #include "parser/tree/datatype/Int.h"
 #include "parser/tree/datatype/Boolean.h"
+#include "data/TableStructure.h"
 
 DataType *InformationSchemaLine::databaseDT = new VarChar(256);
 DataType *InformationSchemaLine::tableDT = new VarChar(256);
@@ -31,6 +32,10 @@ InformationSchemaLine::InformationSchemaLine(ColumnDetail * column, std::string 
     this->notNull = column->notNull;
     this->dataType = column->dataType->type;
     this->size = column->dataType->size;
+
+    this->database.push_back(0);
+    this->table.push_back(0);
+    this->column.push_back(0);
 
     if (column->defaultValue != nullptr) {
         switch (column->defaultValue->fieldType) {
@@ -120,4 +125,9 @@ InsertableField *InformationSchemaLine::autoIncrementToInsertableField() const {
     auto *value = new ConstNumberField(this->autoIncrement);
 
     return new InsertableField(autoIncrementDT, value);
+}
+
+std::vector<InformationSchemaLine *> InformationSchemaLine::get_all_information_schema() {
+    TableStructure::selectAllInTable("information_schema", "columns", {});
+    return {};
 }

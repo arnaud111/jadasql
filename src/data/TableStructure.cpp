@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <filesystem>
 #include <fstream>
+#include <iostream>
 #include "../../include/data/TableStructure.h"
 #include "data/DatabaseStructure.h"
 
@@ -22,7 +23,7 @@ std::vector<std::string> TableStructure::getListTable(const std::string& databas
 }
 
 bool TableStructure::tableExist(const std::string& database, const std::string &name) {
-    std::string file = DatabaseStructure::BASE_DATA_PATH + database + "/" + name + ".tb";
+    std::string file = DatabaseStructure::BASE_DATA_PATH + database + "/" + name;
 
     struct stat sb {};
 
@@ -50,4 +51,21 @@ void TableStructure::insertRow(const std::string& database, const std::string& t
     }
 
     file.close();
+}
+
+std::vector<std::vector<Field *>> TableStructure::selectAllInTable(const std::string &database, const std::string &table, std::vector<DataType *> columnsDataType) {
+
+    std::string fileName = DatabaseStructure::BASE_DATA_PATH + database + "/" + table;
+
+    std::ifstream file(fileName, std::ios::binary);
+
+    char octet;
+    while (file.read(&octet, 1)) {
+        printf("-%d", static_cast<int>(octet));
+    }
+    printf("\n");
+
+    file.close();
+
+    return {};
 }

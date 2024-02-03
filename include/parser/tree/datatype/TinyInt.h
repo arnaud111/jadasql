@@ -17,6 +17,8 @@ public:
     void display() override;
 
     ReturnedValue *execute(ExecutionData *executionData) override;
+
+    Field *readFromFile(std::ifstream *file) override;
 };
 
 

@@ -19,6 +19,8 @@ public:
     const char *to_writable();
 
     int size_of();
+
+    void display() const;
 };
 
 #endif //JADA_INSERTABLEFIELD_H

@@ -17,11 +17,11 @@
 DataType *InformationSchemaLine::databaseDT = new VarChar(256);
 DataType *InformationSchemaLine::tableDT = new VarChar(256);
 DataType *InformationSchemaLine::columnDT = new VarChar(256);
-DataType *InformationSchemaLine::dataTypeDT = new TinyInt();
+DataType *InformationSchemaLine::dataTypeDT = new Int();
 DataType *InformationSchemaLine::sizeDT = new Int();
 DataType *InformationSchemaLine::defaultValueDT = new VarChar(256);
-DataType *InformationSchemaLine::notNullDT = new Boolean();
-DataType *InformationSchemaLine::autoIncrementDT = new Boolean();
+DataType *InformationSchemaLine::notNullDT = new Int();
+DataType *InformationSchemaLine::autoIncrementDT = new Int();
 
 InformationSchemaLine::InformationSchemaLine(ColumnDetail * column, std::string table, std::string database) {
 
@@ -55,6 +55,33 @@ InformationSchemaLine::InformationSchemaLine(ColumnDetail * column, std::string 
     }
 }
 
+InformationSchemaLine::InformationSchemaLine(std::vector<Field *> data) {
+
+    if (data.size() != 8) {
+        Error::runtimeError("Data size doesn't match");
+    }
+
+    if (data[0]->fieldType != f_ConstString
+    || data[1]->fieldType != f_ConstString
+    || data[2]->fieldType != f_ConstString
+    || data[3]->fieldType != f_ConstNumber
+    || data[4]->fieldType != f_ConstNumber
+    || data[5]->fieldType != f_ConstString
+    || data[6]->fieldType != f_ConstNumber
+    || data[7]->fieldType != f_ConstNumber) {
+        Error::runtimeError("Data types doesn't match");
+    }
+
+    this->database = ((ConstStringField *) data[0])->value;
+    this->table = ((ConstStringField *) data[1])->value;
+    this->column = ((ConstStringField *) data[2])->value;
+    this->dataType = static_cast<DataTypeEnum>(((ConstNumberField *) data[3])->value);
+    this->size = ((ConstNumberField *) data[4])->value;
+    this->defaultValue = ((ConstStringField *) data[5])->value;
+    this->notNull = ((ConstNumberField *) data[6])->value;
+    this->autoIncrement = ((ConstNumberField *) data[7])->value;
+}
+
 InsertableRow *InformationSchemaLine::toInsertableRow() {
 
     std::vector<InsertableField *> insertableFields;
@@ -69,6 +96,19 @@ InsertableRow *InformationSchemaLine::toInsertableRow() {
     insertableFields.push_back(autoIncrementToInsertableField());
 
     return new InsertableRow(insertableFields);
+}
+
+std::vector<DataType *> InformationSchemaLine::get_all_data_types() {
+    return {
+            InformationSchemaLine::databaseDT,
+            InformationSchemaLine::tableDT,
+            InformationSchemaLine::columnDT,
+            InformationSchemaLine::dataTypeDT,
+            InformationSchemaLine::sizeDT,
+            InformationSchemaLine::defaultValueDT,
+            InformationSchemaLine::notNullDT,
+            InformationSchemaLine::autoIncrementDT,
+    };
 }
 
 InsertableField *InformationSchemaLine::databaseToInsertableField() const {
@@ -128,6 +168,17 @@ InsertableField *InformationSchemaLine::autoIncrementToInsertableField() const {
 }
 
 std::vector<InformationSchemaLine *> InformationSchemaLine::get_all_information_schema() {
-    TableStructure::selectAllInTable("information_schema", "columns", {});
-    return {};
+    std::vector<std::vector<Field *>> lines = TableStructure::selectAllInTable("information_schema", "columns", InformationSchemaLine::get_all_data_types());
+    std::vector<InformationSchemaLine *> informationSchemaLines;
+
+    informationSchemaLines.reserve(lines.size());
+    for (auto &line: lines) {
+        informationSchemaLines.push_back(new InformationSchemaLine(line));
+    }
+
+    return informationSchemaLines;
+}
+
+void InformationSchemaLine::display() const {
+    printf("database: %s, table: %s, column: %s, data type: %d, size: %d, default value: %s, not null: %d, auto increment: %d\n", this->database.c_str(), this->table.c_str(), this->column.c_str(), this->dataType, this->size, this->defaultValue.c_str(), this->notNull, this->autoIncrement);
 }

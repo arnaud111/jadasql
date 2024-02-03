@@ -61,3 +61,10 @@ int InsertableField::size_of() {
             return sizeof(char) * ((ConstStringField *) this->value)->value.size();
     }
 }
+
+void InsertableField::display() const {
+    printf("InsertableField ");
+    this->dataType->display();
+    this->value->display();
+    printf(";\n");
+}

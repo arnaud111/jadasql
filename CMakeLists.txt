@@ -40,4 +40,6 @@ add_executable(jada main.cpp
         src/parser/tree/statements/ShowStatement.cpp
         src/parser/tree/statements/UseStatement.cpp
         src/interpreter/values/ReturnedRowData.cpp
-        src/data/InformationSchemaLine.cpp src/data/InsertableField.cpp src/data/InsertableRow.cpp)
+        src/data/InformationSchemaLine.cpp src/data/InsertableField.cpp src/data/InsertableRow.cpp
+        src/parser/tree/datatype/DataTypeExecute.cpp
+        src/parser/tree/datatype/DataTypeRead.cpp)

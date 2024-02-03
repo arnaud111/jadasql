@@ -8,6 +8,7 @@
 #include <vector>
 #include "../../../lexer/symbol/Symbol.h"
 #include "../tree_item/TreeItem.h"
+#include "parser/tree/field/Field.h"
 
 enum DataTypeEnum {
     d_Boolean,
@@ -29,6 +30,8 @@ public:
     int size;
 
     static DataType *convertToDataType(std::vector<Symbol *> symbols);
+
+    virtual Field *readFromFile(std::ifstream *file) = 0;
 };
 
 

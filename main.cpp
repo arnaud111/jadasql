@@ -17,7 +17,11 @@ int main() {
     ExecutionData *executionData = new ExecutionData();
 
     createInformationSchema();
-    InformationSchemaLine::get_all_information_schema();
+    std::vector<InformationSchemaLine *> columnsInformation = InformationSchemaLine::get_all_information_schema();
+
+    for (auto &col: columnsInformation) {
+        col->display();
+    }
 
     while (true) {
 
@@ -65,5 +69,5 @@ void createInformationSchema() {
 }
 
 /*
- * CREATE TABLE aaa@test (id INT);
+ * CREATE TABLE aaa@user (id INT, age INT);
  */

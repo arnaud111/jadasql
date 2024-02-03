@@ -25,9 +25,13 @@ public:
 
     explicit InformationSchemaLine(ColumnDetail * column, std::string table, std::string database);
 
+    explicit InformationSchemaLine(std::vector<Field *> data);
+
     InsertableRow *toInsertableRow();
 
     static std::vector<InformationSchemaLine *> get_all_information_schema();
+
+    void display() const;
 
 private:
 
@@ -55,6 +59,8 @@ private:
     InsertableField *notNullToInsertableField() const;
 
     InsertableField *autoIncrementToInsertableField() const;
+
+    static std::vector<DataType *> get_all_data_types();
 };
 
 #endif //JADA_INFORMATIONSCHEMALINE_H

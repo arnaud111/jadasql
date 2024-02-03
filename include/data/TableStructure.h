@@ -22,6 +22,10 @@ public:
     static void insertRow(const std::string& database, const std::string& table, InsertableRow *insertableRow);
 
     static std::vector<std::vector<Field *>> selectAllInTable(const std::string &database, const std::string &table, std::vector<DataType *> columnsDataType);
+
+private:
+
+    static std::vector<Field *> selectNextLine(std::ifstream *file, std::vector<DataType *> columnsDataType);
 };
 
 #endif //JADA_TABLESTRUCTURE_H

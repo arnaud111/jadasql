@@ -44,9 +44,12 @@ void TableStructure::insertRow(const std::string& database, const std::string& t
 
     std::string fileName = DatabaseStructure::BASE_DATA_PATH + database + "/" + table;
 
-    std::ofstream file(fileName, std::ios::binary);
+    std::ofstream file;
+
+    file.open(fileName, std::ios::binary | std::ios::app);
 
     for (auto & insertableField : insertableRow->listField) {
+        //insertableField->display();
         file.write(insertableField->to_writable(), insertableField->size_of());
     }
 
@@ -56,16 +59,27 @@ void TableStructure::insertRow(const std::string& database, const std::string& t
 std::vector<std::vector<Field *>> TableStructure::selectAllInTable(const std::string &database, const std::string &table, std::vector<DataType *> columnsDataType) {
 
     std::string fileName = DatabaseStructure::BASE_DATA_PATH + database + "/" + table;
-
+    std::vector<std::vector<Field *>> allLines;
     std::ifstream file(fileName, std::ios::binary);
 
-    char octet;
-    while (file.read(&octet, 1)) {
-        printf("-%d", static_cast<int>(octet));
+    while (!file.eof()) {
+        allLines.push_back(selectNextLine(&file, columnsDataType));
     }
-    printf("\n");
 
     file.close();
 
-    return {};
+    return allLines;
 }
+
+std::vector<Field *> TableStructure::selectNextLine(std::ifstream *file, std::vector<DataType *> columnsDataType) {
+
+    std::vector<Field *> values;
+
+    values.reserve(columnsDataType.size());
+    for (auto &dataType: columnsDataType) {
+        values.push_back(dataType->readFromFile(file));
+    }
+
+    return values;
+}
+

@@ -81,6 +81,10 @@ ReturnedValue *DropStatement::execute(ExecutionData *executionData) {
                 Error::runtimeError("Database Does Not Exist");
             }
 
+            if (!TableStructure::tableExist(database, ((TableReference *) this->droppedField)->tableName)) {
+                Error::runtimeError("Table Does Not Exist");
+            }
+
             if (TableStructure::removeTable(database, ((TableReference *) this->droppedField)->tableName)) {
                 return ReturnedValue::rowCount(1);
             }

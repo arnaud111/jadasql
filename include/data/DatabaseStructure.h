@@ -16,6 +16,8 @@ public:
 
     static bool createDatabase(const std::string& name);
 
+    static bool removeDatabase(const std::string& name);
+
     static std::vector<std::string> getListDatabase();
 
     static bool databaseExist(const std::string& name);

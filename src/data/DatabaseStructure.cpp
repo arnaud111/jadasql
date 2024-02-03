@@ -26,6 +26,18 @@ bool DatabaseStructure::createDatabase(const std::string& name) {
     return true;
 }
 
+bool DatabaseStructure::removeDatabase(const std::string &name) {
+
+    std::string dir = BASE_DATA_PATH + name;
+
+    if (!databaseExist(name)) {
+        return false;
+    }
+
+    std::filesystem::remove_all(dir);
+    return true;
+}
+
 std::vector<std::string> DatabaseStructure::getListDatabase() {
 
     std::vector<std::string> listDatabases;

@@ -11,7 +11,7 @@
 
 TableReference::TableReference(std::vector<Symbol *> symbols) {
     int index = 1;
-    this->fieldType = f_Reference;
+    this->fieldType = f_TableReference;
     this->databaseReference = nullptr;
 
     if (symbols[0]->symbolValueType == s_Identifier) {
@@ -45,6 +45,7 @@ DatabaseReference::DatabaseReference(std::vector<Symbol *> symbols) {
         Error::syntaxError(symbols[0]);
     }
 
+    this->fieldType = f_DatabaseReference;
     this->databaseName = ((IdentifierSymbol *) symbols[0])->value;
 }
 

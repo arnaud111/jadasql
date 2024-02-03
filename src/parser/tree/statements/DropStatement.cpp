@@ -8,6 +8,8 @@
 #include "parser/tree/structure/DatabaseReference.h"
 #include "lexer/symbol/value/IdentifierSymbol.h"
 #include "parser/tree/structure/TableReference.h"
+#include "data/TableStructure.h"
+#include "data/DatabaseStructure.h"
 
 DropStatement::DropStatement(const std::vector<Symbol *> &symbols) {
 
@@ -63,5 +65,35 @@ DropStatementTypeEnum DropStatement::getDropType(Symbol *symbol) {
 }
 
 ReturnedValue *DropStatement::execute(ExecutionData *executionData) {
-    return nullptr;
+
+    std::string database = executionData->databaseUsed;
+
+    switch (this->type) {
+        case DropTable:
+            if (((TableReference *) this->droppedField)->databaseReference != nullptr) {
+                database = ((TableReference *) this->droppedField)->databaseReference->databaseName;
+            }
+
+            if (database.empty()) {
+                Error::runtimeError("No Database Selected");
+            }
+            if (!DatabaseStructure::databaseExist(database)) {
+                Error::runtimeError("Database Does Not Exist");
+            }
+
+            if (TableStructure::removeTable(database, ((TableReference *) this->droppedField)->tableName)) {
+                return ReturnedValue::rowCount(1);
+            }
+            break;
+        case DropDatabase:
+            if (!DatabaseStructure::databaseExist(((DatabaseReference *) this->droppedField)->databaseName)) {
+                Error::runtimeError("Database Does Not Exist");
+            }
+            if (DatabaseStructure::removeDatabase(((DatabaseReference *) this->droppedField)->databaseName)) {
+                return ReturnedValue::rowCount(1);
+            }
+            break;
+    }
+
+    return ReturnedValue::rowCount(0);
 }

@@ -17,7 +17,8 @@ enum FieldType {
     f_ConstString,
     f_ConstNumber,
     f_Null,
-    f_Reference,
+    f_TableReference,
+    f_DatabaseReference,
     f_Operation,
 };
 

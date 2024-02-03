@@ -40,6 +40,17 @@ bool TableStructure::createTable(const std::string &database, const std::string 
     return true;
 }
 
+bool TableStructure::removeTable(const std::string &database, const std::string &table) {
+
+    std::string fileName = DatabaseStructure::BASE_DATA_PATH + database + "/" + table;
+
+    if (remove(fileName.c_str())) {
+        return false;
+    }
+
+    return true;
+}
+
 void TableStructure::insertRow(const std::string& database, const std::string& table, InsertableRow *insertableRow) {
 
     std::string fileName = DatabaseStructure::BASE_DATA_PATH + database + "/" + table;

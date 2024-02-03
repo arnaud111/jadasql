@@ -14,14 +14,11 @@ void createInformationSchema();
 int main() {
 
     std::string request;
-    ExecutionData *executionData = new ExecutionData();
+    auto *executionData = new ExecutionData();
 
     createInformationSchema();
     std::vector<InformationSchemaLine *> columnsInformation = InformationSchemaLine::get_all_information_schema();
 
-    for (auto &col: columnsInformation) {
-        col->display();
-    }
 
     while (true) {
 

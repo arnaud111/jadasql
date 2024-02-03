@@ -57,7 +57,8 @@ InformationSchemaLine::InformationSchemaLine(ColumnDetail * column, std::string 
 
 InformationSchemaLine::InformationSchemaLine(std::vector<Field *> data) {
 
-    if (data.size() != 8) {
+//    if (data.size() != 8) {
+    if (data.size() != 7) {
         Error::runtimeError("Data size doesn't match");
     }
 
@@ -66,9 +67,9 @@ InformationSchemaLine::InformationSchemaLine(std::vector<Field *> data) {
     || data[2]->fieldType != f_ConstString
     || data[3]->fieldType != f_ConstNumber
     || data[4]->fieldType != f_ConstNumber
-    || data[5]->fieldType != f_ConstString
-    || data[6]->fieldType != f_ConstNumber
-    || data[7]->fieldType != f_ConstNumber) {
+    //|| data[5]->fieldType != f_ConstString
+    || data[5]->fieldType != f_ConstNumber
+    || data[6]->fieldType != f_ConstNumber) {
         Error::runtimeError("Data types doesn't match");
     }
 
@@ -77,9 +78,10 @@ InformationSchemaLine::InformationSchemaLine(std::vector<Field *> data) {
     this->column = ((ConstStringField *) data[2])->value;
     this->dataType = static_cast<DataTypeEnum>(((ConstNumberField *) data[3])->value);
     this->size = ((ConstNumberField *) data[4])->value;
-    this->defaultValue = ((ConstStringField *) data[5])->value;
-    this->notNull = ((ConstNumberField *) data[6])->value;
-    this->autoIncrement = ((ConstNumberField *) data[7])->value;
+    //this->defaultValue = ((ConstStringField *) data[5])->value;
+    this->defaultValue = "";
+    this->notNull = ((ConstNumberField *) data[5])->value;
+    this->autoIncrement = ((ConstNumberField *) data[6])->value;
 }
 
 InsertableRow *InformationSchemaLine::toInsertableRow() {
@@ -91,7 +93,7 @@ InsertableRow *InformationSchemaLine::toInsertableRow() {
     insertableFields.push_back(columnToInsertableField());
     insertableFields.push_back(dataTypeToInsertableField());
     insertableFields.push_back(sizeToInsertableField());
-    insertableFields.push_back(defaultValueToInsertableField());
+    //insertableFields.push_back(defaultValueToInsertableField());
     insertableFields.push_back(notNullToInsertableField());
     insertableFields.push_back(autoIncrementToInsertableField());
 
@@ -105,7 +107,7 @@ std::vector<DataType *> InformationSchemaLine::get_all_data_types() {
             InformationSchemaLine::columnDT,
             InformationSchemaLine::dataTypeDT,
             InformationSchemaLine::sizeDT,
-            InformationSchemaLine::defaultValueDT,
+            //InformationSchemaLine::defaultValueDT,
             InformationSchemaLine::notNullDT,
             InformationSchemaLine::autoIncrementDT,
     };

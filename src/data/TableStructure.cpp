@@ -60,10 +60,14 @@ std::vector<std::vector<Field *>> TableStructure::selectAllInTable(const std::st
 
     std::string fileName = DatabaseStructure::BASE_DATA_PATH + database + "/" + table;
     std::vector<std::vector<Field *>> allLines;
+    std::vector<Field *> lineTmp;
     std::ifstream file(fileName, std::ios::binary);
 
     while (!file.eof()) {
-        allLines.push_back(selectNextLine(&file, columnsDataType));
+        lineTmp = selectNextLine(&file, columnsDataType);
+        if (lineTmp.size() == columnsDataType.size()) {
+            allLines.push_back(lineTmp);
+        }
     }
 
     file.close();
@@ -77,6 +81,9 @@ std::vector<Field *> TableStructure::selectNextLine(std::ifstream *file, std::ve
 
     values.reserve(columnsDataType.size());
     for (auto &dataType: columnsDataType) {
+        if (file->eof()) {
+            return {};
+        }
         values.push_back(dataType->readFromFile(file));
     }
 

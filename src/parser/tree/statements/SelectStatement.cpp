@@ -121,6 +121,8 @@ ReturnedValue *SelectStatement::execute(ExecutionData *executionData) {
     std::vector<std::string> columnDataTmp;
     std::vector<std::vector<Field *>> columnDataFields;
     std::vector<DataType *> dataTypes;
+    std::vector<int> indexReturned;
+    bool found;
 
     if (((TableReference *) this->from->table)->databaseReference != nullptr) {
         database = ((TableReference *) this->from->table)->databaseReference->databaseName;
@@ -139,21 +141,39 @@ ReturnedValue *SelectStatement::execute(ExecutionData *executionData) {
 
     columnsInformation = InformationSchemaLine::get_information_schema_for_table(database, ((TableReference *) this->from->table)->tableName);
 
+    for (auto &selected: this->field) {
+        if (selected->fieldType != f_Column) {
+            Error::runtimeError("Not implemented");
+        }
+
+        columnsName.push_back(((ColumnReference *) selected)->columnName);
+        found = false;
+        for (int i = 0; i < columnsInformation.size(); i++) {
+            if (columnsInformation[i]->column == ((ColumnReference *) selected)->columnName) {
+                found = true;
+                indexReturned.push_back(i);
+            }
+        }
+
+        if (!found) {
+            Error::runtimeError("Column not found");
+        }
+    }
+
     dataTypes.reserve(columnsInformation.size());
     for (auto &information: columnsInformation) {
         dataTypes.push_back(DataType::convertToDataType(information->dataType, information->size));
-        columnsName.push_back(information->column);
     }
 
     columnDataFields = TableStructure::selectAllInTable(database, ((TableReference *) this->from->table)->tableName, dataTypes);
 
     for (auto &dataField: columnDataFields) {
         columnDataTmp = {};
-        for (auto &fieldValue: dataField) {
-            if (fieldValue->fieldType == f_ConstString) {
-                columnDataTmp.push_back(((ConstStringField *) fieldValue)->value);
+        for (auto &index: indexReturned) {
+            if (dataField[index]->fieldType == f_ConstString) {
+                columnDataTmp.push_back(((ConstStringField *) dataField[index])->value);
             } else {
-                columnDataTmp.push_back(std::to_string(((ConstNumberField *) fieldValue)->value));
+                columnDataTmp.push_back(std::to_string(((ConstNumberField *) dataField[index])->value));
             }
         }
         columnData.push_back(columnDataTmp);

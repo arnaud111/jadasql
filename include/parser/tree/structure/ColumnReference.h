@@ -16,10 +16,12 @@ public:
     std::string columnName;
 
     explicit ColumnReference(std::string columnName) {
+        this->fieldType = f_Column;
         this->columnName = std::move(columnName);
     }
 
     explicit ColumnReference(std::string columnName, std::string tableName) {
+        this->fieldType = f_Column;
         this->columnName = std::move(columnName);
         this->tableName = std::move(tableName);
     }

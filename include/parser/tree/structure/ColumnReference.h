@@ -29,6 +29,8 @@ public:
     void display() override;
 
     ReturnedValue *execute(ExecutionData *executionData) override;
+
+    ReturnedValue *execute(std::vector<Field *> row, std::vector<std::string> columnName);
 };
 
 #endif //JADA_COLUMNREFERENCE_H

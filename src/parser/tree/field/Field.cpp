@@ -26,6 +26,8 @@
 #include "lexer/symbol/keyword/OperatorSymbol.h"
 #include "parser/tree/operation/Operation.h"
 #include "parser/tree/field/NullField.h"
+#include "interpreter/values/ReturnedString.h"
+#include "interpreter/values/ReturnedNumber.h"
 
 std::vector<Field *> Field::createListField(const std::vector<Symbol *> &symbols) {
     std::vector<Field *> listFields;
@@ -303,8 +305,16 @@ ReturnedValue *ConstNumberField::execute(ExecutionData *executionData) {
     return nullptr;
 }
 
+ReturnedValue *ConstNumberField::execute() const {
+    return new ReturnedNumber(this->value);
+}
+
 ReturnedValue *ConstStringField::execute(ExecutionData *executionData) {
     return nullptr;
+}
+
+ReturnedValue *ConstStringField::execute() const {
+    return new ReturnedString(this->value);
 }
 
 ReturnedValue *NullField::execute(ExecutionData *executionData) {

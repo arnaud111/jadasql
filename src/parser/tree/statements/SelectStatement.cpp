@@ -11,6 +11,7 @@
 #include "data/InformationSchemaLine.h"
 #include "parser/tree/field/ConstStringField.h"
 #include "parser/tree/field/ConstNumberField.h"
+#include "interpreter/values/ReturnedBool.h"
 
 SelectStatement::SelectStatement(const std::vector<Symbol *> &symbols) : Statement() {
     std::vector<Symbol *> splitSymbols;
@@ -116,6 +117,7 @@ ReturnedValue *SelectStatement::execute(ExecutionData *executionData) {
 
     std::string database;
     std::vector<InformationSchemaLine *> columnsInformation;
+    std::vector<std::string> columnsNameReturned;
     std::vector<std::string> columnsName;
     std::vector<std::vector<std::string>> columnData;
     std::vector<std::string> columnDataTmp;
@@ -146,7 +148,7 @@ ReturnedValue *SelectStatement::execute(ExecutionData *executionData) {
             Error::runtimeError("Not implemented");
         }
 
-        columnsName.push_back(((ColumnReference *) selected)->columnName);
+        columnsNameReturned.push_back(((ColumnReference *) selected)->columnName);
         found = false;
         for (int i = 0; i < columnsInformation.size(); i++) {
             if (columnsInformation[i]->column == ((ColumnReference *) selected)->columnName) {
@@ -163,21 +165,24 @@ ReturnedValue *SelectStatement::execute(ExecutionData *executionData) {
     dataTypes.reserve(columnsInformation.size());
     for (auto &information: columnsInformation) {
         dataTypes.push_back(DataType::convertToDataType(information->dataType, information->size));
+        columnsName.push_back(information->column);
     }
 
     columnDataFields = TableStructure::selectAllInTable(database, ((TableReference *) this->from->table)->tableName, dataTypes);
 
     for (auto &dataField: columnDataFields) {
-        columnDataTmp = {};
-        for (auto &index: indexReturned) {
-            if (dataField[index]->fieldType == f_ConstString) {
-                columnDataTmp.push_back(((ConstStringField *) dataField[index])->value);
-            } else {
-                columnDataTmp.push_back(std::to_string(((ConstNumberField *) dataField[index])->value));
+        if (this->where == nullptr || ((ReturnedBool *) ((Operation *) this->where)->executeWhere(dataField, columnsName))->value) {
+            columnDataTmp = {};
+            for (auto &index: indexReturned) {
+                if (dataField[index]->fieldType == f_ConstString) {
+                    columnDataTmp.push_back(((ConstStringField *) dataField[index])->value);
+                } else {
+                    columnDataTmp.push_back(std::to_string(((ConstNumberField *) dataField[index])->value));
+                }
             }
+            columnData.push_back(columnDataTmp);
         }
-        columnData.push_back(columnDataTmp);
     }
 
-    return ReturnedValue::rowData(columnsName, columnData);
+    return ReturnedValue::rowData(columnsNameReturned, columnData);
 }

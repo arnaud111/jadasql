@@ -8,6 +8,8 @@
 #include "lexer/symbol/value/IdentifierSymbol.h"
 #include "error/Error.h"
 #include "parser/tree/structure/ColumnReference.h"
+#include "parser/tree/field/ConstNumberField.h"
+#include "parser/tree/field/ConstStringField.h"
 
 TableReference::TableReference(std::vector<Symbol *> symbols) {
     int index = 1;
@@ -54,6 +56,20 @@ DatabaseReference::DatabaseReference(std::string databaseName)  {
 }
 
 ReturnedValue *ColumnReference::execute(ExecutionData *executionData) {
+    return nullptr;
+}
+
+ReturnedValue *ColumnReference::execute(std::vector<Field *> row, std::vector<std::string> columnName) {
+
+    for (int i = 0; i < columnName.size(); i++) {
+        if (columnName[i] == this->columnName) {
+            if (row[i]->fieldType == f_ConstNumber) {
+                return ((ConstNumberField *) row[i])->execute();
+            }
+            return ((ConstStringField *) row[i])->execute();
+        }
+    }
+
     return nullptr;
 }
 

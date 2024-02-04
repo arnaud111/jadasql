@@ -45,6 +45,8 @@ public:
     static Field *tryConvertToOperation(const std::vector<Symbol *> &symbols);
 
     static Field *tryConvertToFunctionField(const std::vector<Symbol *> &symbols, int function);
+
+    bool confirmWhere(std::vector<Field *> row, std::vector<std::string *> columnsName);
 };
 
 #endif //JADA_FIELD_H

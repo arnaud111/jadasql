@@ -23,6 +23,8 @@ public:
     void display() override;
 
     ReturnedValue *execute(ExecutionData *executionData) override;
+
+    ReturnedValue *execute() const;
 };
 
 #endif //JADA_CONSTSTRINGFIELD_H

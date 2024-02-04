@@ -21,6 +21,8 @@ public:
     void display() override;
 
     ReturnedValue *execute(ExecutionData *executionData) override;
+
+    ReturnedValue *execute() const;
 };
 
 #endif //JADA_CONSTNUMBERFIELD_H

@@ -12,6 +12,9 @@ enum ReturnedValueType {
     None,
     RowCount,
     RowData,
+    String,
+    Number,
+    Bool,
 };
 
 class ReturnedValue {

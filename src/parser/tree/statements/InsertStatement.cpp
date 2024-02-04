@@ -7,6 +7,9 @@
 #include "lexer/symbol/keyword/KeywordSymbol.h"
 #include "lexer/symbol/keyword/DelimiterSymbol.h"
 #include "lexer/symbol/value/IdentifierSymbol.h"
+#include "data/DatabaseStructure.h"
+#include "data/TableStructure.h"
+#include "data/InformationSchemaLine.h"
 
 InsertStatement::InsertStatement(std::vector<Symbol *> symbols) {
     std::vector<Symbol *> tmpSymbolsArray;
@@ -95,5 +98,40 @@ std::vector<Symbol *> InsertStatement::getInParenthesis(unsigned long long start
 }
 
 ReturnedValue *InsertStatement::execute(ExecutionData *executionData) {
+
+    std::string database;
+    std::vector<InformationSchemaLine *> columnsInformation;
+    std::vector<InsertableField *> insertableFields;
+
+    if (((TableReference *) this->tableReference)->databaseReference != nullptr) {
+        database = ((TableReference *) this->tableReference)->databaseReference->databaseName;
+    }
+
+    if (database.empty()) {
+        Error::runtimeError("No Database Selected");
+    }
+    if (!DatabaseStructure::databaseExist(database)) {
+        Error::runtimeError("Database Does Not Exist");
+    }
+
+    if (!TableStructure::tableExist(database, ((TableReference *) this->tableReference)->tableName)) {
+        Error::runtimeError("Table Does Not Exist");
+    }
+
+    columnsInformation = InformationSchemaLine::get_information_schema_for_table(database, ((TableReference *) this->tableReference)->tableName);
+
+    for (auto &line: this->values) {
+        if (line.size() != columnsInformation.size()) {
+            Error::runtimeError("Not enough data");
+        }
+
+        insertableFields = {};
+        for (int i = 0; i < line.size(); i++) {
+            insertableFields.push_back(new InsertableField(DataType::convertToDataType(columnsInformation[i]->dataType, columnsInformation[i]->size), line[i]));
+        }
+
+        TableStructure::insertRow(database, ((TableReference *) this->tableReference)->tableName, new InsertableRow(insertableFields));
+    }
+
     return nullptr;
 }

@@ -67,4 +67,5 @@ void createInformationSchema() {
 
 /*
  * CREATE TABLE aaa@user (id INT, age INT);
+ * INSERT INTO aaa@user VALUES (1, 1);
  */

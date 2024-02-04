@@ -181,6 +181,22 @@ std::vector<InformationSchemaLine *> InformationSchemaLine::get_all_information_
     return informationSchemaLines;
 }
 
+std::vector<InformationSchemaLine *> InformationSchemaLine::get_information_schema_for_table(std::string database, std::string table) {
+    std::vector<std::vector<Field *>> lines = TableStructure::selectAllInTable("information_schema", "columns", InformationSchemaLine::get_all_data_types());
+    std::vector<InformationSchemaLine *> informationSchemaLines;
+    InformationSchemaLine *tmpLine;
+
+    informationSchemaLines.reserve(lines.size());
+    for (auto &line: lines) {
+        tmpLine = new InformationSchemaLine(line);
+        if (tmpLine->database == database && tmpLine->table == table) {
+            informationSchemaLines.push_back(tmpLine);
+        }
+    }
+
+    return informationSchemaLines;
+}
+
 void InformationSchemaLine::display() const {
     printf("database: %s, table: %s, column: %s, data type: %d, size: %d, default value: %s, not null: %d, auto increment: %d\n", this->database.c_str(), this->table.c_str(), this->column.c_str(), this->dataType, this->size, this->defaultValue.c_str(), this->notNull, this->autoIncrement);
 }

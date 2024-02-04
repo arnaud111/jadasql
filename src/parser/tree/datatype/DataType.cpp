@@ -139,3 +139,28 @@ DataType *DataType::convertToDataType(std::vector<Symbol *> symbols) {
     return nullptr;
 }
 
+DataType *DataType::convertToDataType(DataTypeEnum dataTypeEnum, int size) {
+    switch (dataTypeEnum) {
+        case d_Boolean:
+            return new Boolean();
+        case d_Char:
+            return new Char(size);
+        case d_Date:
+            return new Date();
+        case d_DateTime:
+            return new DateTime();
+        case d_Double:
+            return new Double();
+        case d_Float:
+            return new Float();
+        case d_Int:
+            return new Int();
+        case d_Timestamp:
+            return new Timestamp();
+        case d_TinyInt:
+            return new TinyInt();
+        case d_VarChar:
+            return new VarChar(size);
+    }
+}
+

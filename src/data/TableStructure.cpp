@@ -54,13 +54,12 @@ bool TableStructure::removeTable(const std::string &database, const std::string 
 void TableStructure::insertRow(const std::string& database, const std::string& table, InsertableRow *insertableRow) {
 
     std::string fileName = DatabaseStructure::BASE_DATA_PATH + database + "/" + table;
-
     std::ofstream file;
 
     file.open(fileName, std::ios::binary | std::ios::app);
 
     for (auto & insertableField : insertableRow->listField) {
-        //insertableField->display();
+        insertableField->display();
         file.write(insertableField->to_writable(), insertableField->size_of());
     }
 

@@ -31,6 +31,8 @@ public:
 
     static DataType *convertToDataType(std::vector<Symbol *> symbols);
 
+    static DataType *convertToDataType(DataTypeEnum dataTypeEnum, int size);
+
     virtual Field *readFromFile(std::ifstream *file) = 0;
 };
 

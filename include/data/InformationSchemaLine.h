@@ -31,6 +31,8 @@ public:
 
     static std::vector<InformationSchemaLine *> get_all_information_schema();
 
+    static std::vector<InformationSchemaLine *> get_information_schema_for_table(std::string database, std::string table);
+
     void display() const;
 
 private:

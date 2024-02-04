@@ -133,5 +133,5 @@ ReturnedValue *InsertStatement::execute(ExecutionData *executionData) {
         TableStructure::insertRow(database, ((TableReference *) this->tableReference)->tableName, new InsertableRow(insertableFields));
     }
 
-    return nullptr;
+    return ReturnedValue::rowCount(this->values.size());
 }

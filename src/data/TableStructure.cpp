@@ -59,7 +59,7 @@ void TableStructure::insertRow(const std::string& database, const std::string& t
     file.open(fileName, std::ios::binary | std::ios::app);
 
     for (auto & insertableField : insertableRow->listField) {
-        insertableField->display();
+        //insertableField->display();
         file.write(insertableField->to_writable(), insertableField->size_of());
     }
 

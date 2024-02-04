@@ -142,6 +142,7 @@ ReturnedValue *SelectStatement::execute(ExecutionData *executionData) {
     dataTypes.reserve(columnsInformation.size());
     for (auto &information: columnsInformation) {
         dataTypes.push_back(DataType::convertToDataType(information->dataType, information->size));
+        columnsName.push_back(information->column);
     }
 
     columnDataFields = TableStructure::selectAllInTable(database, ((TableReference *) this->from->table)->tableName, dataTypes);

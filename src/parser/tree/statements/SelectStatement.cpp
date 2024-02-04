@@ -6,6 +6,11 @@
 #include "lexer/symbol/keyword/KeywordSymbol.h"
 #include "lexer/symbol/value/NumberSymbol.h"
 #include "error/Error.h"
+#include "data/DatabaseStructure.h"
+#include "data/TableStructure.h"
+#include "data/InformationSchemaLine.h"
+#include "parser/tree/field/ConstStringField.h"
+#include "parser/tree/field/ConstNumberField.h"
 
 SelectStatement::SelectStatement(const std::vector<Symbol *> &symbols) : Statement() {
     std::vector<Symbol *> splitSymbols;
@@ -108,5 +113,50 @@ bool SelectStatement::isDistinct(std::vector<Symbol *> symbols) {
 }
 
 ReturnedValue *SelectStatement::execute(ExecutionData *executionData) {
-    return nullptr;
+
+    std::string database;
+    std::vector<InformationSchemaLine *> columnsInformation;
+    std::vector<std::string> columnsName;
+    std::vector<std::vector<std::string>> columnData;
+    std::vector<std::string> columnDataTmp;
+    std::vector<std::vector<Field *>> columnDataFields;
+    std::vector<DataType *> dataTypes;
+
+    if (((TableReference *) this->from->table)->databaseReference != nullptr) {
+        database = ((TableReference *) this->from->table)->databaseReference->databaseName;
+    }
+
+    if (database.empty()) {
+        Error::runtimeError("No Database Selected");
+    }
+    if (!DatabaseStructure::databaseExist(database)) {
+        Error::runtimeError("Database Does Not Exist");
+    }
+
+    if (!TableStructure::tableExist(database, ((TableReference *) this->from->table)->tableName)) {
+        Error::runtimeError("Table Does Not Exist");
+    }
+
+    columnsInformation = InformationSchemaLine::get_information_schema_for_table(database, ((TableReference *) this->from->table)->tableName);
+
+    dataTypes.reserve(columnsInformation.size());
+    for (auto &information: columnsInformation) {
+        dataTypes.push_back(DataType::convertToDataType(information->dataType, information->size));
+    }
+
+    columnDataFields = TableStructure::selectAllInTable(database, ((TableReference *) this->from->table)->tableName, dataTypes);
+
+    for (auto &dataField: columnDataFields) {
+        columnDataTmp = {};
+        for (auto &fieldValue: dataField) {
+            if (fieldValue->fieldType == f_ConstString) {
+                columnDataTmp.push_back(((ConstStringField *) fieldValue)->value);
+            } else {
+                columnDataTmp.push_back(std::to_string(((ConstNumberField *) fieldValue)->value));
+            }
+        }
+        columnData.push_back(columnDataTmp);
+    }
+
+    return ReturnedValue::rowData(columnsName, columnData);
 }

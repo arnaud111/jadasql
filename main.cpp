@@ -19,6 +19,9 @@ int main() {
     createInformationSchema();
     std::vector<InformationSchemaLine *> columnsInformation = InformationSchemaLine::get_all_information_schema();
 
+    for (auto &col: columnsInformation) {
+        col->display();
+    }
 
     while (true) {
 
@@ -60,15 +63,15 @@ void createInformationSchema() {
     }
 
     if (!TableStructure::tableExist("information_schema", "columns")) {
-        std::ofstream Tables(DatabaseStructure::BASE_DATA_PATH + "information_schema/columns");
-        Tables.close();
+        TableStructure::createTable("information_schema", "columns");
     }
 }
 
 /*
- * CREATE TABLE aaa@user (id INT, age INT);
+ * CREATE TABLE aaa@user_char (id INT, age INT, name CHAR(10));
  * INSERT INTO aaa@user VALUES (1, 1);
  * SELECT id, age FROM aaa@user;
  * DELETE FROM aaa@user WHERE id = 1;
  * UPDATE aaa@user SET age = 2 WHERE id = 1;
+ * DROP TABLE aaa@user;
  */

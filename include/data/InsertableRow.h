@@ -15,6 +15,7 @@ public:
 
     explicit InsertableRow(std::vector<InsertableField *> listField);
 
+    void display();
 };
 
 #endif //JADA_INSERTABLEROW_H

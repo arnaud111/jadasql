@@ -29,6 +29,10 @@ public:
 private:
 
     static DropStatementTypeEnum getDropType(Symbol *symbol);
+
+    ReturnedValue *executeDropTable(ExecutionData *executionData);
+
+    ReturnedValue *executeDropDatabase(ExecutionData *executionData);
 };
 
 

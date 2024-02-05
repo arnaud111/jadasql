@@ -24,7 +24,9 @@ const char *InsertableField::to_writable() {
         case d_Date:
         case d_DateTime:
         case d_Timestamp:
+            return reinterpret_cast<const char*>(((ConstStringField *) this->value)->value.c_str());
         case d_VarChar:
+            ((ConstStringField *) this->value)->value.push_back(0);
             return reinterpret_cast<const char*>(((ConstStringField *) this->value)->value.c_str());
         case d_Boolean:
         case d_Double:
@@ -58,7 +60,7 @@ int InsertableField::size_of() {
         case d_TinyInt:
             return sizeof(short);
         case d_VarChar:
-            return sizeof(char) * ((ConstStringField *) this->value)->value.size();
+            return sizeof(char) * ((ConstStringField *) this->value)->value.size() + 1;
     }
 }
 

@@ -11,3 +11,10 @@ InsertableRow::InsertableRow(std::vector<InsertableField *> listField) {
     this->listField = std::move(listField);
 
 }
+
+void InsertableRow::display() {
+
+    for (auto &insertableField: this->listField) {
+        insertableField->display();
+    }
+}

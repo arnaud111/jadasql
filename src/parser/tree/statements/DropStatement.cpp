@@ -10,6 +10,7 @@
 #include "parser/tree/structure/TableReference.h"
 #include "data/TableStructure.h"
 #include "data/DatabaseStructure.h"
+#include "data/InformationSchemaLine.h"
 
 DropStatement::DropStatement(const std::vector<Symbol *> &symbols) {
 
@@ -65,39 +66,64 @@ DropStatementTypeEnum DropStatement::getDropType(Symbol *symbol) {
 }
 
 ReturnedValue *DropStatement::execute(ExecutionData *executionData) {
-
-    std::string database = executionData->databaseUsed;
-
-    switch (this->type) {
+     switch (this->type) {
         case DropTable:
-            if (((TableReference *) this->droppedField)->databaseReference != nullptr) {
-                database = ((TableReference *) this->droppedField)->databaseReference->databaseName;
-            }
-
-            if (database.empty()) {
-                Error::runtimeError("No Database Selected");
-            }
-            if (!DatabaseStructure::databaseExist(database)) {
-                Error::runtimeError("Database Does Not Exist");
-            }
-
-            if (!TableStructure::tableExist(database, ((TableReference *) this->droppedField)->tableName)) {
-                Error::runtimeError("Table Does Not Exist");
-            }
-
-            if (TableStructure::removeTable(database, ((TableReference *) this->droppedField)->tableName)) {
-                return ReturnedValue::rowCount(1);
-            }
-            break;
+            return executeDropTable(executionData);
         case DropDatabase:
-            if (!DatabaseStructure::databaseExist(((DatabaseReference *) this->droppedField)->databaseName)) {
-                Error::runtimeError("Database Does Not Exist");
-            }
-            if (DatabaseStructure::removeDatabase(((DatabaseReference *) this->droppedField)->databaseName)) {
-                return ReturnedValue::rowCount(1);
-            }
-            break;
+            return executeDropDatabase(executionData);
+    }
+}
+
+ReturnedValue *DropStatement::executeDropDatabase(ExecutionData *executionData) {
+
+    std::vector<InsertableRow *> columnsInformationReplace;
+    std::vector<InformationSchemaLine *> columnsInformation = InformationSchemaLine::get_all_information_schema();
+
+    if (!DatabaseStructure::databaseExist(((DatabaseReference *) this->droppedField)->databaseName)) {
+        Error::runtimeError("Database Does Not Exist");
     }
 
-    return ReturnedValue::rowCount(0);
+    DatabaseStructure::removeDatabase(((DatabaseReference *) this->droppedField)->databaseName);
+
+    for (auto &informationRow: columnsInformation) {
+        if (informationRow->database != ((DatabaseReference *) this->droppedField)->databaseName) {
+            columnsInformationReplace.push_back(informationRow->toInsertableRow());
+        }
+    }
+
+    TableStructure::replace("information_schema", "columns", columnsInformationReplace);
+
+    return ReturnedValue::rowCount(1);
+}
+
+ReturnedValue *DropStatement::executeDropTable(ExecutionData *executionData) {
+
+    std::vector<InsertableRow *> columnsInformationReplace;
+    std::vector<InformationSchemaLine *> columnsInformation = InformationSchemaLine::get_all_information_schema();
+    std::string database = executionData->databaseUsed;
+
+    if (((TableReference *) this->droppedField)->databaseReference != nullptr) {
+        database = ((TableReference *) this->droppedField)->databaseReference->databaseName;
+    }
+
+    if (database.empty()) {
+        Error::runtimeError("No Database Selected");
+    }
+    if (!DatabaseStructure::databaseExist(database)) {
+        Error::runtimeError("Database Does Not Exist");
+    }
+
+    if (!TableStructure::tableExist(database, ((TableReference *) this->droppedField)->tableName)) {
+        Error::runtimeError("Table Does Not Exist");
+    }
+
+    for (auto &informationRow: columnsInformation) {
+        if (informationRow->database != database || informationRow->table != ((TableReference *) this->droppedField)->tableName) {
+            columnsInformationReplace.push_back(informationRow->toInsertableRow());
+        }
+    }
+
+    TableStructure::replace("information_schema", "columns", columnsInformationReplace);
+
+    return ReturnedValue::rowCount(1);
 }

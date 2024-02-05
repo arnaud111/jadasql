@@ -466,7 +466,7 @@ void Operation::display() {
 }
 
 void ConstStringField::display() {
-    printf("\"%s\" ", this->value.c_str());
+    printf("\"%s\" (size : %zu)", this->value.c_str(), this->value.size());
 }
 
 void ConstNumberField::display() {

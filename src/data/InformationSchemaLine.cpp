@@ -33,10 +33,6 @@ InformationSchemaLine::InformationSchemaLine(ColumnDetail * column, std::string 
     this->dataType = column->dataType->type;
     this->size = column->dataType->size;
 
-    this->database.push_back(0);
-    this->table.push_back(0);
-    this->column.push_back(0);
-
     if (column->defaultValue != nullptr) {
         switch (column->defaultValue->fieldType) {
             case f_ConstString:

@@ -66,6 +66,16 @@ void TableStructure::insertRow(const std::string& database, const std::string& t
     file.close();
 }
 
+void TableStructure::replace(const std::string& database, const std::string& table, std::vector<InsertableRow *> insertableRow) {
+
+    removeTable(database, table);
+    createTable(database, table);
+
+    for (auto &row: insertableRow) {
+        insertRow(database, table, row);
+    }
+}
+
 std::vector<std::vector<Field *>> TableStructure::selectAllInTable(const std::string &database, const std::string &table, std::vector<DataType *> columnsDataType) {
 
     std::string fileName = DatabaseStructure::BASE_DATA_PATH + database + "/" + table;

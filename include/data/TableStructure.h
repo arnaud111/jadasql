@@ -23,6 +23,8 @@ public:
 
     static void insertRow(const std::string& database, const std::string& table, InsertableRow *insertableRow);
 
+    static void replace(const std::string& database, const std::string& table, std::vector<InsertableRow *> insertableRow);
+
     static std::vector<std::vector<Field *>> selectAllInTable(const std::string &database, const std::string &table, std::vector<DataType *> columnsDataType);
 
 private:

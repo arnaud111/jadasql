@@ -42,7 +42,6 @@ ReturnedValue *DeleteStatement::execute(ExecutionData *executionData) {
 
     std::string database;
     std::vector<InformationSchemaLine *> columnsInformation;
-    std::vector<std::string> columnsNameReturned;
     std::vector<std::string> columnsName;
     std::vector<DataType *> dataTypes;
     std::vector<std::vector<Field *>> columnDataFields;

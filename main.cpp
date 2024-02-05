@@ -68,5 +68,7 @@ void createInformationSchema() {
 /*
  * CREATE TABLE aaa@user (id INT, age INT);
  * INSERT INTO aaa@user VALUES (1, 1);
+ * SELECT id, age FROM aaa@user;
  * DELETE FROM aaa@user WHERE id = 1;
+ * UPDATE aaa@user SET age = 2 WHERE id = 1;
  */

@@ -296,7 +296,7 @@ void Boolean::display() {
 }
 
 void Char::display() {
-    printf("CHAR(%llu) ", this->size);
+    printf("CHAR(%d) ", this->size);
 }
 
 void Date::display() {
@@ -328,7 +328,7 @@ void TinyInt::display() {
 }
 
 void VarChar::display() {
-    printf("VARCHAR(%llu) ", this->size);
+    printf("VARCHAR(%d) ", this->size);
 }
 
 void NullField::display() {

@@ -12,8 +12,6 @@ class Char: public DataType {
 
 public:
 
-    unsigned long long size;
-
     explicit Char(std::vector<Symbol *> symbol);
 
     explicit Char(int size);

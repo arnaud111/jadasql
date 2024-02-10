@@ -19,9 +19,9 @@ int main() {
     createInformationSchema();
     std::vector<InformationSchemaLine *> columnsInformation = InformationSchemaLine::get_all_information_schema();
 
-    for (auto &col: columnsInformation) {
+    /*for (auto &col: columnsInformation) {
         col->display();
-    }
+    }*/
 
     while (true) {
 
@@ -68,9 +68,9 @@ void createInformationSchema() {
 }
 
 /*
- * CREATE TABLE aaa@user_char (id INT, age INT, name CHAR(10));
- * INSERT INTO aaa@user VALUES (1, 1);
- * SELECT id, age FROM aaa@user;
+ * CREATE TABLE aaa@user_char (id INT, age INT, name CHAR(4));
+ * INSERT INTO aaa@user_char VALUES (1, 1, "a");
+ * SELECT id, age, name FROM aaa@user_char;
  * DELETE FROM aaa@user WHERE id = 1;
  * UPDATE aaa@user SET age = 2 WHERE id = 1;
  * DROP TABLE aaa@user;

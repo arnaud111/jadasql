@@ -99,7 +99,7 @@ std::vector<Symbol *> InsertStatement::getInParenthesis(unsigned long long start
 
 ReturnedValue *InsertStatement::execute(ExecutionData *executionData) {
 
-    std::string database;
+    std::string database = executionData->databaseUsed;
     std::vector<InformationSchemaLine *> columnsInformation;
     std::vector<InsertableField *> insertableFields;
 

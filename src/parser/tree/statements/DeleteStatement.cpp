@@ -40,7 +40,7 @@ DeleteStatement::DeleteStatement(std::vector<Symbol *> symbols) {
 
 ReturnedValue *DeleteStatement::execute(ExecutionData *executionData) {
 
-    std::string database;
+    std::string database = executionData->databaseUsed;
     std::vector<InformationSchemaLine *> columnsInformation;
     std::vector<std::string> columnsName;
     std::vector<DataType *> dataTypes;

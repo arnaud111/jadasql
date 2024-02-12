@@ -115,7 +115,7 @@ bool SelectStatement::isDistinct(std::vector<Symbol *> symbols) {
 
 ReturnedValue *SelectStatement::execute(ExecutionData *executionData) {
 
-    std::string database;
+    std::string database = executionData->databaseUsed;
     std::vector<InformationSchemaLine *> columnsInformation;
     std::vector<std::string> columnsNameReturned;
     std::vector<std::string> columnsName;

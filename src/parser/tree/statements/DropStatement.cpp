@@ -74,7 +74,7 @@ ReturnedValue *DropStatement::execute(ExecutionData *executionData) {
     }
 }
 
-ReturnedValue *DropStatement::executeDropDatabase(ExecutionData *executionData) {
+ReturnedValue *DropStatement::executeDropDatabase(ExecutionData *executionData) const {
 
     std::vector<InsertableRow *> columnsInformationReplace;
     std::vector<InformationSchemaLine *> columnsInformation = InformationSchemaLine::get_all_information_schema();
@@ -96,7 +96,7 @@ ReturnedValue *DropStatement::executeDropDatabase(ExecutionData *executionData) 
     return ReturnedValue::rowCount(1);
 }
 
-ReturnedValue *DropStatement::executeDropTable(ExecutionData *executionData) {
+ReturnedValue *DropStatement::executeDropTable(ExecutionData *executionData) const {
 
     std::vector<InsertableRow *> columnsInformationReplace;
     std::vector<InformationSchemaLine *> columnsInformation = InformationSchemaLine::get_all_information_schema();
@@ -116,6 +116,8 @@ ReturnedValue *DropStatement::executeDropTable(ExecutionData *executionData) {
     if (!TableStructure::tableExist(database, ((TableReference *) this->droppedField)->tableName)) {
         Error::runtimeError("Table Does Not Exist");
     }
+
+    TableStructure::removeTable(database, ((TableReference *) this->droppedField)->tableName);
 
     for (auto &informationRow: columnsInformation) {
         if (informationRow->database != database || informationRow->table != ((TableReference *) this->droppedField)->tableName) {

@@ -30,9 +30,9 @@ private:
 
     static DropStatementTypeEnum getDropType(Symbol *symbol);
 
-    ReturnedValue *executeDropTable(ExecutionData *executionData);
+    ReturnedValue *executeDropTable(ExecutionData *executionData) const;
 
-    ReturnedValue *executeDropDatabase(ExecutionData *executionData);
+    ReturnedValue *executeDropDatabase(ExecutionData *executionData) const;
 };
 
 
